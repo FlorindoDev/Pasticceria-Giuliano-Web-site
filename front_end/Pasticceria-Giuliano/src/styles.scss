@@ -1,0 +1,68 @@
+@use "tailwindcss";
+@use 'ngx-toastr/toastr.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.toast-error {
+    background-color: #a62e28;
+}
+
+.toast-warning {
+    background-color: #d09304;
+}
+
+body {
+    font-family: 'Lexend', sans-serif;
+}
+
+
+@theme {
+    --color-text: #121212;
+    --color-bg: #fafafa;
+    --color-primary: #fb8d3f;
+    --color-secondary: #e6ad44;
+    --color-accent: #1d9099;
+    --color-bgcontrast: #ebebeb;
+}
+
+
+
+.dark {
+    --color-bgcontrast: #07050a;
+    --color-text: #dfdfdf;
+    --color-bg: #0d0b11;
+    --color-primary: #6e47a9;
+    --color-secondary: #2c184d;
+    --color-accent: #b486fe;
+
+    //colori cubbo caricamento
+    --background-cube: #222;
+    --left-face: #502a88;
+    --right-face: #b486fe;
+    --top-face: #2c184d;
+    --scale: 1;
+    --duration: 3s;
+    --timing-function: ease;
+}
+
+.light {
+    //colori cubbo caricamento
+    --background-cube: #222;
+    --left-face: #D53A33;
+    --right-face: #E79C10;
+    --top-face: #1d9099;
+    --scale: 1;
+    --duration: 3s;
+    --timing-function: ease;
+}
+
+@theme {
+    --breakpoint-lg: 72rem;
+    --breakpoint-md: 56rem;
+    --breakpoint-sx: 38rem;
+
+}
