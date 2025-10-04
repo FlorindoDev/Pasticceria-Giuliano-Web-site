@@ -21,16 +21,16 @@ body {
 
 
 @theme {
-    --color-text: #121212;
-    --color-bg: #fafafa;
-    --color-primary: #fb8d3f;
-    --color-secondary: #e6ad44;
-    --color-accent: #1d9099;
-    --color-bgcontrast: #ebebeb;
+    --color-text: #2b1a15;
+    --color-bg: #ffffff;
+    --color-primary: #3b221b;
+    --color-secondary: #d9c6b0;
+    --color-accent: #b5916b;
+    --color-bgcontrast: #f5f2ef;
 }
 
 
-
+/*
 .dark {
     --color-bgcontrast: #07050a;
     --color-text: #dfdfdf;
@@ -59,6 +59,7 @@ body {
     --duration: 3s;
     --timing-function: ease;
 }
+*/
 
 @theme {
     --breakpoint-lg: 72rem;
