@@ -21,6 +21,7 @@ module.exports = {
                 primary: 'var(--color-primary)',
                 secondary: 'var(--color-secondary)',
                 accent: 'var(--color-accent)',
+                secondarylight: 'var(--color-highlight)'
             },
             fontFamily: {
                 lexend: ['"Lexend"', 'sans-serif'],

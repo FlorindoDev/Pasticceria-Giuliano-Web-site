@@ -1,0 +1,27 @@
+<article
+    class="group bg-bgcontrast text-text rounded-3xl overflow-hidden shadow-md ring-1 ring-cream/60 hover:-translate-y-1 transition">
+    <img [src]=img class="w-full h-100 object-cover object-[position:50%_50%]">
+    <div class="p-6">
+        <div class="flex-col items-start">
+            <h4 class="font-semibold text-lg group-hover:text-primary transition">{{typesweet}}</h4>
+            @if(isShippable){
+            <span class="text-xs uppercase bg-highlight/10 text-primary px-2 py-1 rounded-full font-medium">
+                Spedizione e negozio
+            </span>
+            }@else{
+            <span class="text-xs uppercase bg-highlight/10 text-primary px-2 py-1 rounded-full font-medium">
+                Solo in negozio
+            </span>
+            }
+        </div>
+
+        <div class="mt-2 flex items-center justify-between">
+
+            @if(price){ <p class="text-primary">{{ price }} €</p>}
+
+
+            <button class="bg-primary text-bg px-4 py-2 rounded-full hover:bg-accent transition">Scegli
+                dessert</button>
+        </div>
+    </div>
+</article>

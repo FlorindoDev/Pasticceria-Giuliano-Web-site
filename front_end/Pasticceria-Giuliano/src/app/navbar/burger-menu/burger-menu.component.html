@@ -1,0 +1,28 @@
+<!-- Bottone hamburger -->
+<button (click)="isMenuOpen = !isMenuOpen"
+    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-bgcontrast text-accent focus:outline-none transition"
+    aria-label="Apri menu">
+    ≡
+</button>
+
+<!-- Menu mobile -->
+@if(isMenuOpen){
+<nav
+    class="absolute top-16 right-4 flex flex-col items-start gap-4 bg-bgcontrast text-text p-6 rounded-2xl shadow-lg border border-bgcontrast/50 md:hidden z-50 animate-fade-in">
+
+    <a routerLink="/home" routerLinkActive="active" (click)="closeMenu()"
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Home</a>
+
+    <a routerLink="" fragment="chi-siamo" (click)="closeMenu()"
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Chi siamo</a>
+
+    <a routerLink="" fragment="assortimento" (click)="closeMenu()"
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Assortimento</a>
+
+    <a href="#" (click)="closeMenu()"
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Consegna e pagamento</a>
+
+    <a href="#" (click)="closeMenu()"
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Contatti</a>
+</nav>
+}

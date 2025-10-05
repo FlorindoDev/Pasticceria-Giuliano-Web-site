@@ -24,9 +24,10 @@ body {
     --color-text: #2b1a15;
     --color-bg: #ffffff;
     --color-primary: #3b221b;
-    --color-secondary: #d9c6b0;
+    --color-secondary: #b99d80;
     --color-accent: #b5916b;
-    --color-bgcontrast: #f5f2ef;
+    --color-bgcontrast: #fff4e8;
+    --color-highlight: #9c7246;
 }
 
 
@@ -63,7 +64,16 @@ body {
 
 @theme {
     --breakpoint-lg: 72rem;
-    --breakpoint-md: 56rem;
+    --breakpoint-md: 55rem;
     --breakpoint-sx: 38rem;
 
+}
+
+//link attivi
+.active {
+    @apply font-bold text-text border-none bg-secondary/70 pr-3 pl-3 pt-1 pb-1 rounded-xl
+}
+
+html {
+    scroll-behavior: smooth;
 }
