@@ -8,7 +8,7 @@
 <!-- Menu mobile -->
 @if(isMenuOpen){
 <nav
-    class="absolute top-16 right-4 flex flex-col items-start gap-4 bg-bgcontrast text-text p-6 rounded-2xl shadow-lg border border-bgcontrast/50 md:hidden z-50 animate-fade-in">
+    class="absolute top-12 right-2 flex flex-col items-start gap-4 bg-bgcontrast text-text p-6 rounded-2xl shadow-lg border border-bgcontrast/50 md:hidden z-50 animate-fade-in">
 
     <a routerLink="/home" routerLinkActive="active" (click)="closeMenu()"
         class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Home</a>
@@ -20,7 +20,7 @@
         class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Assortimento</a>
 
     <a href="#" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Consegna e pagamento</a>
+        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Vetrina</a>
 
     <a href="#" (click)="closeMenu()"
         class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Contatti</a>
