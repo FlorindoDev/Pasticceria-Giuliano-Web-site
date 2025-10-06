@@ -17,29 +17,12 @@ export class UserNotFoundError extends AppErrorHttp {
     }
 }
 
-export class VoteNotFoundError extends AppErrorHttp {
+export class ResidenceNotFoundError extends AppErrorHttp {
     constructor() {
-        super(NO_CONTENT, "non ci sono voti", "VOTE_NOT_EXISTS");
+        super(NO_CONTENT, "non ci sono Residance", "RESIDENCE_NOT_EXISTS");
     }
 }
 
-export class MemeNotFoundError extends AppErrorHttp {
-    constructor() {
-        super(NO_CONTENT, "non ci sono memes", "MEME_NOT_EXISTS");
-    }
-}
-
-export class CommentNotFoundError extends AppErrorHttp {
-    constructor() {
-        super(NO_CONTENT, "non ci sono comment", "COMMENT_NOT_EXISTS");
-    }
-}
-
-export class TagsNotFoundError extends AppErrorHttp {
-    constructor() {
-        super(NO_CONTENT, "non ci sono tags per questo meme", "TAGS_NOT_EXISTS");
-    }
-}
 
 
 /* ****************************************************************** */
@@ -75,12 +58,6 @@ export class UserAlreadyExistsError extends AppErrorHttp {
     }
 }
 
-export class VoteAlreadyExistsError extends AppErrorHttp {
-    constructor() {
-        super(CONFLICT, "Voto gia esistente", "VOTE_EXISTS");
-    }
-}
-
 export class UnauthorizedError extends AppErrorHttp {
     constructor() {
         super(UNAUTHORIZED, "Non autorizzato", "UNAUTHORIZED");
@@ -99,12 +76,6 @@ export class CredentialError extends AppErrorHttp {
     }
 }
 
-export class toManyTags extends AppErrorHttp {
-    constructor() {
-        super(CONFLICT, "puoi mettere massimo 5 tags", "TO_MANY_TAGS");
-    }
-}
-
 export class TelephoneNumerPresentError extends AppErrorHttp {
     constructor() {
         super(CONFLICT, "numero di telefono già utilizato", "TELEPHONE_NUMBER_EXISTS");
@@ -120,33 +91,16 @@ export class FailToUpdateUser extends AppErrorHttp {
     }
 }
 
-export class FailToSaveTags extends AppErrorHttp {
+export class FailToSaveResidence extends AppErrorHttp {
     constructor() {
-        super(INTERNAL_SERVER_ERROR, "errore in aspetato durante save tags riprova più tardi", "PROCESSING_TAGS_SAVE_ERROR");
+        super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto Residence", "RESIDENCE_ERROR");
     }
 }
 
-export class FailToDeleteTags extends AppErrorHttp {
-    constructor() {
-        super(INTERNAL_SERVER_ERROR, "errore in aspetato durante Delete tags riprova più tardi", "PROCESSING_TAGS_DELETE_ERROR");
-    }
-}
 
 export class FailToUploadFile extends AppErrorHttp {
     constructor() {
         super(INTERNAL_SERVER_ERROR, "Errore durante l’upload", "PROCESSING_UPLOAD_FILE_ERROR");
-    }
-}
-
-export class FailToSaveVote extends AppErrorHttp {
-    constructor() {
-        super(INTERNAL_SERVER_ERROR, "Errore durante upload del voto", "PROCESSING_UPLOAD_VOTE_ERROR");
-    }
-}
-
-export class FailToSaveComment extends AppErrorHttp {
-    constructor() {
-        super(INTERNAL_SERVER_ERROR, "Errore durante upload del Comment", "PROCESSING_UPLOAD_COMMENT_ERROR");
     }
 }
 
@@ -156,8 +110,3 @@ export class SignUpError extends AppErrorHttp {
     }
 }
 
-export class MemeUploadError extends AppErrorHttp {
-    constructor() {
-        super(SERVICE_UNAVAILABLE, "Al momento upload di meme non è disponibile", "MEME_UPLOAD_ERROR");
-    }
-}

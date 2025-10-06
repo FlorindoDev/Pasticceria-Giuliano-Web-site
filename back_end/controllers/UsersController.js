@@ -12,24 +12,10 @@ export class UsersController {
 
     }
 
-    static async getAllUsers(pageSize, page, emptyCheck = true) {
-        let result = await User.findAll({
-            attributes: ['idUser', 'nickName', 'email', 'profilePic', 'createdAt', 'updatedAt'],
-            limit: pageSize,
-            offset: (page - 1) * pageSize,
-        });
-
-        if (emptyCheck && result.length === 0) {
-            return Promise.reject(new UserNotFoundError());
-        }
-
-        return result;
-
-    }
 
     static async getUserFromId(id, emptyCheck = true) {
         let result = await User.findByPk(id, {
-            attributes: ['idUser', 'nickName', 'email', 'profilePic', 'createdAt', 'updatedAt'],
+            attributes: ['idUser', 'nome', 'cognome', 'email', 'telefono', 'createdAt', 'updatedAt'],
         });
 
         if (emptyCheck && result === null) {
@@ -40,24 +26,6 @@ export class UsersController {
 
     }
 
-    static async updateProfilePic(id, link) {
-        let result = await User.update(
-            {
-                profilePic: link
-            },
-            {
-                where: {
-                    idUser: id
-                }
-            }
-        );
-
-        if (result[0] == 0) {
-            return Promise.reject(new FailToUpdateUser());
-        }
-
-        return result;
-    }
 
     static async updateUser(id, changes) {
 
@@ -75,7 +43,11 @@ export class UsersController {
 
         let changes = {}
 
-        if (req.body.nickName) changes.nickName = req.body.nickName
+        if (req.body.nome) changes.nome = req.body.nome
+
+        if (req.body.cognome) changes.cognome = req.body.cognome
+
+        if (req.body.telefono) changes.telefono = req.body.telefono
 
         if (req.body.password) changes.password = req.body.password
 
