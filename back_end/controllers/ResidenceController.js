@@ -1,9 +1,9 @@
 import { Residenza } from "../models/DataBase.js";
 import { FailToSaveResidence, ResidenceNotFoundError } from "../utils/error/index.js";
 
-export class ResidanceController {
+export class ResidenceController {
 
-    static async addResidance(req) {
+    static async addResidence(req) {
 
         let residenza = new Residenza(
             {
@@ -26,7 +26,7 @@ export class ResidanceController {
         return result
     }
 
-    static async deleteResidance(req) {
+    static async deleteResidence(req) {
 
         let result = await Residenza.findByPk(req.params.residenceId);
 
@@ -40,7 +40,7 @@ export class ResidanceController {
 
     }
 
-    static getResidance() {
+    static getResidence() {
 
     }
 

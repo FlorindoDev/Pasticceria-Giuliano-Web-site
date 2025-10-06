@@ -4,10 +4,10 @@ import { UsersController } from "../controllers/UsersController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js"
 import { idUserRequredParams, schemaUserPut } from "../schemas/user.schema.js";
 import { validate } from "../middleware/Middlewares.js";
+import { ResidenceController } from "../controllers/ResidenceController.js";
 
 //multer
 import multer from "multer";
-import { ResidanceController } from "../controllers/ResidenceController.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const imageParser = upload.fields([{ name: 'image', maxCount: 1 }])
 
@@ -337,7 +337,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  * }
  */
 router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
-    ResidanceController.addResidance(req).then(() => {
+    ResidenceController.addResidence(req).then(() => {
         res.status(200)
         res.send();
     }).catch(err => {
@@ -420,7 +420,7 @@ router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, ne
  * }
  */
 router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
-    ResidanceController.deleteResidance(req).then(() => {
+    ResidenceController.deleteResidence(req).then(() => {
         res.status(200)
         res.send();
     }).catch(err => {

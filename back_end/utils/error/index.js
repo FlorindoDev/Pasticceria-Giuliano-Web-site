@@ -19,7 +19,7 @@ export class UserNotFoundError extends AppErrorHttp {
 
 export class ResidenceNotFoundError extends AppErrorHttp {
     constructor() {
-        super(NO_CONTENT, "non ci sono Residance", "RESIDENCE_NOT_EXISTS");
+        super(NO_CONTENT, "non ci sono Residenze", "RESIDENCE_NOT_EXISTS");
     }
 }
 
