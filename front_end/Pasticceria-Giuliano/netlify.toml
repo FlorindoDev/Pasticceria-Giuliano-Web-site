@@ -1,0 +1,8 @@
+[build]
+command = "echo 'USING NETLIFY.TOML HERE' && echo '✅ Using local build — skipping Netlify build step'"
+publish = "dist/angular-app/browser"
+
+
+
+[[plugins]]
+package = "@netlify/angular-runtime"
