@@ -12,7 +12,7 @@ export function errorHendlerInterceptor(request: HttpRequest<any>, next: HttpHan
   const toastr = inject(ToastrService);
   return next(request).pipe(
     catchError((err: HttpErrorResponse) => {
-      //console.log(err);
+      console.log(err);
       let myerr: errorHTTP;
       let myErrors = environment.myErrors;
       if (err.status === 0) {
@@ -26,7 +26,9 @@ export function errorHendlerInterceptor(request: HttpRequest<any>, next: HttpHan
         myerr = { status: err.status, description: "Errore in aspettato", code: "UNKOWN" }
       }
 
-      toastr.error(`${myerr.description}`, `${myerr.code}`);
+      //toastr.error(`${myerr.description}`, `${myerr.code}`);
+
+      toastr.error(`${myerr.description}`, `Errore`);
 
       return throwError(() => myerr);
 

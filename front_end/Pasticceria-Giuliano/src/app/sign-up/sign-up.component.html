@@ -1,0 +1,90 @@
+<div id="signup" class="">
+    <div id="over" class="z-50 inset-0 fixed w-full h-full dark:bg-white/30 bg-black opacity-60 backdrop-blur-sm"></div>
+
+
+    <div class="fixed inset-0 flex items-center justify-center z-60">
+        <div class="bg-bg  w-full max-w-lg mx-4 rounded-2xl p-6 text-text">
+
+            <div class="flex justify-end">
+                <button (click)="closeSingup()" class="p-2 dark:hover:bg-gray-600 hover:bg-[#cfd1d3] rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <h2 class="text-3xl font-bold text-center mb-6">Sign up</h2>
+
+            <form id="form-signup" class="flex flex-col" [formGroup]="signupForm" (ngSubmit)="handleSignup()">
+                <input (keyup)="hendleTyping($event)" type="nome" placeholder="Nome" formControlName="nome"
+                    class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+                @if(isSubmitted && signupForm.controls.nome.errors){
+                @if (isSubmitted && signupForm.controls.nome.errors['nome']) {
+                <p class="form-error">Nome not valid.</p>
+                }
+                @if(signupForm.controls.nome.errors['required']){
+                <p class="form-error">Nome is required.</p>
+                }
+
+                }
+                <div class="pb-5"></div>
+                <input (keyup)="hendleTyping($event)" type="cognome" placeholder="Cognome" formControlName="cognome"
+                    class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+                @if(isSubmitted && signupForm.controls.cognome.errors){
+                @if (isSubmitted && signupForm.controls.cognome.errors['cognome']) {
+                <p class="form-error">Cognome not valid.</p>
+                }
+                @if(signupForm.controls.cognome.errors['required']){
+                <p class="form-error">Cognome is required.</p>
+                }
+
+                }
+                <div class="pb-5"></div>
+                <input (keyup)="hendleTyping($event)" type="email" placeholder="Email" formControlName="user"
+                    class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+                @if(isSubmitted && signupForm.controls.user.errors){
+                @if (isSubmitted && signupForm.controls.user.errors['pattern']) {
+                <p class="form-error">Email not valid.</p>
+                }
+                @if(signupForm.controls.user.errors['required']){
+                <p class="form-error">Email is required.</p>
+                }
+
+                }
+                <div class="pb-5"></div>
+                <input (keyup)="hendleTyping($event)" type="password" placeholder="Password" formControlName="pass"
+                    class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+                @if(isSubmitted && signupForm.controls.pass.errors){
+                @if(signupForm.controls.pass.errors['required']){
+                <p class="form-error">Password is required.</p>
+                }
+                @if(signupForm.controls.pass.errors['minlength']){
+                <p class="form-error">Password should contain at least 8 characters</p>
+                }
+                }
+                <div class="pb-5"></div>
+                <button type="submit"
+                    class="text-text mt-2 bg-primary hover:bg-secondary rounded-full py-3 font-bold flex justify-center transition-colors duration-200">
+                    <p id="text-of-sign" class="block text-bg">Sign up</p>
+                    <svg id="loading-sign" class="hidden w-10 h-10 animate-spin text-bg" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
+                            stroke="currentColor" stroke-width="3.55556" stroke-linecap="round" />
+                    </svg>
+
+                </button>
+            </form>
+
+            <div class="mt-4 text-center text-md text-text space-y-2">
+                <a href="#" class="block hover:underline">Password dimenticata?</a>
+                <span>
+                    <span class="text-accent">Non</span> è la Prima volta su Pasticceria Giuliano <button
+                        class="text-blue-500 hover:underline"
+                        (click)="this.gotoLogin.emit('login'); this.closeSingup();">Accedi</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

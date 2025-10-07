@@ -11,8 +11,13 @@ export class BurgerMenu {
 
   isMenuOpen = false;
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   closeMenu() {
     this.isMenuOpen = false;
   }
+
 
 }
