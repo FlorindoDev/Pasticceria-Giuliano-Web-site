@@ -1,28 +1,125 @@
-<!-- Bottone hamburger -->
-<button (click)="isMenuOpen = !isMenuOpen"
-    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-bgcontrast text-accent focus:outline-none transition"
-    aria-label="Apri menu">
-    <img class="w-6" src="/menu-icon.svg">
-</button>
+<nav id="burger-menu" class="fixed inset-0 z-[9999] text-text animate-slide-in
+            bg-gradient-to-br from-bgcontrast to-bg
+            flex flex-col justify-between">
 
-<!-- Menu mobile -->
-@if(isMenuOpen){
-<nav
-    class="absolute top-12 right-2 flex flex-col items-start gap-4 bg-bgcontrast text-text p-6 rounded-2xl shadow-lg border border-bgcontrast/50 md:hidden z-50 animate-fade-in">
+    <!-- HEADER -->
+    <div class="sticky top-0 bg-primary/95 backdrop-blur-sm
+              flex items-center justify-between px-7 py-7
+              border-b border-white/15 shadow-md">
+        <span class="text-2xl font-extrabold tracking-widest uppercase text-bg">Menu</span>
+        <button (click)="closeMenu()" aria-label="Chiudi menu" class="p-3 rounded-full text-bg hover:text-white
+                   hover:bg-white/15 active:scale-95 transition">
+            ✕
+        </button>
+    </div>
 
-    <a routerLink="/home" routerLinkActive="active" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Home</a>
 
-    <a routerLink="" fragment="chi-siamo" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Chi siamo</a>
+    <div class="px-7 pt-12 pb-10 flex-1 overflow-y-auto">
+        <ul class="rounded-3xl bg-white/10/ [background-color:rgba(255,255,255,.06)]
+               backdrop-blur-sm p-5 shadow-lg ring-1 ring-white/10 divide-y divide-white/10 space-y-0">
 
-    <a routerLink="" fragment="vetrina" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Assortimento</a>
 
-    <a routerLink="" fragment="vetrina" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Vetrina</a>
+            <li class="group relative">
+                <a routerLink="/home" (click)="closeMenu()" class="flex items-center justify-between py-5 rounded-xl px-4
+                  hover:bg-white/10 transition shadow-sm hover:shadow">
+                    <div class="flex items-center gap-3">
+                        <!-- barra sinistra che cresce -->
+                        <span class="block h-0.5 w-0 group-hover:w-8 transition-all duration-200
+                         bg-current opacity-70 rounded-full"></span>
+                        <span class="text-[1.35rem] leading-none font-semibold uppercase tracking-[0.08em]">
+                            Home
+                        </span>
+                    </div>
+                    <span
+                        class="text-2xl opacity-70 transition-transform duration-200 group-hover:translate-x-1.5">›</span>
+                </a>
+            </li>
 
-    <a href="#" (click)="closeMenu()"
-        class="hover:text-accent transition uppercase tracking-wide text-sm font-medium">Contatti</a>
+            <li class="group relative">
+                <a routerLink="" fragment="chi-siamo" (click)="closeMenu()" class="flex items-center justify-between py-5 rounded-xl px-4
+                  hover:bg-white/10 transition shadow-sm hover:shadow">
+                    <div class="flex items-center gap-3">
+                        <span class="block h-0.5 w-0 group-hover:w-8 transition-all duration-200
+                         bg-current opacity-70 rounded-full"></span>
+                        <span class="text-[1.35rem] leading-none font-semibold uppercase tracking-[0.08em]">
+                            Chi siamo
+                        </span>
+                    </div>
+                    <span
+                        class="text-2xl opacity-70 transition-transform duration-200 group-hover:translate-x-1.5">›</span>
+                </a>
+            </li>
+
+            <li class="group relative">
+                <a routerLink="" fragment="assortimento" (click)="closeMenu()" class="flex items-center justify-between py-5 rounded-xl px-4
+                  hover:bg-white/10 transition shadow-sm hover:shadow">
+                    <div class="flex items-center gap-3">
+                        <span class="block h-0.5 w-0 group-hover:w-8 transition-all duration-200
+                         bg-current opacity-70 rounded-full"></span>
+                        <span class="text-[1.35rem] leading-none font-semibold uppercase tracking-[0.08em]">
+                            Assortimento
+                        </span>
+                    </div>
+                    <span
+                        class="text-2xl opacity-70 transition-transform duration-200 group-hover:translate-x-1.5">›</span>
+                </a>
+            </li>
+
+            <li class="group relative">
+                <a routerLink="" fragment="vetrina" (click)="closeMenu()" class="flex items-center justify-between py-5 rounded-xl px-4
+                  hover:bg-white/10 transition shadow-sm hover:shadow">
+                    <div class="flex items-center gap-3">
+                        <span class="block h-0.5 w-0 group-hover:w-8 transition-all duration-200
+                         bg-current opacity-70 rounded-full"></span>
+                        <span class="text-[1.35rem] leading-none font-semibold uppercase tracking-[0.08em]">
+                            Vetrina
+                        </span>
+                    </div>
+                    <span
+                        class="text-2xl opacity-70 transition-transform duration-200 group-hover:translate-x-1.5">›</span>
+                </a>
+            </li>
+
+            <li class="group relative">
+                <a routerLink="" fragment="contatti" (click)="closeMenu()" class="flex items-center justify-between py-5 rounded-xl px-4
+                  hover:bg-white/10 transition shadow-sm hover:shadow">
+                    <div class="flex items-center gap-3">
+                        <span class="block h-0.5 w-0 group-hover:w-8 transition-all duration-200
+                         bg-current opacity-70 rounded-full"></span>
+                        <span class="text-[1.35rem] leading-none font-semibold uppercase tracking-[0.08em]">
+                            Contatti
+                        </span>
+                    </div>
+                    <span
+                        class="text-2xl opacity-70 transition-transform duration-200 group-hover:translate-x-1.5">›</span>
+                </a>
+            </li>
+        </ul>
+        <div
+            class="flex justify-center gap-6 px-7 pb-12 pt-8 bg-gradient-to-t from-bg/60 to-transparent border-t border-white/10">
+
+
+            <button (click)="closeMenu(); openLogin()" class="flex-1 py-4 rounded-2xl text-center font-bold uppercase tracking-wider
+               text-white shadow-2xl ring-2 ring-white/20
+               bg-gradient-to-r from-primary to-accent
+               hover:brightness-110 hover:shadow-[0_12px_32px_rgba(0,0,0,.35)]
+               active:scale-[0.98] transition">
+                Login
+            </button>
+
+
+            <button (click)="closeMenu(); openSignup()" class="flex-1 py-4 rounded-2xl text-center font-bold uppercase tracking-wider
+               text-white shadow-xl ring-2 ring-white/20
+               bg-gradient-to-r from-accent to-secondary
+               hover:brightness-110 hover:shadow-[0_12px_32px_rgba(0,0,0,.35)]
+               active:scale-[0.98] transition">
+                Registrati
+            </button>
+        </div>
+
+
+    </div>
+
+
+
 </nav>
-}

@@ -12,8 +12,13 @@ import { SignUp } from '../sign-up/sign-up.component';
 })
 export class Navbar {
 
+  isMenuOpen = false;
+
+  closeBurger() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   openLogin() {
-    console.log("")
     let element = document.getElementById("login");
     element?.classList.remove("hidden");
   }
