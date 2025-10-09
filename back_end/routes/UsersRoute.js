@@ -236,7 +236,7 @@ router.put('/:id', enforceAuthentication, validate(schemaUserPut), isOwnProfile,
  */
 router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
     UsersController.deleteUser(req.idUser).then(() => {
-        res.status(200)
+        res.status(200);
         res.send();
     }).catch(err => {
         next(err);
@@ -338,7 +338,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  */
 router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
     ResidenceController.addResidence(req).then(() => {
-        res.status(200)
+        res.status(200);
         res.send();
     }).catch(err => {
         next(err);
@@ -421,7 +421,99 @@ router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, ne
  */
 router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
     ResidenceController.deleteResidence(req).then(() => {
-        res.status(200)
+        res.status(200);
+        res.send();
+    }).catch(err => {
+        next(err);
+    });
+
+});
+
+/**
+ * @swagger
+ * {
+ *   "/users/{id}/residence": {
+ *     "get": {
+ *       "tags": ["Users"],
+ *       "summary": "Ottieni la residenza dell'utente",
+ *       "description": "Recupera i dati di residenza associati all'utente specificato tramite ID.",
+ *       "operationId": "getUserResidence",
+ *       "security": [
+ *         {
+ *           "bearerAuth": []
+ *         }
+ *       ],
+ *       "parameters": [
+ *         {
+ *           "name": "id",
+ *           "in": "path",
+ *           "description": "ID dell'utente di cui ottenere la residenza",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "string"
+ *           }
+ *         }
+ *       ],
+ *       "responses": {
+ *         "200": {
+ *           "description": "Residenza recuperata con successo",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "type": "object",
+ *                 "properties": {
+ *                   "regione": { "type": "string", "example": "Lombardia" },
+ *                   "comune": { "type": "string", "example": "Milano" },
+ *                   "cap": { "type": "string", "example": "20100" },
+ *                   "via": { "type": "string", "example": "Via Roma" },
+ *                   "numero_civico": { "type": "string", "example": "10" }
+ *                 }
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "401": {
+ *           "description": "Non autorizzato — token mancante o non valido",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Error" }
+ *             }
+ *           }
+ *         },
+ *         "403": {
+ *           "description": "Accesso negato — l’utente non può accedere a questo profilo",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Error" }
+ *             }
+ *           }
+ *         },
+ *         "404": {
+ *           "description": "Residenza non trovata",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Error" }
+ *             }
+ *           }
+ *         },
+ *         "500": {
+ *           "description": "Errore del server",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Error" }
+ *             }
+ *           }
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+
+router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
+    ResidenceController.getResidence(req).then((result) => {
+        res.status(200);
+        res.json(result);
         res.send();
     }).catch(err => {
         next(err);

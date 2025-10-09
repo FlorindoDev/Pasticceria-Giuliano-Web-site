@@ -82,6 +82,12 @@ export class TelephoneNumerPresentError extends AppErrorHttp {
     }
 }
 
+export class ToMnayResidenceError extends AppErrorHttp {
+    constructor() {
+        super(CONFLICT, "Hai troppe Residenze (max 3)", "MAX_RESIDENCE");
+    }
+}
+
 /* ****************************************************************** */
 
 //Codici 500

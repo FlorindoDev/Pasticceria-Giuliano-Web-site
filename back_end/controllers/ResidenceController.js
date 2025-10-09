@@ -1,9 +1,19 @@
 import { Residenza } from "../models/DataBase.js";
-import { FailToSaveResidence, ResidenceNotFoundError } from "../utils/error/index.js";
+import { FailToSaveResidence, ResidenceNotFoundError, ToMnayResidenceError } from "../utils/error/index.js";
 
 export class ResidenceController {
 
     static async addResidence(req) {
+
+        let res = await Residenza.findAndCountAll({
+            where: {
+                UserIdUser: req.idUser
+            }
+        })
+
+        if (res.count > 3) {
+            throw new ToMnayResidenceError();
+        }
 
         let residenza = new Residenza(
             {
@@ -40,8 +50,18 @@ export class ResidenceController {
 
     }
 
-    static getResidence() {
+    static async getResidence(req) {
+        let result = await Residenza.findAll({
+            where: {
+                UserIdUser: req.idUser
+            }
+        })
 
+        if (!result) {
+            throw new ResidenceNotFoundError();
+        }
+
+        return result;
     }
 
 }
