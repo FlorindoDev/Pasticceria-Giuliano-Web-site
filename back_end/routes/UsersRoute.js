@@ -337,7 +337,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  * }
  */
 router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
-    ResidenceController.addResidence(req).then(() => {
+    ResidenceController.addResidence(req.idUser, req.body).then(() => {
         res.status(200);
         res.send();
     }).catch(err => {
@@ -420,7 +420,7 @@ router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, ne
  * }
  */
 router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
-    ResidenceController.deleteResidence(req).then(() => {
+    ResidenceController.deleteResidence(req.params.residenceId).then(() => {
         res.status(200);
         res.send();
     }).catch(err => {
@@ -449,9 +449,7 @@ router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile
  *           "in": "path",
  *           "description": "ID dell'utente di cui ottenere la residenza",
  *           "required": true,
- *           "schema": {
- *             "type": "string"
- *           }
+ *           "schema": { "type": "string" }
  *         }
  *       ],
  *       "responses": {
@@ -472,46 +470,17 @@ router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile
  *             }
  *           }
  *         },
- *         "401": {
- *           "description": "Non autorizzato — token mancante o non valido",
- *           "content": {
- *             "application/json": {
- *               "schema": { "$ref": "#/components/schemas/Error" }
- *             }
- *           }
- *         },
- *         "403": {
- *           "description": "Accesso negato — l’utente non può accedere a questo profilo",
- *           "content": {
- *             "application/json": {
- *               "schema": { "$ref": "#/components/schemas/Error" }
- *             }
- *           }
- *         },
- *         "404": {
- *           "description": "Residenza non trovata",
- *           "content": {
- *             "application/json": {
- *               "schema": { "$ref": "#/components/schemas/Error" }
- *             }
- *           }
- *         },
- *         "500": {
- *           "description": "Errore del server",
- *           "content": {
- *             "application/json": {
- *               "schema": { "$ref": "#/components/schemas/Error" }
- *             }
- *           }
- *         }
+ *         "401": { "description": "Non autorizzato — token mancante o non valido" },
+ *         "403": { "description": "Accesso negato — l’utente non può accedere a questo profilo" },
+ *         "404": { "description": "Residenza non trovata" },
+ *         "500": { "description": "Errore del server" }
  *       }
  *     }
  *   }
  * }
  */
-
 router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
-    ResidenceController.getResidence(req).then((result) => {
+    ResidenceController.getResidence(req.idUser).then((result) => {
         res.status(200);
         res.json(result);
         res.send();
@@ -521,6 +490,82 @@ router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, nex
 
 });
 
+/**
+ * @swagger
+ * {
+ *   "/users/{id}/residence/{residenceId}": {
+ *     "put": {
+ *       "tags": ["Users"],
+ *       "summary": "Aggiorna la residenza di un utente",
+ *       "description": "Permette di aggiornare i dati di una specifica residenza associata all'utente identificato tramite ID.",
+ *       "operationId": "updateUserResidence",
+ *       "security": [
+ *         {
+ *           "bearerAuth": []
+ *         }
+ *       ],
+ *       "parameters": [
+ *         {
+ *           "name": "id",
+ *           "in": "path",
+ *           "description": "ID dell'utente proprietario della residenza",
+ *           "required": true,
+ *           "schema": { "type": "string" }
+ *         },
+ *         {
+ *           "name": "residenceId",
+ *           "in": "path",
+ *           "description": "ID della residenza da aggiornare",
+ *           "required": true,
+ *           "schema": { "type": "string" }
+ *         }
+ *       ],
+ *       "requestBody": {
+ *         "required": true,
+ *         "content": {
+ *           "application/json": {
+ *             "schema": {
+ *               "type": "object",
+ *               "properties": {
+ *                 "regione": { "type": "string" },
+ *                 "comune": { "type": "string" },
+ *                 "cap": { "type": "string" },
+ *                 "via": { "type": "string" },
+ *                 "numero_civico": { "type": "string" }
+ *               },
+ *               "required": ["regione", "comune", "cap", "via", "numero_civico"],
+ *               "example": {
+ *                 "regione": "Lombardia",
+ *                 "comune": "Milano",
+ *                 "cap": "20100",
+ *                 "via": "Via Roma",
+ *                 "numero_civico": "10"
+ *               }
+ *             }
+ *           }
+ *         }
+ *       },
+ *       "responses": {
+ *         "200": { "description": "Residenza aggiornata con successo" },
+ *         "400": { "description": "Richiesta non valida — dati mancanti o errati" },
+ *         "401": { "description": "Non autorizzato — token mancante o non valido" },
+ *         "403": { "description": "Accesso negato — l’utente non può modificare questa residenza" },
+ *         "404": { "description": "Residenza non trovata" },
+ *         "500": { "description": "Errore del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.put('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
+    ResidenceController.updateResidence(req.params.residenceId, req.body).then(() => {
+        res.status(200);
+        res.send();
+    }).catch(err => {
+        next(err);
+    });
+
+});
 
 
 

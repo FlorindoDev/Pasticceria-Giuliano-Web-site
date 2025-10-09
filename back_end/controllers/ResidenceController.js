@@ -1,13 +1,14 @@
+import { set } from "zod";
 import { Residenza } from "../models/DataBase.js";
 import { FailToSaveResidence, ResidenceNotFoundError, ToMnayResidenceError } from "../utils/error/index.js";
 
 export class ResidenceController {
 
-    static async addResidence(req) {
+    static async addResidence(idUser, body) {
 
         let res = await Residenza.findAndCountAll({
             where: {
-                UserIdUser: req.idUser
+                UserIdUser: idUser
             }
         })
 
@@ -17,12 +18,12 @@ export class ResidenceController {
 
         let residenza = new Residenza(
             {
-                regione: req.body.regione,
-                comune: req.body.comune,
-                cap: req.body.cap,
-                via: req.body.via,
-                numeroCivico: req.body.numero_civico,
-                UserIdUser: req.idUser
+                regione: body.regione,
+                comune: body.comune,
+                cap: body.cap,
+                via: body.via,
+                numeroCivico: body.numero_civico,
+                UserIdUser: idUser
             }
         )
 
@@ -36,9 +37,9 @@ export class ResidenceController {
         return result
     }
 
-    static async deleteResidence(req) {
+    static async deleteResidence(residenceId) {
 
-        let result = await Residenza.findByPk(req.params.residenceId);
+        let result = await Residenza.findByPk(residenceId);
 
         if (result != null) {
             result = result.destroy();
@@ -50,10 +51,10 @@ export class ResidenceController {
 
     }
 
-    static async getResidence(req) {
+    static async getResidence(idUser) {
         let result = await Residenza.findAll({
             where: {
-                UserIdUser: req.idUser
+                UserIdUser: idUser
             }
         })
 
@@ -62,6 +63,16 @@ export class ResidenceController {
         }
 
         return result;
+    }
+
+    static async updateResidence(residenceId, body) {
+        Residenza.update(body, {
+            where: {
+                idResidenza: residenceId
+            }
+
+        })
+
     }
 
 }
