@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import { UserModel } from "./User.js";
-import { ResidenzaModel } from "./residenza.js";
+import { ResidenzaModel } from "./Residenza.js";
 import { OrdineModel } from "./Ordine.js";
 import { ProdottoModel } from "./Prodotto.js";
 import { IngredienteModel } from "./Ingrediente.js";
