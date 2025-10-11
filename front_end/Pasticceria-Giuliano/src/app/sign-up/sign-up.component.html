@@ -26,6 +26,12 @@
                 @if(signupForm.controls.nome.errors['required']){
                 <p class="form-error">Nome is required.</p>
                 }
+                @if(signupForm.controls.nome.errors['minlength']){
+                <p class="form-error">Nome should contain at least 3 characters</p>
+                }
+                @if(signupForm.controls.nome.errors['maxlength']){
+                <p class="form-error">Nome should contain at least 10 characters</p>
+                }
 
                 }
                 <div class="pb-5"></div>
@@ -37,6 +43,9 @@
                 }
                 @if(signupForm.controls.cognome.errors['required']){
                 <p class="form-error">Cognome is required.</p>
+                }
+                @if(signupForm.controls.cognome.errors['minlength']){
+                <p class="form-error">Cognome should contain at least 3 characters</p>
                 }
 
                 }

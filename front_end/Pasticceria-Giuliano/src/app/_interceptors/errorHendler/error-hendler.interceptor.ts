@@ -12,9 +12,13 @@ export function errorHendlerInterceptor(request: HttpRequest<any>, next: HttpHan
   const toastr = inject(ToastrService);
   return next(request).pipe(
     catchError((err: HttpErrorResponse) => {
+
       console.log(err);
+      console.log(request);
+
       let myerr: errorHTTP;
       let myErrors = environment.myErrors;
+
       if (err.status === 0) {
         myerr = { status: err.status, description: "Errore di connessione", code: "CONNECTION_ERROR" }
       } else if (myErrors.find(val => val === err.status)) {

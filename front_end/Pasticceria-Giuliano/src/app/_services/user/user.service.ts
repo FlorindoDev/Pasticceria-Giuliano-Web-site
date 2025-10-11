@@ -24,7 +24,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-
   getUserFromId(iduser: number | string): Observable<User> {
     return this.http.get<User>(`${this.url}/users/${iduser}`, this.httpOptions);
   }
@@ -64,12 +63,12 @@ export class UserService {
 
   }
 
-  getNickName(): string | null {
+  getNome(): string | null {
 
 
-    const nickName = localStorage.getItem("user");
-    if (nickName) {
-      return (JSON.parse(nickName) as User).nickName;
+    const nome = localStorage.getItem("user");
+    if (nome) {
+      return (JSON.parse(nome) as User).nome;
     }
 
     return null;

@@ -24,12 +24,14 @@ export class AuthService {
     user: this.getUser(),
     token: this.getToken(),
     iduser: this.getidUser(),
+    isAdmin: this.getAdmin(),
     isAuthenticated: this.verifyToken(this.getToken())
   });
 
   user = computed(() => this.authState().user);
   token = computed(() => this.authState().token);
   iduser = computed(() => this.authState().iduser);
+  isAdmin = computed(() => this.authState().isAdmin);
   isAuthenticated = computed(() => this.authState().isAuthenticated);
 
   constructor(private http: HttpClient, private UserService: UserService) {
@@ -37,7 +39,7 @@ export class AuthService {
       this.setFieldOnStorage(this.token(), "token");
       this.setFieldOnStorage(this.user(), "user-email");
       this.setFieldOnStorage(this.iduser(), "iduser");
-
+      this.setFieldOnStorage(this.isAdmin(), "isAdmin");
     });
   }
 
@@ -45,10 +47,12 @@ export class AuthService {
     const decodedToken: any = jwtDecode(token);
     const user = decodedToken.user;
     const iduser = decodedToken.idUser;
+    const isAdmin = decodedToken.admin;
     this.authState.set({
       user: user,
       iduser: iduser,
       token: token,
+      isAdmin: isAdmin,
       isAuthenticated: this.verifyToken(token)
     })
   }
@@ -63,6 +67,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem("token");
+  }
+
+  getAdmin() {
+    return localStorage.getItem("isAdmin") === "true";
   }
 
   getUser() {
@@ -104,6 +112,7 @@ export class AuthService {
       user: null,
       token: null,
       iduser: null,
+      isAdmin: false,
       isAuthenticated: false
     });
     this.UserService.deleteUser();

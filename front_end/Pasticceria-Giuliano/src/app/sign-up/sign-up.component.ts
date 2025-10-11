@@ -33,11 +33,11 @@ export class SignUp {
     nome: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(16)]),
+      Validators.maxLength(10)]),
     cognome: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(16)]),
+      Validators.maxLength(10)]),
   });
 
   startLoading() {

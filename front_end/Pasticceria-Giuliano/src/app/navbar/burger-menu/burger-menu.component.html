@@ -95,6 +95,7 @@
                 </a>
             </li>
         </ul>
+        @if(!isLogged){
         <div
             class="flex justify-center gap-6 px-7 pb-12 pt-8 bg-gradient-to-t from-bg/60 to-transparent border-t border-white/10">
 
@@ -116,6 +117,44 @@
                 Registrati
             </button>
         </div>
+
+        }@else{
+        <div class="px-5 pt-6 pb-4 border-b border-secondary/20">
+            <div class="flex items-center gap-3">
+
+                <div class="grid place-items-center w-12 h-12 rounded-2xl bg-primary text-bg font-bold shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M5.121 17.804A9.004 9.004 0 0112 15c2.21 0 4.21.804 5.879 2.13M12 12a4 4 0 100-8 4 4 0 000 8z" />
+                    </svg>
+                </div>
+
+
+                <div class="min-w-0">
+                    <p class="font-semibold truncate">{{ this.nome }}</p>
+                    <details class="group relative">
+                        <summary
+                            class="flex items-center gap-1 text-sm text-text/70 cursor-pointer select-none list-none">
+                            <span>Account</span>
+                            <span class="opacity-60 transition-transform group-open:rotate-180">▾</span>
+                        </summary>
+
+
+                        <div
+                            class="absolute left-0 mt-2 w-40 rounded-2xl border border-secondary/30 bg-bg shadow-xl p-1 z-50">
+                            <a routerLink="/profilo"
+                                class="block px-3 py-2 rounded-xl hover:bg-bgcontrast text-primary transition">Profilo</a>
+                            <button type="button" (click)="logout()"
+                                class="w-full text-left px-3 py-2 rounded-xl hover:bg-red-50 text-red-600 transition">
+                                Esci
+                            </button>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+        }
 
 
     </div>

@@ -2,10 +2,18 @@
     <div class="relative mx-auto px-6 md:px-10 flex items-center justify-between">
 
         <nav class="hidden md:flex items-center justify-center gap-8 text-md uppercase tracking-wide mx-auto">
-            <div class="h-1 w-26"></div>
-            <a routerLink="/home" routerLinkActive="active" class="text-text hover:text-accent transition">Home</a>
+            @if(isLogged()){
+            <div class="lg:block hidden  h-1 w-70"></div>
+            }@else{
+            <div class="lg:block hidden h-1 w-55"></div>
+            }
+            <div class="lg:hidden h-1 w-42"></div>
 
-            <a routerLink="" fragment="chi-siamo" class="font-semibold text-text hover:text-accent transition">Chi
+            <a routerLink="/home" routerLinkActive="active"
+                class="font-semibold text-text hover:text-accent transition">Home</a>
+
+            <a routerLink="" fragment="chi-siamo"
+                class="font-semibold text-text hover:text-accent transition whitespace-nowrap">Chi
                 siamo</a>
 
             <img src="/pasticceria-giuliano-logo.svg" alt="Logo Pasticceria Giuliano"
@@ -13,13 +21,13 @@
 
             <a routerLink="" fragment="vetrina" class="font-semibold text-text hover:text-accent transition">Vetrina</a>
 
-            <a href="#" routerLinkActive="active"
+            <a routerLink="/assortimento" routerLinkActive="active"
                 class="font-semibold text-text hover:text-accent transition">Assortimento</a>
 
 
             <span class="text-primary opacity-60 select-none font-bold text-2xl ">|</span>
 
-
+            @if(!isLogged()){
             <a (click)="openLogin()" class="text-text hover:text-accent transition flex items-center gap-1"
                 title="Accedi">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mt-1" fill="none" viewBox="0 0 24 24"
@@ -27,7 +35,50 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M5.121 17.804A9.004 9.004 0 0112 15c2.21 0 4.21.804 5.879 2.13M12 12a4 4 0 100-8 4 4 0 000 8z" />
                 </svg>
+                <span class="font-semibold lg:block hidden">Entra</span>
+
             </a>
+            }@else{
+            <details class="relative">
+                <summary
+                    class="inline-flex cursor-pointer select-none items-center gap-1 text-text hover:text-accent transition mt-2 list-none"
+                    aria-haspopup="menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M5.121 17.804A9.004 9.004 0 0112 15c2.21 0 4.21.804 5.879 2.13M12 12a4 4 0 100-8 4 4 0 000 8z" />
+                    </svg>
+
+                    <span class="font-semibold lg:block hidden">{{ this.nome() }}</span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 translate-y-[1px]"
+                        viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M4 6 L20 6 L12 18 Z" />
+                    </svg>
+                </summary>
+
+
+                <div class="absolute right-0 mt-2 min-w-44 rounded-2xl border border-black/10 bg-white/95 shadow-xl backdrop-blur p-1 z-50"
+                    role="menu" aria-label="Menu utente">
+                    <a routerLink="/profilo"
+                        class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/5 active:scale-[0.99] transition"
+                        role="menuitem">
+                        Profilo
+                    </a>
+
+
+
+                    <hr class="my-1 border-black/10">
+
+                    <button type="button"
+                        class="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-red-50 text-red-600 active:scale-[0.99] transition"
+                        role="menuitem" (click)="logout()">
+                        Esci
+                    </button>
+                </div>
+            </details>
+
+            }
         </nav>
 
         <div class="h-1 w-13 md:hidden"></div>
@@ -47,8 +98,8 @@
 </header>
 
 @if(isMenuOpen){
-<burger-menu (logged)="openLogin()" (gotoSignup)="openSignup()" (isMenuOpen)="closeBurger()"
-    class="fixed right-6 z-[9999]"></burger-menu>
+<burger-menu [nome]="nome()" [isLogged]="isLogged()" (logged)="openLogin()" (gotoSignup)="openSignup()"
+    (isMenuOpen)="closeBurger()" class="fixed right-6 z-[9999]"></burger-menu>
 }
 
 <login (logged)="onLogin()" (gotoSignup)="openSignup()"></login>

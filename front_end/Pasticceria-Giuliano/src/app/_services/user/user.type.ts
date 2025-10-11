@@ -1,6 +1,6 @@
 export interface User {
     idUser?: number | string,
-    nickName: string,
+    nome: string,
     email: string,
     profilePic: string | null,
     createdAt?: Date,

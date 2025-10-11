@@ -1,0 +1,158 @@
+<section class="min-h-screen bg-bg text-text">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+
+
+        <header class="relative mb-10 md:mb-14 text-center">
+
+            <span class="inline-flex items-center justify-center rounded-full border border-secondary/30 bg-bgcontrast/90 px-4 py-1.5 
+           text-xs font-semibold text-highlight shadow-sm backdrop-blur">
+                100% naturale · fatto a mano
+            </span>
+
+            <h1 class="mx-auto mt-5 max-w-2xl text-4xl md:text-6xl font-extrabold leading-tight tracking-tight 
+           text-transparent bg-clip-text bg-gradient-to-b from-primary to-accent">
+                Assortimento di dolci
+            </h1>
+
+
+            <p class="mx-auto mt-4 max-w-2xl text-base md:text-lg text-text/80">
+                Esplora le categorie e scegli il tuo dessert preferito.
+            </p>
+
+            <div class="mx-auto mt-6 h-px w-24 rounded-full bg-secondary/30"></div>
+        </header>
+
+
+
+        <nav class="sticky md:top-30 top-23 z-20">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="flex justify-center py-3">
+                    <ul class="inline-flex flex-wrap items-center justify-center gap-2 md:gap-3
+                 rounded-full bg-bgcontrast border border-secondary
+                 px-3 md:px-4 py-2 shadow-md">
+                        <li>
+                            <a href="#torte" class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
+                    text-primary border border-transparent hover:bg-accent hover:text-bg transition">
+                                Torte
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#mignon" class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
+                    text-primary border border-transparent hover:bg-accent hover:text-bg transition">
+                                Mignon
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#semifreddi" class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
+                    text-primary border border-transparent hover:bg-accent hover:text-bg transition">
+                                Semifreddi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#classici" class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
+                    text-primary border border-transparent hover:bg-accent hover:text-bg transition">
+                                Classici
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#speciali" class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
+                    text-primary border border-transparent hover:bg-accent hover:text-bg transition">
+                                Speciali
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+        <section id="torte" class="scroll-mt-24 pt-10 md:pt-14">
+            <div class="flex items-end justify-between mb-5">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary">Torte</h2>
+                <span class="text-sm text-text/60">Ideali per feste e ricorrenze</span>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <sweet-card [img]="'/torte/tiramisu.jpg'" [typesweet]="'Tiramisù classico'" [price]="'25'"></sweet-card>
+                <sweet-card [img]="'/torte/chantilly-bosco.jpg'" [typesweet]="'Chantilly ai frutti di bosco'"
+                    [price]="'28'"></sweet-card>
+                <sweet-card [img]="'/torte/millefoglie.jpg'" [typesweet]="'Millefoglie alla crema'"
+                    [price]="'27'"></sweet-card>
+                <sweet-card [img]="'/torte/cioccolato.jpg'" [typesweet]="'Torta al cioccolato fondente'"
+                    [price]="'26'"></sweet-card>
+            </div>
+        </section>
+
+        <!-- MIGNON -->
+        <section id="mignon" class="scroll-mt-24 pt-12 md:pt-16">
+            <div class="flex items-end justify-between mb-5">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary">Mignon</h2>
+                <span class="text-sm text-text/60">Piccoli capolavori</span>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <sweet-card [img]="'/mignon/carramello.jpeg'" [typesweet]="'Carramello'" [price]="'10'"></sweet-card>
+                <sweet-card [img]="'/mignon/coda-aragosta.jpg'" [typesweet]="'Coda di aragosta'"
+                    [price]="'10'"></sweet-card>
+                <sweet-card [img]="'/mignon/croccantino.jpg'" [typesweet]="'Croccantino'" [price]="'10'"></sweet-card>
+                <sweet-card [img]="'/mignon/bigne-panna.jpg'" [typesweet]="'Bignè alla panna'"
+                    [price]="'1.5'"></sweet-card>
+            </div>
+        </section>
+
+        <!-- SEMIFREDDI -->
+        <section id="semifreddi" class="scroll-mt-24 pt-12 md:pt-16">
+            <div class="flex items-end justify-between mb-5">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary">Semifreddi</h2>
+                <span class="text-sm text-text/60">Freschi e vellutati</span>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <sweet-card [img]="'/semifreddi/variegato-nocciola.jpg'" [typesweet]="'Variegato nocciola'"
+                    [price]="'22'"></sweet-card>
+                <sweet-card [img]="'/semifreddi/fragola.jpg'" [typesweet]="'Semifreddo alla fragola'"
+                    [price]="'21'"></sweet-card>
+                <sweet-card [img]="'/semifreddi/limone.jpg'" [typesweet]="'Semifreddo al limone'"
+                    [price]="'20'"></sweet-card>
+                <sweet-card [img]="'/semifreddi/pistacchio.jpg'" [typesweet]="'Semifreddo al pistacchio'"
+                    [price]="'23'"></sweet-card>
+            </div>
+        </section>
+
+        <!-- CLASSICI -->
+        <section id="classici" class="scroll-mt-24 pt-12 md:pt-16">
+            <div class="flex items-end justify-between mb-5">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary">Classici</h2>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <sweet-card [img]="'/classici/croccantino.jpg'" [typesweet]="'Croccantino'" [price]="'10'"></sweet-card>
+                <sweet-card [img]="'/classici/sfoglia-crema.jpg'" [typesweet]="'Sfoglia alla crema'"
+                    [price]="'8'"></sweet-card>
+                <sweet-card [img]="'/classici/zeppola.jpg'" [typesweet]="'Zeppola classica'" [price]="'9'"></sweet-card>
+                <sweet-card [img]="'/classici/cannolo.jpg'" [typesweet]="'Cannolo ricotta'" [price]="'10'"></sweet-card>
+            </div>
+        </section>
+
+        <!-- SPECIALI -->
+        <section id="speciali" class="scroll-mt-24 pt-12 md:pt-16 pb-16">
+            <div class="flex items-end justify-between mb-5">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary">Speciali</h2>
+                <span class="text-sm text-text/60">Edizioni limitate & stagionali</span>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <sweet-card [img]="'/speciali/marron-glace.jpg'" [typesweet]="'Marron glacé'"
+                    [price]="'30'"></sweet-card>
+                <sweet-card [img]="'/speciali/foresta-nera.jpg'" [typesweet]="'Foresta Nera'"
+                    [price]="'29'"></sweet-card>
+                <sweet-card [img]="'/speciali/sacher.jpg'" [typesweet]="'Sacher'" [price]="'28'"></sweet-card>
+                <sweet-card [img]="'/speciali/red-velvet.jpg'" [typesweet]="'Red Velvet'" [price]="'28'"></sweet-card>
+            </div>
+        </section>
+
+    </div>
+</section>
