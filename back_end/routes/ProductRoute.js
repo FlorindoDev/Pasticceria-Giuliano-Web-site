@@ -1,14 +1,17 @@
 import express from "express";
-import { enforceAuthentication } from "../middleware/authorization.js";
+import { enforceAuthentication, isUserAdmin } from "../middleware/authorization.js";
 import { ProductController } from "../controllers/ProductController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js";
 
 // multer per upload immagine
 import multer from "multer";
+import { UnauthorizedError } from "../utils/error/index.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const imageParser = upload.fields([{ name: "image", maxCount: 1 }]);
 
 export const router = express.Router();
+
+let unauthorizedError = new UnauthorizedError();
 
 //TODO: Aggiungere bucket immagini
 
@@ -74,7 +77,7 @@ export const router = express.Router();
  *   }
  * }
  */
-router.post("/", enforceAuthentication, imageParser, upLoadOnGoogle, (req, res, next) => {
+router.post("/", enforceAuthentication, isUserAdmin(unauthorizedError), imageParser, upLoadOnGoogle, (req, res, next) => {
     ProductController.addProduct(req.body)
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -115,7 +118,7 @@ router.post("/", enforceAuthentication, imageParser, upLoadOnGoogle, (req, res, 
  *   }
  * }
  */
-router.get("/", enforceAuthentication, (req, res, next) => {
+router.get("/", enforceAuthentication, isUserAdmin(unauthorizedError), (req, res, next) => {
     ProductController.getProducts()
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -177,7 +180,7 @@ router.get("/", enforceAuthentication, (req, res, next) => {
  * }
  */
 router.put(
-    "/:productId", enforceAuthentication, imageParser, upLoadOnGoogle, (req, res, next) => {
+    "/:productId", enforceAuthentication, isUserAdmin(unauthorizedError), imageParser, upLoadOnGoogle, (req, res, next) => {
         ProductController.updateProduct(req.params.productId, req.body)
             .then(() => res.status(200).send())
             .catch((err) => next(err));
@@ -220,7 +223,7 @@ router.put(
  *   }
  * }
  */
-router.delete("/:productId", enforceAuthentication, (req, res, next) => {
+router.delete("/:productId", enforceAuthentication, isUserAdmin(unauthorizedError), (req, res, next) => {
     ProductController.deleteProduct(req.params.productId)
         .then(() => res.status(200).send())
         .catch((err) => next(err));

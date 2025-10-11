@@ -1,5 +1,5 @@
 import { User } from "../models/DataBase.js"
-import { UserNotFoundError, FailToUpdateUser } from "../utils/error/index.js";
+import { UserNotFoundError } from "../utils/error/index.js";
 
 export class UsersController {
 

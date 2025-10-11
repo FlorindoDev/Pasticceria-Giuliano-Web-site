@@ -102,6 +102,12 @@ export function UserModel(database) {
             unique: true
         },
 
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+
         password: {
             type: DataTypes.STRING,
             allowNull: false,

@@ -1,4 +1,4 @@
-import { User, Admin } from "../models/DataBase.js";
+import { User } from "../models/DataBase.js";
 import Jwt from "jsonwebtoken";
 import { SignUpError, CredentialError } from "../utils/error/index.js";
 
@@ -27,9 +27,6 @@ export class AuthController {
 
     static async checkCredentials(req) {
 
-        let isAdmin = false;
-        let foundAdmin = null;
-
         let user = new User({
             email: req.body.email,
             password: req.body.password
@@ -44,23 +41,10 @@ export class AuthController {
         );
 
         if (found === null) {
-            let foundAdmin = await Admin.findOne({
-                where: {
-                    email: user.email,
-                    password: user.password
-                },
-            }
-            );
-            isAdmin = true;
-            found = foundAdmin;
-        }
-
-
-        if (found === null && foundAdmin === null) {
             return Promise.reject(new CredentialError());
         }
 
-        req.isAdmin = isAdmin;
+        req.isAdmin = found.dataValues.isAdmin;
         req.idUser = found.dataValues.idUser;
 
         return found !== null;

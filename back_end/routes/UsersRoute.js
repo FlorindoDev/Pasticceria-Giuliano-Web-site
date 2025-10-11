@@ -1,5 +1,5 @@
 import express from "express";
-import { enforceAuthentication, isOwnProfile } from "../middleware/authorization.js"
+import { enforceAuthentication, isNotUserAdmin, isOwnProfile } from "../middleware/authorization.js"
 import { UsersController } from "../controllers/UsersController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js"
 import { idUserRequredParams, schemaUserPut } from "../schemas/user.schema.js";
@@ -8,9 +8,13 @@ import { ResidenceController } from "../controllers/ResidenceController.js";
 
 //multer
 import multer from "multer";
+import { TelephoneNumerPresentError, UnauthorizedError } from "../utils/error/index.js";
+import { isTelephoneNumerPresent } from "../middleware/UserMiddlewares.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const imageParser = upload.fields([{ name: 'image', maxCount: 1 }])
 
+let unauthorizedError = new UnauthorizedError();
+let telefonoPresentError = new TelephoneNumerPresentError()
 
 export const router = express.Router();
 
@@ -167,19 +171,23 @@ router.get('/:id', [enforceAuthentication, validate(idUserRequredParams), isOwnP
  *   }
  * }
  */
-router.put('/:id', enforceAuthentication, validate(schemaUserPut), isOwnProfile, (req, res, next) => {
+router.put('/:id', enforceAuthentication,
+    isTelephoneNumerPresent(telefonoPresentError),
+    validate(schemaUserPut),
+    isOwnProfile,
+    (req, res, next) => {
 
-    let changes = UsersController.changesObject(req);
+        let changes = UsersController.changesObject(req);
 
-    UsersController.updateUser(req.idUser, changes).then(() => {
+        UsersController.updateUser(req.idUser, changes).then(() => {
 
-        res.status(200);
-        res.send();
+            res.status(200);
+            res.send();
 
-    }).catch((err) => {
-        next(err)
+        }).catch((err) => {
+            next(err)
+        });
     });
-});
 
 /**
  * @swagger

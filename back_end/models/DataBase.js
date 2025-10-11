@@ -6,7 +6,6 @@ import { ProdottoModel } from "./Prodotto.js";
 import { IngredienteModel } from "./Ingrediente.js";
 import { OrdineProdottoModel } from "./OridineProdotto.js";
 import { ProdottoIngredienteModel } from "./ProdottoIngrediente.js";
-import { AdminModel } from "./admin.js";
 
 import 'dotenv/config.js';
 
@@ -27,7 +26,6 @@ ProdottoModel(database);
 IngredienteModel(database);
 OrdineProdottoModel(database);
 ProdottoIngredienteModel(database);
-AdminModel(database);
 
 export const {
     User,
@@ -36,8 +34,7 @@ export const {
     Prodotto,
     Ingrediente,
     OrdineProdotto,
-    ProdottoIngrediente,
-    Admin
+    ProdottoIngrediente
 } = database.models;
 
 

@@ -15,6 +15,7 @@ export function enforceAuthentication(req, res, next) {
         } else {
             req.email_in_token = decodedToken.user;
             req.idUser = decodedToken.idUser;
+            req.isAdmin = decodedToken.admin;
             next();
         }
     });
@@ -25,6 +26,18 @@ export function isOwnProfile(req, res, next) {
     if (req.idUser != req.params.id) return next(new ForbbidenError());
 
     next();
+
+}
+
+export let isUserAdmin = (err) => async (req, res, next) => {
+    req.isAdmin ? next() : next(err);
+    return;
+
+}
+
+export let isNotUserAdmin = (err) => async (req, res, next) => {
+    !req.isAdmin ? next() : next(err);
+    return;
 
 }
 

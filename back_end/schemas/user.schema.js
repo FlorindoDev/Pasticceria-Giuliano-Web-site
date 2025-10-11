@@ -14,7 +14,7 @@ let password = z.object({
 let nome = z.object({
     nome: z.string({
         required_error: "Il campo nome è obbligatorio"
-    }).min(3).max(16),
+    }).min(3).max(10),
 });
 
 let cognome = z.object({
