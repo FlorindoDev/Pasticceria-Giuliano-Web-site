@@ -34,6 +34,10 @@ export function ProdottoModel(database) {
             primaryKey: true
         },
         costo: { type: DataTypes.FLOAT, allowNull: false },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         isShippable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
     });
 }

@@ -209,7 +209,7 @@ router.post('/login', validate(schemaLogin), (req, res, next) => {
     AuthController.checkCredentials(req).then(() => {
 
         res.status(200);
-        res.json({ token: AuthController.issueToken(req.body.email, req.idUser) })
+        res.json({ token: AuthController.issueToken(req.body.email, req.idUser, req.isAdmin) })
 
     }).catch((err) => {
         next(err)

@@ -17,6 +17,12 @@ export class UserNotFoundError extends AppErrorHttp {
     }
 }
 
+export class ProductNotFoundError extends AppErrorHttp {
+    constructor() {
+        super(NO_CONTENT, "prodotto non trovato", "PRODUCT_NOT_EXISTS");
+    }
+}
+
 export class ResidenceNotFoundError extends AppErrorHttp {
     constructor() {
         super(NO_CONTENT, "non ci sono Residenze", "RESIDENCE_NOT_EXISTS");
@@ -100,6 +106,12 @@ export class FailToUpdateUser extends AppErrorHttp {
 export class FailToSaveResidence extends AppErrorHttp {
     constructor() {
         super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto Residence", "RESIDENCE_ERROR");
+    }
+}
+
+export class FailToSaveProductError extends AppErrorHttp {
+    constructor() {
+        super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto prodotto", "PRODUCT_ERROR");
     }
 }
 

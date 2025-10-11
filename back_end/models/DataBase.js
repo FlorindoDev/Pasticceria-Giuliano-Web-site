@@ -36,7 +36,8 @@ export const {
     Prodotto,
     Ingrediente,
     OrdineProdotto,
-    ProdottoIngrediente
+    ProdottoIngrediente,
+    Admin
 } = database.models;
 
 
@@ -62,7 +63,7 @@ Ingrediente.Prodotto = Ingrediente.belongsToMany(Prodotto, { through: "ProdottoI
 
 
 
-database.sync({ /*force: true*/ }).then(() => {
+database.sync({ /*alter: true*/ }).then(() => {
     console.log("Database synced correctly");
 }).catch(err => {
     console.log("Error with database synchronization: " + err.message);

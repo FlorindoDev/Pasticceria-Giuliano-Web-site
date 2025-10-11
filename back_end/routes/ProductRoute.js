@@ -1,0 +1,229 @@
+import express from "express";
+import { enforceAuthentication } from "../middleware/authorization.js";
+import { ProductController } from "../controllers/ProductController.js";
+import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js";
+
+// multer per upload immagine
+import multer from "multer";
+const upload = multer({ storage: multer.memoryStorage() });
+const imageParser = upload.fields([{ name: "image", maxCount: 1 }]);
+
+export const router = express.Router();
+
+//TODO: Aggiungere bucket immagini
+
+/**
+ * @swagger
+ * {
+ *   "/products": {
+ *     "post": {
+ *       "tags": ["Products"],
+ *       "summary": "Crea un prodotto",
+ *       "description": "Crea un nuovo prodotto. Se viene inviata un'immagine come multipart/form-data, il middleware carica il file e imposta il campo `image` con l'URL risultante.",
+ *       "operationId": "createProduct",
+ *       "security": [ { "bearerAuth": [] } ],
+ *       "requestBody": {
+ *         "required": true,
+ *         "content": {
+ *           "multipart/form-data": {
+ *             "schema": {
+ *               "type": "object",
+ *               "properties": {
+ *                 "costo": { "type": "number", "example": 29.9 },
+ *                 "isShippable": { "type": "boolean", "example": true },
+ *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" }
+ *               },
+ *               "required": ["costo","isShippable","image"]
+ *             }
+ *           },
+ *           "application/json": {
+ *             "schema": {
+ *               "type": "object",
+ *               "properties": {
+ *                 "costo": { "type": "number", "example": 29.9 },
+ *                 "isShippable": { "type": "boolean", "example": true },
+ *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/img.png" }
+ *               },
+ *               "required": ["costo", "image"]
+ *             }
+ *           }
+ *         }
+ *       },
+ *       "responses": {
+ *         "200": {
+ *           "description": "Prodotto creato con successo",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Prodotto" },
+ *               "example": {
+ *                 "idProdotto": 12,
+ *                 "costo": 29.9,
+ *                 "image": "https://storage.googleapis.com/bucket/prod-12.png",
+ *                 "isShippable": true,
+ *                 "createdAt": "2025-06-01T10:00:00.000Z",
+ *                 "updatedAt": "2025-06-01T10:00:00.000Z"
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "400": { "description": "Richiesta non valida — dati mancanti o errati" },
+ *         "401": { "description": "Non autorizzato — token mancante o non valido" },
+ *         "500": { "description": "Errore del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.post("/", enforceAuthentication, imageParser, upLoadOnGoogle, (req, res, next) => {
+    ProductController.addProduct(req.body)
+        .then((result) => res.status(200).json(result))
+        .catch((err) => next(err));
+}
+);
+
+/**
+ * @swagger
+ * {
+ *   "/products": {
+ *     "get": {
+ *       "tags": ["Products"],
+ *       "summary": "Lista prodotti dell'utente autenticato",
+ *       "description": "Recupera tutti i prodotti associati all'utente attualmente autenticato.",
+ *       "operationId": "listMyProducts",
+ *       "security": [ { "bearerAuth": [] } ],
+ *       "responses": {
+ *         "200": {
+ *           "description": "Lista dei prodotti",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "type": "array",
+ *                 "items": { "$ref": "#/components/schemas/Prodotto" }
+ *               },
+ *               "example": [
+ *                 { "idProdotto": 12, "costo": 29.9, "image": "https://.../p12.png", "isShippable": true },
+ *                 { "idProdotto": 13, "costo": 49.0, "image": "https://.../p13.png", "isShippable": false }
+ *               ]
+ *             }
+ *           }
+ *         },
+ *         "401": { "description": "Non autorizzato" },
+ *         "404": { "description": "Nessun prodotto trovato" },
+ *         "500": { "description": "Errore del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.get("/", enforceAuthentication, (req, res, next) => {
+    ProductController.getProducts()
+        .then((result) => res.status(200).json(result))
+        .catch((err) => next(err));
+});
+
+/**
+ * @swagger
+ * {
+ *   "/products/{productId}": {
+ *     "put": {
+ *       "tags": ["Products"],
+ *       "summary": "Aggiorna un prodotto",
+ *       "description": "Aggiorna i dati di un prodotto. Supporta aggiornamento immagine via upload multipart.",
+ *       "operationId": "updateProduct",
+ *       "security": [ { "bearerAuth": [] } ],
+ *       "parameters": [
+ *         {
+ *           "name": "productId",
+ *           "in": "path",
+ *           "description": "ID del prodotto da aggiornare",
+ *           "required": true,
+ *           "schema": { "type": "string" }
+ *         }
+ *       ],
+ *       "requestBody": {
+ *         "required": true,
+ *         "content": {
+ *           "multipart/form-data": {
+ *             "schema": {
+ *               "type": "object",
+ *               "properties": {
+ *                 "costo": { "type": "number", "example": 39.5 },
+ *                 "isShippable": { "type": "boolean", "example": true },
+ *                 "image": { "type": "string", "format": "binary" }
+ *               }
+ *             }
+ *           },
+ *           "application/json": {
+ *             "schema": {
+ *               "type": "object",
+ *               "properties": {
+ *                 "costo": { "type": "number", "example": 39.5 },
+ *                 "isShippable": { "type": "boolean", "example": true },
+ *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/new-img.png" }
+ *               }
+ *             }
+ *           }
+ *         }
+ *       },
+ *       "responses": {
+ *         "200": { "description": "Prodotto aggiornato con successo" },
+ *         "400": { "description": "Richiesta non valida" },
+ *         "401": { "description": "Non autorizzato" },
+ *         "404": { "description": "Prodotto non trovato" },
+ *         "500": { "description": "Errore del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.put(
+    "/:productId", enforceAuthentication, imageParser, upLoadOnGoogle, (req, res, next) => {
+        ProductController.updateProduct(req.params.productId, req.body)
+            .then(() => res.status(200).send())
+            .catch((err) => next(err));
+    }
+);
+
+/**
+ * @swagger
+ * {
+ *   "/products/{productId}": {
+ *     "delete": {
+ *       "tags": ["Products"],
+ *       "summary": "Elimina un prodotto",
+ *       "description": "Elimina un prodotto esistente.",
+ *       "operationId": "deleteProduct",
+ *       "security": [ { "bearerAuth": [] } ],
+ *       "parameters": [
+ *         {
+ *           "name": "productId",
+ *           "in": "path",
+ *           "description": "ID del prodotto da eliminare",
+ *           "required": true,
+ *           "schema": { "type": "string" }
+ *         }
+ *       ],
+ *       "responses": {
+ *         "200": { "description": "Prodotto eliminato con successo" },
+ *         "401": { "description": "Non autorizzato" },
+ *         "404": {
+ *           "description": "Prodotto non trovato",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": { "$ref": "#/components/schemas/Error" },
+ *             }
+ *           }
+ *         },
+ *         "500": { "description": "Errore del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.delete("/:productId", enforceAuthentication, (req, res, next) => {
+    ProductController.deleteProduct(req.params.productId)
+        .then(() => res.status(200).send())
+        .catch((err) => next(err));
+});
+
+export default router;
