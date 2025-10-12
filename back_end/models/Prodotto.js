@@ -15,16 +15,22 @@ import { DataTypes } from "sequelize";
  *           type: number
  *           format: float
  *           example: 7.50
+ *         nome:
+ *           type: string
+ *           example: tiramisú
  *         isShippable:
  *           type: boolean
  *           example: true
+ *         image:
+ *           type: string
+ *           example: bucket/dolce.png
  *         createdAt:
  *           type: string
  *           format: date-time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *       required: ["costo", "isShippable"]
+ *       required: ["costo", "isShippable","nome","image", "idProdotto"]
  */
 export function ProdottoModel(database) {
     return database.define("Prodotto", {
@@ -32,6 +38,10 @@ export function ProdottoModel(database) {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
+        },
+        nome: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         costo: { type: DataTypes.FLOAT, allowNull: false },
         image: {

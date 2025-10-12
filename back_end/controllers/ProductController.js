@@ -10,6 +10,7 @@ export class ProductController {
 
         let prodotto = new Prodotto({
             costo: body.costo,
+            nome: body.nome,
             image: body.image,
             isShippable: body.isShippable ?? true,
         });
@@ -39,6 +40,16 @@ export class ProductController {
         let result = await Prodotto.findAll({});
 
         if (!result || result.length === 0) {
+            throw new ProductNotFoundError();
+        }
+
+        return result;
+    }
+
+    static async getProductsByPk(idProdotto) {
+        let result = await Prodotto.findByPk(idProdotto);
+
+        if (!result) {
             throw new ProductNotFoundError();
         }
 

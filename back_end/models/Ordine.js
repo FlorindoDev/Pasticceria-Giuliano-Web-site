@@ -33,7 +33,7 @@ import { DataTypes } from "sequelize";
  *         updatedAt:
  *           type: string
  *           format: date-time
- *       required: ["stato", "costo", "userId"]
+ *       required: ["stato", "costo", "userId","numero_spedizione", "idOrdine"]
  */
 export function OrdineModel(database) {
     return database.define("Ordine", {

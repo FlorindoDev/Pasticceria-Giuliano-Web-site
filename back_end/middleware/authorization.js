@@ -29,14 +29,14 @@ export function isOwnProfile(req, res, next) {
 
 }
 
-export let isUserAdmin = (err) => async (req, res, next) => {
-    req.isAdmin ? next() : next(err);
+export let isUserAdmin = (req, res, next) => {
+    req.isAdmin ? next() : next(new UnauthorizedError());
     return;
 
 }
 
-export let isNotUserAdmin = (err) => async (req, res, next) => {
-    !req.isAdmin ? next() : next(err);
+export let isNotUserAdmin = (req, res, next) => {
+    !req.isAdmin ? next() : next(new UnauthorizedError());
     return;
 
 }

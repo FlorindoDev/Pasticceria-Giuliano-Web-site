@@ -2,6 +2,7 @@ import express from "express";
 import { enforceAuthentication, isUserAdmin } from "../middleware/authorization.js";
 import { ProductController } from "../controllers/ProductController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js";
+import { IngredientController } from "../controllers/IngredientController.js";
 
 // multer per upload immagine
 import multer from "multer";
@@ -14,6 +15,7 @@ export const router = express.Router();
 let unauthorizedError = new UnauthorizedError();
 
 //TODO: Aggiungere bucket immagini
+//TODO: Aggiungere controlli per gli endpoint
 
 /**
  * @swagger
@@ -33,10 +35,11 @@ let unauthorizedError = new UnauthorizedError();
  *               "type": "object",
  *               "properties": {
  *                 "costo": { "type": "number", "example": 29.9 },
+ *                  "nome": { "type": "string", "example": "tiramisú" },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" }
  *               },
- *               "required": ["costo","isShippable","image"]
+ *               "required": ["costo","isShippable","nome"]
  *             }
  *           },
  *           "application/json": {
@@ -44,6 +47,7 @@ let unauthorizedError = new UnauthorizedError();
  *               "type": "object",
  *               "properties": {
  *                 "costo": { "type": "number", "example": 29.9 },
+ *                  "nome": { "type": "string", "example": "tiramisú" },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/img.png" }
  *               },
@@ -77,7 +81,7 @@ let unauthorizedError = new UnauthorizedError();
  *   }
  * }
  */
-router.post("/", enforceAuthentication, isUserAdmin(unauthorizedError), imageParser, upLoadOnGoogle, (req, res, next) => {
+router.post("/", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
     ProductController.addProduct(req.body)
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -118,7 +122,7 @@ router.post("/", enforceAuthentication, isUserAdmin(unauthorizedError), imagePar
  *   }
  * }
  */
-router.get("/", enforceAuthentication, isUserAdmin(unauthorizedError), (req, res, next) => {
+router.get("/", enforceAuthentication, isUserAdmin, (req, res, next) => {
     ProductController.getProducts()
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -180,7 +184,7 @@ router.get("/", enforceAuthentication, isUserAdmin(unauthorizedError), (req, res
  * }
  */
 router.put(
-    "/:productId", enforceAuthentication, isUserAdmin(unauthorizedError), imageParser, upLoadOnGoogle, (req, res, next) => {
+    "/:productId", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
         ProductController.updateProduct(req.params.productId, req.body)
             .then(() => res.status(200).send())
             .catch((err) => next(err));
@@ -223,10 +227,93 @@ router.put(
  *   }
  * }
  */
-router.delete("/:productId", enforceAuthentication, isUserAdmin(unauthorizedError), (req, res, next) => {
+router.delete("/:productId", enforceAuthentication, isUserAdmin, (req, res, next) => {
     ProductController.deleteProduct(req.params.productId)
         .then(() => res.status(200).send())
         .catch((err) => next(err));
 });
+
+
+/**
+ * @swagger
+ * {
+ *   "/products/{productId}/ingredients": {
+ *     "post": {
+ *       "tags": ["Products"],
+ *       "summary": "Salva o aggiorna gli ingredienti di un prodotto",
+ *       "description": "Crea o sostituisce la lista degli ingredienti associati a un prodotto. Richiede autenticazione e ruolo amministratore.",
+ *       "security": [{ "bearerAuth": [] }],
+ *       "parameters": [
+ *         {
+ *           "name": "productId",
+ *           "in": "path",
+ *           "description": "ID del prodotto (>= 1)",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "integer",
+ *             "minimum": 1
+ *           }
+ *         }
+ *       ],
+ *       "requestBody": {
+ *         "required": true,
+ *         "content": {
+ *           "application/json": {
+ *             "schema": {
+ *               "type": "array",
+ *               "items": {
+ *                 "type": "object",
+ *                 "required": ["nome"],
+ *                 "properties": {
+ *                   "nome": {
+ *                     "type": "string",
+ *                     "description": "Nome dell'ingrediente"
+ *                   }
+ *                 }
+ *               }
+ *             }
+ *           }
+ *         }
+ *       },
+ *       "responses": {
+ *         "200": {
+ *           "description": "Ingredienti salvati correttamente",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "type": "object",
+ *                 "properties": {
+ *                   "message": { "type": "string" }
+ *                 }
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "400": {
+ *           "description": "Body non valido o schema ingredienti errato"
+ *         },
+ *         "401": {
+ *           "description": "Non autenticato"
+ *         },
+ *         "403": {
+ *           "description": "Non autorizzato (ruolo non sufficiente)"
+ *         },
+ *         "404": {
+ *           "description": "Prodotto non trovato"
+ *         },
+ *         "500": {
+ *           "description": "Errore interno del server"
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.post("/:productId/ingredients", enforceAuthentication, isUserAdmin, (req, res, next) => {
+    IngredientController.saveIngredients(req.params.productId, req)
+        .then(() => res.status(200).send())
+        .catch((err) => next(err));
+}
+);
 
 export default router;

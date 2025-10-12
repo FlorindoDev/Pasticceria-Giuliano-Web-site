@@ -32,7 +32,7 @@ import { DataTypes } from "sequelize";
  *         updatedAt:
  *           type: string
  *           format: date-time
- *       required: ["regione", "comune", "cap", "via", "numeroCivico"]
+ *       required: ["regione", "comune", "cap", "via", "numeroCivico", "idResidenza"]
  */
 export function ResidenzaModel(database) {
     return database.define("Residenza", {

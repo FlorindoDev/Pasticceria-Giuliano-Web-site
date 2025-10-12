@@ -23,6 +23,12 @@ export class ProductNotFoundError extends AppErrorHttp {
     }
 }
 
+export class IngredientNotFoundError extends AppErrorHttp {
+    constructor() {
+        super(NO_CONTENT, "non ci sono Ingredienti", "INGREDIENT_NOT_EXISTS");
+    }
+}
+
 export class ResidenceNotFoundError extends AppErrorHttp {
     constructor() {
         super(NO_CONTENT, "non ci sono Residenze", "RESIDENCE_NOT_EXISTS");
@@ -106,6 +112,18 @@ export class FailToUpdateUser extends AppErrorHttp {
 export class FailToSaveResidence extends AppErrorHttp {
     constructor() {
         super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto Residence", "RESIDENCE_ERROR");
+    }
+}
+
+export class FailToDeleteIngredientError extends AppErrorHttp {
+    constructor() {
+        super(INTERNAL_SERVER_ERROR, "Errore durante la cancellazione del Ingrediente", "INGREDIENT_DELETE_ERROR");
+    }
+}
+
+export class FailToSaveIngredientError extends AppErrorHttp {
+    constructor() {
+        super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto del Ingrediente", "INGREDIENT_SAVE_ERROR");
     }
 }
 

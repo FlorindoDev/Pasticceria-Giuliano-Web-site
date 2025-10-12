@@ -55,7 +55,7 @@ import { createHash } from "crypto";
  *             "example": "2025-05-17T16:22:54.589Z"
  *           }
  *         },
- *         "required": ["Nome", "Cognome", "email", "telefono", "password"],
+ *         "required": ["Nome", "Cognome", "email", "telefono", "password","idUser"],
  *         "example": {
  *           "idUser": 1,
  *           "Nome": "Mario",

@@ -19,7 +19,7 @@ import { DataTypes } from "sequelize";
  *         updatedAt:
  *           type: string
  *           format: date-time
- *       required: ["nome"]
+ *       required: ["nome","Ingrediente"]
  */
 export function IngredienteModel(database) {
     return database.define("Ingrediente", {

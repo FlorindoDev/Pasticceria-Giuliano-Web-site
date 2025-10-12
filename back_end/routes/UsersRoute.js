@@ -1,20 +1,12 @@
 import express from "express";
-import { enforceAuthentication, isNotUserAdmin, isOwnProfile } from "../middleware/authorization.js"
+import { enforceAuthentication, isOwnProfile } from "../middleware/authorization.js"
 import { UsersController } from "../controllers/UsersController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js"
 import { idUserRequredParams, schemaUserPut } from "../schemas/user.schema.js";
 import { validate } from "../middleware/Middlewares.js";
 import { ResidenceController } from "../controllers/ResidenceController.js";
+import { schemaProductPost, schemaProductPut, idResidenzaRequiredParams } from "../schemas/residenza.schema.js";
 
-//multer
-import multer from "multer";
-import { TelephoneNumerPresentError, UnauthorizedError } from "../utils/error/index.js";
-import { isTelephoneNumerPresent } from "../middleware/UserMiddlewares.js";
-const upload = multer({ storage: multer.memoryStorage() });
-const imageParser = upload.fields([{ name: 'image', maxCount: 1 }])
-
-let unauthorizedError = new UnauthorizedError();
-let telefonoPresentError = new TelephoneNumerPresentError()
 
 export const router = express.Router();
 
@@ -171,23 +163,19 @@ router.get('/:id', [enforceAuthentication, validate(idUserRequredParams), isOwnP
  *   }
  * }
  */
-router.put('/:id', enforceAuthentication,
-    isTelephoneNumerPresent(telefonoPresentError),
-    validate(schemaUserPut),
-    isOwnProfile,
-    (req, res, next) => {
+router.put('/:id', enforceAuthentication, validate(schemaUserPut), isOwnProfile, (req, res, next) => {
 
-        let changes = UsersController.changesObject(req);
+    let changes = UsersController.changesObject(req);
 
-        UsersController.updateUser(req.idUser, changes).then(() => {
+    UsersController.updateUser(req.idUser, changes).then(() => {
 
-            res.status(200);
-            res.send();
+        res.status(200);
+        res.send();
 
-        }).catch((err) => {
-            next(err)
-        });
+    }).catch((err) => {
+        next(err)
     });
+});
 
 /**
  * @swagger
@@ -344,7 +332,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  *   }
  * }
  */
-router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
+router.post('/:id/residence', [enforceAuthentication, validate(schemaProductPost), isOwnProfile], (req, res, next) => {
     ResidenceController.addResidence(req.idUser, req.body).then(() => {
         res.status(200);
         res.send();
@@ -427,7 +415,7 @@ router.post('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, ne
  *   }
  * }
  */
-router.delete('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
+router.delete('/:id/residence/:residenceId', [enforceAuthentication, validate(idResidenzaRequiredParams), isOwnProfile], (req, res, next) => {
     ResidenceController.deleteResidence(req.params.residenceId).then(() => {
         res.status(200);
         res.send();
@@ -565,7 +553,7 @@ router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, nex
  *   }
  * }
  */
-router.put('/:id/residence/:residenceId', enforceAuthentication, isOwnProfile, (req, res, next) => {
+router.put('/:id/residence/:residenceId', [enforceAuthentication, validate(schemaProductPut), isOwnProfile], (req, res, next) => {
     ResidenceController.updateResidence(req.params.residenceId, req.body).then(() => {
         res.status(200);
         res.send();
