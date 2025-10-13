@@ -3,7 +3,7 @@ import { enforceAuthentication, isUserAdmin } from "../middleware/authorization.
 import { ProductController } from "../controllers/ProductController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js";
 import { IngredientController } from "../controllers/IngredientController.js";
-import { queryParamsToList, validate } from "../middleware/Middlewares.js";
+import { validate } from "../middleware/Middlewares.js";
 import { schemaProductPost, schemaProductPut } from "../schemas/product.schema.js";
 
 // multer per upload immagine
@@ -18,7 +18,6 @@ export const router = express.Router();
 let unauthorizedError = new UnauthorizedError();
 
 //TODO: Aggiungere bucket immagini
-//TODO: Aggiungere controlli per gli endpoint
 
 /**
  * @swagger
