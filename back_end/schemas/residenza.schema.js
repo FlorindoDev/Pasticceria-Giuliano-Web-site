@@ -126,5 +126,5 @@ export const NumeroCivicoNotRequiredBody = z.object({
 });
 
 
-export const schemaProductPost = unionChecks([RegioneRequiredBody, ComuneRequiredBody, CapRequiredBody, ViaRequiredBody, NumeroCivicoRequiredBody]);
-export const schemaProductPut = unionChecks([idResidenzaRequiredParams, RegioneNotRequiredBody, ComuneNotRequiredBody, CapNotRequiredBody, ViaNotRequiredBody, NumeroCivicoNotRequiredBody]);
+export const schemaResidencePost = unionChecks([RegioneRequiredBody, ComuneRequiredBody, CapRequiredBody, ViaRequiredBody, NumeroCivicoRequiredBody]);
+export const schemaResidencePut = unionChecks([idResidenzaRequiredParams, RegioneNotRequiredBody, ComuneNotRequiredBody, CapNotRequiredBody, ViaNotRequiredBody, NumeroCivicoNotRequiredBody]);

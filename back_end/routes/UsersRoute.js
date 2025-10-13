@@ -5,7 +5,7 @@ import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js"
 import { idUserRequredParams, schemaUserPut } from "../schemas/user.schema.js";
 import { validate } from "../middleware/Middlewares.js";
 import { ResidenceController } from "../controllers/ResidenceController.js";
-import { schemaProductPost, schemaProductPut, idResidenzaRequiredParams } from "../schemas/residenza.schema.js";
+import { schemaResidencePost, schemaResidencePut, idResidenzaRequiredParams } from "../schemas/residenza.schema.js";
 
 
 export const router = express.Router();
@@ -332,7 +332,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  *   }
  * }
  */
-router.post('/:id/residence', [enforceAuthentication, validate(schemaProductPost), isOwnProfile], (req, res, next) => {
+router.post('/:id/residence', [enforceAuthentication, validate(schemaResidencePost), isOwnProfile], (req, res, next) => {
     ResidenceController.addResidence(req.idUser, req.body).then(() => {
         res.status(200);
         res.send();
@@ -553,7 +553,7 @@ router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, nex
  *   }
  * }
  */
-router.put('/:id/residence/:residenceId', [enforceAuthentication, validate(schemaProductPut), isOwnProfile], (req, res, next) => {
+router.put('/:id/residence/:residenceId', [enforceAuthentication, validate(schemaResidencePut), isOwnProfile], (req, res, next) => {
     ResidenceController.updateResidence(req.params.residenceId, req.body).then(() => {
         res.status(200);
         res.send();

@@ -3,10 +3,13 @@ import { enforceAuthentication, isUserAdmin } from "../middleware/authorization.
 import { ProductController } from "../controllers/ProductController.js";
 import { upLoad as upLoadOnGoogle } from "../middleware/GoogleStorage.js";
 import { IngredientController } from "../controllers/IngredientController.js";
+import { queryParamsToList, validate } from "../middleware/Middlewares.js";
+import { schemaProductPost, schemaProductPut } from "../schemas/product.schema.js";
 
 // multer per upload immagine
 import multer from "multer";
 import { UnauthorizedError } from "../utils/error/index.js";
+import { schemaIngredientPost } from "../schemas/ingredient.schema.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const imageParser = upload.fields([{ name: "image", maxCount: 1 }]);
 
@@ -81,7 +84,7 @@ let unauthorizedError = new UnauthorizedError();
  *   }
  * }
  */
-router.post("/", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
+router.post("/", enforceAuthentication, validate(schemaProductPost), isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
     ProductController.addProduct(req.body)
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -97,7 +100,6 @@ router.post("/", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle
  *       "summary": "Lista prodotti dell'utente autenticato",
  *       "description": "Recupera tutti i prodotti associati all'utente attualmente autenticato.",
  *       "operationId": "listMyProducts",
- *       "security": [ { "bearerAuth": [] } ],
  *       "responses": {
  *         "200": {
  *           "description": "Lista dei prodotti",
@@ -122,7 +124,7 @@ router.post("/", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle
  *   }
  * }
  */
-router.get("/", enforceAuthentication, isUserAdmin, (req, res, next) => {
+router.get("/", (req, res, next) => {
     ProductController.getProducts()
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
@@ -184,7 +186,7 @@ router.get("/", enforceAuthentication, isUserAdmin, (req, res, next) => {
  * }
  */
 router.put(
-    "/:productId", enforceAuthentication, isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
+    "/:productId", enforceAuthentication, validate(schemaProductPut), isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
         ProductController.updateProduct(req.params.productId, req.body)
             .then(() => res.status(200).send())
             .catch((err) => next(err));
@@ -309,8 +311,151 @@ router.delete("/:productId", enforceAuthentication, isUserAdmin, (req, res, next
  *   }
  * }
  */
-router.post("/:productId/ingredients", enforceAuthentication, isUserAdmin, (req, res, next) => {
+router.post("/:productId/ingredients", enforceAuthentication, validate(schemaIngredientPost), isUserAdmin, (req, res, next) => {
     IngredientController.saveIngredients(req.params.productId, req)
+        .then(() => res.status(200).send())
+        .catch((err) => next(err));
+}
+);
+
+/**
+ * @swagger
+ * {
+ *   "/products/{productId}/ingredients": {
+ *     "get": {
+ *       "tags": ["Products"],
+ *       "summary": "Ottiene la lista degli ingredienti di un prodotto",
+ *       "description": "Restituisce tutti gli ingredienti associati a un determinato prodotto. Richiede autenticazione e ruolo amministratore.",
+ *       "parameters": [
+ *         {
+ *           "name": "productId",
+ *           "in": "path",
+ *           "description": "ID del prodotto (>= 1)",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "integer",
+ *             "minimum": 1
+ *           }
+ *         }
+ *       ],
+ *       "responses": {
+ *         "200": {
+ *           "description": "Lista degli ingredienti recuperata correttamente",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "type": "array",
+ *                 "items": {
+ *                   "type": "object",
+ *                   "properties": {
+ *                     "idIngrediente": { "type": "integer" },
+ *                     "nome": { "type": "string" }
+ *                   }
+ *                 }
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "400": {
+ *           "description": "ID prodotto non valido"
+ *         },
+ *         "401": {
+ *           "description": "Non autenticato"
+ *         },
+ *         "403": {
+ *           "description": "Non autorizzato (ruolo non sufficiente)"
+ *         },
+ *         "404": {
+ *           "description": "Prodotto non trovato o nessun ingrediente associato"
+ *         },
+ *         "500": {
+ *           "description": "Errore interno del server"
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.get("/:productId/ingredients", (req, res, next) => {
+    IngredientController.getProductsIngredients(req.params.productId)
+        .then((result) => res.status(200).json(result))
+        .catch((err) => next(err));
+}
+);
+
+/**
+ * @swagger
+ * {
+ *   "/products/{productId}/ingredients": {
+ *     "delete": {
+ *       "tags": ["Products"],
+ *       "summary": "Elimina uno o più ingredienti associati a un prodotto",
+ *       "description": "Rimuove dal prodotto indicato gli ingredienti specificati come parametri di query. Richiede autenticazione e ruolo amministratore.",
+ *       "security": [{ "bearerAuth": [] }],
+ *       "parameters": [
+ *         {
+ *           "name": "productId",
+ *           "in": "path",
+ *           "description": "ID del prodotto (>= 1)",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "integer",
+ *             "minimum": 1
+ *           }
+ *         },
+ *         {
+ *           "name": "nome",
+ *           "in": "query",
+ *           "description": "Nome dell'ingrediente da eliminare (può essere ripetuto più volte)",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "array",
+ *             "items": { "type": "string" },
+ *             "example": ["Pomodoro", "Mozzarella"]
+ *           },
+ *           "style": "form",
+ *           "explode": true
+ *         }
+ *       ],
+ *       "responses": {
+ *         "200": {
+ *           "description": "Ingredienti eliminati correttamente",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "type": "object",
+ *                 "properties": {
+ *                   "message": {
+ *                     "type": "string",
+ *                     "example": "Ingredienti rimossi con successo"
+ *                   }
+ *                 }
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "400": {
+ *           "description": "Parametri non validi o mancanti"
+ *         },
+ *         "401": {
+ *           "description": "Non autenticato"
+ *         },
+ *         "403": {
+ *           "description": "Non autorizzato (ruolo non sufficiente)"
+ *         },
+ *         "404": {
+ *           "description": "Prodotto o ingredienti non trovati"
+ *         },
+ *         "500": {
+ *           "description": "Errore interno del server"
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.delete("/:productId/ingredients", enforceAuthentication, isUserAdmin, (req, res, next) => {
+    IngredientController.deleteIngredientsFromProduct(req.params.productId, req.query.nome)
         .then(() => res.status(200).send())
         .catch((err) => next(err));
 }

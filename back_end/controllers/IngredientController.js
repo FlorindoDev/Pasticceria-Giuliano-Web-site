@@ -62,7 +62,7 @@ export class IngredientController {
 
         let prodotto = await ProductController.getProductsByPk(idProdotto);
 
-        let result = await prodotto.getIngredients(filters);
+        let result = await prodotto.getIngredientes();
 
         if (emptyCheck && result.length === 0) return Promise.reject(new IngredientNotFoundError());
 
@@ -79,24 +79,15 @@ export class IngredientController {
         return result;
     }
 
-    /*
-    static isTagInList(tag, list) {
-        let flag = false;
-        for (let i = 0; i < list.length; i++) {
-            if (tag.dataValues.name === list[i]) flag = true;
-        }
-        return flag;
-    }*/
+    static async deleteIngredientsFromProduct(idProdotto, list) {
 
-    static async deleteIngredientsFromMeme(idProdotto, list) {
-
-        list = await IngredientController.getIngredients({ where: { name: list } });
+        list = await IngredientController.getIngredients({ where: { nome: list } });
 
 
         let prodotto = await ProductController.getProductsByPk(idProdotto);
 
         list = await Promise.all(
-            list.map(ingredient => prodotto.removeIngrediente(ingredient))
+            list.map(ingredient => prodotto.removeIngredientes(ingredient))
         );
 
 
