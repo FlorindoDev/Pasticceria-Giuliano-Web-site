@@ -1,8 +1,9 @@
 export interface User {
     idUser?: number | string,
     nome: string,
+    cognome: string,
     email: string,
-    profilePic: string | null,
+    telefono: string | null,
     createdAt?: Date,
     updatedAt?: Date
 }
