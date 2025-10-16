@@ -18,6 +18,9 @@ export const router = express.Router();
 let unauthorizedError = new UnauthorizedError();
 
 //TODO: Aggiungere bucket immagini
+//TODO: Aggiungere tag dolci
+//TODO: Aggiunfere ricerca per nome e tag
+
 
 /**
  * @swagger
