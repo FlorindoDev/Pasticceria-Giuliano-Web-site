@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { SweetCard } from '../sweet-card/sweet-card.component';
+import { SweetSection } from '../sweet-section/sweet-section.component';
 import { AssortimentoService } from '../_services/assortimento/assortimento.service';
 import { Dolce } from '../_services/assortimento/dolce.type';
 
 @Component({
   selector: 'assortimento',
-  imports: [SweetCard],
+  imports: [SweetSection],
   templateUrl: './assortimento.component.html',
   styleUrl: './assortimento.component.scss'
 })
@@ -13,19 +13,9 @@ import { Dolce } from '../_services/assortimento/dolce.type';
 
 export class Assortimento {
 
-  dolce: Dolce[] = [];
+  sections: string[] = ["semi-freddi"];
 
-  constructor(private assortimento_service: AssortimentoService) { }
 
-  /*
-  fetchAssortimento() {
-    this.assortimento_service.getDolce().subscribe({
-      next: (dolce: Dolce[]) => {
-        this.dolce = dolce;
-      }
-    })
-  }
-  */
 
 
 }

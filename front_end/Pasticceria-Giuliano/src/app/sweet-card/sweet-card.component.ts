@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Dolce } from '../_services/assortimento/dolce.type';
 
 @Component({
   selector: 'sweet-card',
@@ -10,9 +11,6 @@ import { Component, Input } from '@angular/core';
 
 export class SweetCard {
 
-  @Input() img: string = "";
-  @Input() price: string | null = null;
-  @Input() typesweet: string = "";
-  @Input() isShippable: boolean = false;
+  @Input() dolce: Dolce = { idProdotto: null, nome: "null", costo: 45, isShippable: false, tag: "null", image: null };
 
 }

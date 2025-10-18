@@ -21,8 +21,8 @@ export class AssortimentoService {
 
     constructor(private http: HttpClient) { }
 
-    getDolce() {
-        const url = `${this.url}/products`;
+    getDolceByTag(tag: string) {
+        const url = `${this.url}/products?tag=${tag}`;
         return this.http.get<Dolce[]>(url, this.httpOptions);
     }
 

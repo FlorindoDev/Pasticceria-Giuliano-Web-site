@@ -125,18 +125,12 @@
                 </p>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @for(dolce of dolci; track dolce){
 
-                <sweet-card [img]="'/carramello.jpeg'" [typesweet]="'Carramello'" [price]="'10'"></sweet-card>
+                <sweet-card [dolce]=dolce></sweet-card>
 
-                <sweet-card [img]="'/codaaragosta.png'" [typesweet]="'Coda di aragosta'" [price]="'10'"></sweet-card>
+                }
 
-                <sweet-card [img]="'/croccantino.jpeg'" [typesweet]="'Croccantino'" [price]="'10'"></sweet-card>
-                <sweet-card [img]="'/specalitaallapanna.png'" [typesweet]="'Specialità alla panna'"
-                    [price]="'10'"></sweet-card>
-
-                <sweet-card [img]="'/tonino.jpeg'" [typesweet]="'Tonino'" [price]="'10'"></sweet-card>
-
-                <sweet-card [img]="'/tiramisu.jpeg'" [typesweet]="'Tiramisú'" [price]="'10'"></sweet-card>
 
             </div>
 

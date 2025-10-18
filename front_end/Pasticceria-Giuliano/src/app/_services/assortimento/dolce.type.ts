@@ -3,5 +3,6 @@ export interface Dolce {
     nome: string,
     costo: number,
     image: string | null,
-    isShippable: boolean
+    isShippable: boolean,
+    tag: string
 }
