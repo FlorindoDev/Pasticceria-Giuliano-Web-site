@@ -8,18 +8,11 @@ import { schemaProductPost, schemaProductPut } from "../schemas/product.schema.j
 
 // multer per upload immagine
 import multer from "multer";
-import { UnauthorizedError } from "../utils/error/index.js";
 import { schemaIngredientPost } from "../schemas/ingredient.schema.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const imageParser = upload.fields([{ name: "image", maxCount: 1 }]);
 
 export const router = express.Router();
-
-let unauthorizedError = new UnauthorizedError();
-
-//TODO: Aggiungere bucket immagini
-//TODO: Aggiungere tag dolci
-//TODO: Aggiunfere ricerca per nome e tag
 
 
 /**
@@ -42,9 +35,10 @@ let unauthorizedError = new UnauthorizedError();
  *                 "costo": { "type": "number", "example": 29.9 },
  *                  "nome": { "type": "string", "example": "tiramisú" },
  *                 "isShippable": { "type": "boolean", "example": true },
- *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" }
+ *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" },
+ *                 "tag": { "type": "string",  "example": "semi-freddo"}
  *               },
- *               "required": ["costo","isShippable","nome"]
+ *               "required": ["costo","isShippable","nome","tag","image"]
  *             }
  *           },
  *           "application/json": {
@@ -54,9 +48,10 @@ let unauthorizedError = new UnauthorizedError();
  *                 "costo": { "type": "number", "example": 29.9 },
  *                  "nome": { "type": "string", "example": "tiramisú" },
  *                 "isShippable": { "type": "boolean", "example": true },
+ *                 "tag": { "type": "string",  "example": "semi-freddo"},
  *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/img.png" }
  *               },
- *               "required": ["costo", "image"]
+ *               "required": ["costo","isShippable","nome","tag","image"]
  *             }
  *           }
  *         }
@@ -86,8 +81,8 @@ let unauthorizedError = new UnauthorizedError();
  *   }
  * }
  */
-router.post("/", enforceAuthentication, validate(schemaProductPost), isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
-    ProductController.addProduct(req.body)
+router.post("/", enforceAuthentication, imageParser, isUserAdmin, validate(schemaProductPost), upLoadOnGoogle(), (req, res, next) => {
+    ProductController.addProduct(req.body, req.picUrl)
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
 }
@@ -100,8 +95,30 @@ router.post("/", enforceAuthentication, validate(schemaProductPost), isUserAdmin
  *     "get": {
  *       "tags": ["Products"],
  *       "summary": "Lista prodotti dell'utente autenticato",
- *       "description": "Recupera tutti i prodotti associati all'utente attualmente autenticato.",
+ *       "description": "Recupera tutti i prodotti associati all'utente attualmente autenticato. È possibile filtrare i risultati per nome e tag.",
  *       "operationId": "listMyProducts",
+ *       "parameters": [
+ *         {
+ *           "name": "nome",
+ *           "in": "query",
+ *           "description": "Filtra i prodotti in base al nome (ricerca parziale).",
+ *           "required": false,
+ *           "schema": {
+ *             "type": "string"
+ *           },
+ *           "example": "red velvet"
+ *         },
+ *         {
+ *           "name": "tag",
+ *           "in": "query",
+ *           "description": "Filtra i prodotti in base al tag associato.",
+ *           "required": false,
+ *           "schema": {
+ *             "type": "string"
+ *           },
+ *           "example": "semi-freddo"
+ *         }
+ *       ],
  *       "responses": {
  *         "200": {
  *           "description": "Lista dei prodotti",
@@ -112,8 +129,8 @@ router.post("/", enforceAuthentication, validate(schemaProductPost), isUserAdmin
  *                 "items": { "$ref": "#/components/schemas/Prodotto" }
  *               },
  *               "example": [
- *                 { "idProdotto": 12, "costo": 29.9, "image": "https://.../p12.png", "isShippable": true },
- *                 { "idProdotto": 13, "costo": 49.0, "image": "https://.../p13.png", "isShippable": false }
+ *                 { "idProdotto": 12, "costo": 29.9, "image": "https://.../p12.png", "isShippable": true, "tag": "semi-freddo" },
+ *                 { "idProdotto": 13, "costo": 49.0, "image": "https://.../p13.png", "isShippable": false, "tag": "semi-freddo" }
  *               ]
  *             }
  *           }
@@ -127,7 +144,8 @@ router.post("/", enforceAuthentication, validate(schemaProductPost), isUserAdmin
  * }
  */
 router.get("/", (req, res, next) => {
-    ProductController.getProducts()
+
+    ProductController.getProducts(ProductController.createFilter(req))
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
 });
@@ -159,8 +177,10 @@ router.get("/", (req, res, next) => {
  *               "type": "object",
  *               "properties": {
  *                 "costo": { "type": "number", "example": 39.5 },
+ *                 "nome": { "type": "string", "example": tiramisù },
  *                 "isShippable": { "type": "boolean", "example": true },
- *                 "image": { "type": "string", "format": "binary" }
+ *                 "image": { "type": "string", "format": "binary" },
+ *                  "tag": { "type": "string",  "example": "semi-freddo"}
  *               }
  *             }
  *           },
@@ -169,8 +189,10 @@ router.get("/", (req, res, next) => {
  *               "type": "object",
  *               "properties": {
  *                 "costo": { "type": "number", "example": 39.5 },
+ *                  "nome": { "type": "string", "example": tiramisù },
  *                 "isShippable": { "type": "boolean", "example": true },
- *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/new-img.png" }
+ *                 "image": { "type": "string", "example": "https://storage.googleapis.com/bucket/new-img.png" },
+ *                  "tag": { "type": "string",  "example": "semi-freddo"}
  *               }
  *             }
  *           }
@@ -188,8 +210,8 @@ router.get("/", (req, res, next) => {
  * }
  */
 router.put(
-    "/:productId", enforceAuthentication, validate(schemaProductPut), isUserAdmin, imageParser, upLoadOnGoogle, (req, res, next) => {
-        ProductController.updateProduct(req.params.productId, req.body)
+    "/:productId", enforceAuthentication, imageParser, isUserAdmin, validate(schemaProductPut), upLoadOnGoogle(false), (req, res, next) => {
+        ProductController.updateProduct(req.params.productId, req.body, req.picUrl)
             .then(() => res.status(200).send())
             .catch((err) => next(err));
     }
@@ -313,7 +335,7 @@ router.delete("/:productId", enforceAuthentication, isUserAdmin, (req, res, next
  *   }
  * }
  */
-router.post("/:productId/ingredients", enforceAuthentication, validate(schemaIngredientPost), isUserAdmin, (req, res, next) => {
+router.post("/:productId/ingredients", enforceAuthentication, isUserAdmin, validate(schemaIngredientPost), (req, res, next) => {
     IngredientController.saveIngredients(req.params.productId, req)
         .then(() => res.status(200).send())
         .catch((err) => next(err));

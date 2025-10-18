@@ -8,11 +8,12 @@ const storage = new Storage({ keyFilename: process.env.GOOGLE_APPLICATION_CREDEN
 const bucket = storage.bucket(process.env.BUCKET_NAME);
 const fileConsentiti = ["jpg", "png", "gif", "jpeg"];
 
-export function upLoad(req, res, next) {
+export let upLoad = (required = true) => (req, res, next) => {
     try {
 
-        if (!req.files) {
-            return next(new MissingFile())
+
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return required ? next(new MissingFile()) : next();
         }
 
         const file = req.files['image'][0]
@@ -35,7 +36,7 @@ export function upLoad(req, res, next) {
         });
 
         blobStream.on('finish', () => {
-            req.profilepicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+            req.picUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
             next();
         });
 

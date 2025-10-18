@@ -24,13 +24,16 @@ import { DataTypes } from "sequelize";
  *         image:
  *           type: string
  *           example: bucket/dolce.png
+ *         tag:
+ *           type: string
+ *           example: semi-freddo
  *         createdAt:
  *           type: string
  *           format: date-time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *       required: ["costo", "isShippable","nome","image", "idProdotto"]
+ *       required: ["costo", "isShippable","nome","image", "idProdotto","tag"]
  */
 export function ProdottoModel(database) {
     return database.define("Prodotto", {
@@ -45,6 +48,10 @@ export function ProdottoModel(database) {
         },
         costo: { type: DataTypes.FLOAT, allowNull: false },
         image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        tag: {
             type: DataTypes.STRING,
             allowNull: false,
         },

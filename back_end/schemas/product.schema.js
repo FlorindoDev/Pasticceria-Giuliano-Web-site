@@ -15,23 +15,49 @@ let nome = z.object({
         .regex(nomeProdottoRegex, "Nome prodotto non valido"),
 });
 
-let costo = z.object({
-    costo: z
-        .number({
+let tag = z.object({
+    tag: z
+        .string({
+            required_error: "Il campo tag è obbligatorio",
+            invalid_type_error: "Il costo deve essere una stringa",
+        })
+});
+
+const costo = z.object({
+    costo: z.preprocess(
+        (val) => {
+            // se è una stringa numerica, convertila in numero
+            if (typeof val === "string" && val.trim() !== "" && !isNaN(Number(val))) {
+                return Number(val);
+            }
+            return val; // altrimenti lascia com'è
+        },
+        z.number({
             required_error: "Il campo costo è obbligatorio",
             invalid_type_error: "Il costo deve essere un numero",
-        })
-        .positive("Il costo deve essere maggiore di 0"),
+        }).positive("Il costo deve essere maggiore di 0")
+    ),
 });
 
 
-let isShippable = z.object({
-    isShippable: z
-        .boolean({
+const isShippable = z.object({
+    isShippable: z.preprocess(
+        (val) => {
+            if (typeof val === "string") {
+                if (val.toLowerCase() === "true") return true;
+                if (val.toLowerCase() === "false") return false;
+            }
+            if (val === 1) return true;
+            if (val === 0) return false;
+            return val;
+        },
+        z.boolean({
             required_error: "Il campo isShippable è obbligatorio",
             invalid_type_error: "Il campo isShippable deve essere booleano",
-        }),
+        })
+    ),
 });
+
 
 // ---------- ID (REQUIRED/NOT REQUIRED) ----------
 let idProdottoR = z.object({
@@ -47,17 +73,44 @@ let nomeNotRequired = z.object({
     nome: z.string().regex(nomeProdottoRegex, "Nome prodotto non valido").optional(),
 });
 
+let tagNotRequired = z.object({
+    tag: z
+        .string({
+            invalid_type_error: "Il costo deve essere una stringa",
+        }).optional()
+});
+
 let costoNotRequired = z.object({
-    costo: z
-        .number({
+    costo: z.preprocess(
+        (val) => {
+            // se è una stringa numerica, convertila in numero
+            if (typeof val === "string" && val.trim() !== "" && !isNaN(Number(val))) {
+                return Number(val);
+            }
+            return val; // altrimenti lascia com'è
+        },
+        z.number({
             invalid_type_error: "Il costo deve essere un numero",
-        })
-        .positive("Il costo deve essere maggiore di 0")
-        .optional(),
+        }).positive("Il costo deve essere maggiore di 0").optional()
+    ),
 });
 
 let isShippableNotRequired = z.object({
-    isShippable: z.boolean().optional(),
+    isShippable: z.preprocess(
+        (val) => {
+            if (typeof val === "string") {
+                if (val.toLowerCase() === "true") return true;
+                if (val.toLowerCase() === "false") return false;
+            }
+            if (val === 1) return true;
+            if (val === 0) return false;
+            return val;
+        },
+        z.boolean({
+            required_error: "Il campo isShippable è obbligatorio",
+            invalid_type_error: "Il campo isShippable deve essere booleano",
+        }).optional()
+    ),
 });
 
 // ---------- EXPORTS (WRAPPERS) ----------
@@ -75,6 +128,22 @@ export const idProdottoRequredParams = z.object({
 
 export const NomeRequiredBody = z.object({
     body: nome,
+});
+
+export const TagRequiredBody = z.object({
+    body: tag,
+});
+
+export const TagNotRequiredBody = z.object({
+    body: tagNotRequired,
+});
+
+export const NomeNotRequiredQuery = z.object({
+    query: nomeNotRequired,
+});
+
+export const TagNotRequiredQuery = z.object({
+    query: tagNotRequired,
 });
 
 export const CostoRequiredBody = z.object({
@@ -99,5 +168,6 @@ export const IsShippableNotRequiredBody = z.object({
 });
 
 
-export const schemaProductPost = unionChecks([CostoRequiredBody, NomeRequiredBody, IsShippableRequiredBody]);
-export const schemaProductPut = unionChecks([CostoNotRequiredBody, NomeNotRequiredBody, IsShippableNotRequiredBody]);
+export const schemaProductPost = unionChecks([CostoRequiredBody, NomeRequiredBody, IsShippableRequiredBody, TagRequiredBody]);
+export const schemaProductPut = unionChecks([CostoNotRequiredBody, NomeNotRequiredBody, IsShippableNotRequiredBody, TagNotRequiredBody]);
+export const schemaProductSearch = unionChecks([NomeNotRequiredQuery, TagNotRequiredQuery]);
