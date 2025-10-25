@@ -44,9 +44,9 @@ export function OrdineModel(database) {
         },
         numero_spedizione: { type: DataTypes.STRING, allowNull: true },
         stato: {
-            type: DataTypes.ENUM("CREATO", "PAGATO", "SPEDITO", "CONSEGNATO", "ANNULLATO"),
+            type: DataTypes.ENUM("IN PREPARAZIONE", "SPEDITO", "IN CONSEGNA", "CONSEGNATO", "ANNULLATO"),
             allowNull: false,
-            defaultValue: "CREATO"
+            defaultValue: "IN PREPARAZIONE"
         },
         costo: { type: DataTypes.FLOAT, allowNull: false }
     });

@@ -35,6 +35,12 @@ export class ResidenceNotFoundError extends AppErrorHttp {
     }
 }
 
+export class CartNotFoundError extends AppErrorHttp {
+    constructor() {
+        super(NO_CONTENT, "non ci sono cart", "CART_NOT_EXISTS");
+    }
+}
+
 
 
 /* ****************************************************************** */
@@ -112,6 +118,18 @@ export class FailToUpdateUser extends AppErrorHttp {
 export class FailToSaveResidence extends AppErrorHttp {
     constructor() {
         super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto Residence", "RESIDENCE_ERROR");
+    }
+}
+
+export class FailToSaveCart extends AppErrorHttp {
+    constructor() {
+        super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto del cart", "CART_ERROR");
+    }
+}
+
+export class FailToSaveCartItem extends AppErrorHttp {
+    constructor() {
+        super(INTERNAL_SERVER_ERROR, "Errore durante l'inserimeto nel carello", "CART_ITEM_ERROR");
     }
 }
 

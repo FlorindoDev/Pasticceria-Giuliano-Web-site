@@ -9,6 +9,7 @@ import fs from 'fs';
 import { router as routeAuth } from "./routes/AuthRoute.js"
 import { router as UsersRoute } from "./routes/UsersRoute.js"
 import { router as ProductRoute } from "./routes/ProductRoute.js";
+import { router as CartRoute } from "./routes/CartRoute.js";
 import { AppErrorHttp } from "./utils/AppError.js";
 
 
@@ -51,6 +52,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/auth', routeAuth);
 app.use('/users', UsersRoute);
 app.use('/products', ProductRoute);
+app.use('/carts', CartRoute);
 
 
 

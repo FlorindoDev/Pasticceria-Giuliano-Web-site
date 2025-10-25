@@ -6,6 +6,8 @@ import { ProdottoModel } from "./Prodotto.js";
 import { IngredienteModel } from "./Ingrediente.js";
 import { OrdineProdottoModel } from "./OridineProdotto.js";
 import { ProdottoIngredienteModel } from "./ProdottoIngrediente.js";
+import { CartModel } from "./Cart.js";
+import { CartItemModel } from "./CartItem.js";
 
 import 'dotenv/config.js';
 
@@ -26,6 +28,8 @@ ProdottoModel(database);
 IngredienteModel(database);
 OrdineProdottoModel(database);
 ProdottoIngredienteModel(database);
+CartModel(database);
+CartItemModel(database);
 
 export const {
     User,
@@ -34,13 +38,24 @@ export const {
     Prodotto,
     Ingrediente,
     OrdineProdotto,
-    ProdottoIngrediente
+    ProdottoIngrediente,
+    Cart,
+    CartItem
 } = database.models;
 
 
 //Associazioni User
 User.Residenza = User.hasMany(Residenza, { onDelete: 'CASCADE' });
 User.Ordine = User.hasMany(Ordine, { onDelete: 'CASCADE' });
+User.Cart = User.hasMany(Cart, { onDelete: 'CASCADE' });
+
+//Associazioni Cart
+Cart.User = Cart.belongsTo(User);
+Cart.CartItem = Cart.hasMany(CartItem, { onDelete: 'CASCADE' });
+
+//Associazioni CartItem
+CartItem.Cart = CartItem.belongsTo(Cart);
+CartItem.Prodotto = CartItem.belongsTo(Prodotto);
 
 //Associazioni Residenza
 Residenza.User = Residenza.belongsTo(User);
@@ -52,6 +67,7 @@ Ordine.Prodotto = Ordine.belongsToMany(Prodotto, { through: "OrdineProdotto", on
 //Associazioni Prodotto
 Prodotto.Ordine = Prodotto.belongsToMany(Ordine, { through: "OrdineProdotto" });
 Prodotto.Ingrediente = Prodotto.belongsToMany(Ingrediente, { through: "ProdottoIngrediente" });
+Prodotto.CartItem = Prodotto.hasMany(CartItem, { onDelete: 'CASCADE' });
 
 //Associazioni ingredienti
 Ingrediente.Prodotto = Ingrediente.belongsToMany(Prodotto, { through: "ProdottoIngrediente" });

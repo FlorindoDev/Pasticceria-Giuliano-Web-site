@@ -34,11 +34,12 @@ export const router = express.Router();
  *               "properties": {
  *                 "costo": { "type": "number", "example": 29.9 },
  *                  "nome": { "type": "string", "example": "tiramisú" },
+ *                  "peso": { "type": "number", "example": 500 },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" },
  *                 "tag": { "type": "string",  "example": "semi-freddo"}
  *               },
- *               "required": ["costo","isShippable","nome","tag","image"]
+ *               "required": ["costo","isShippable","nome","tag","image","peso"]
  *             }
  *           },
  *           "application/json": {
@@ -180,7 +181,8 @@ router.get("/", (req, res, next) => {
  *                 "nome": { "type": "string", "example": tiramisù },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "format": "binary" },
- *                  "tag": { "type": "string",  "example": "semi-freddo"}
+ *                  "tag": { "type": "string",  "example": "semi-freddo"},
+ *                  "peso": { "type": "number", "example": 500 },
  *               }
  *             }
  *           },

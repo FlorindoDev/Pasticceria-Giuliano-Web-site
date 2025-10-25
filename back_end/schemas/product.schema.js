@@ -39,6 +39,22 @@ const costo = z.object({
     ),
 });
 
+const peso = z.object({
+    peso: z.preprocess(
+        (val) => {
+            // se è una stringa numerica, convertila in numero
+            if (typeof val === "string" && val.trim() !== "" && !isNaN(Number(val))) {
+                return Number(val);
+            }
+            return val; // altrimenti lascia com'è
+        },
+        z.number({
+            required_error: "Il campo peso è obbligatorio",
+            invalid_type_error: "Il peso deve essere un numero",
+        }).positive("Il peso deve essere maggiore di 0")
+    ),
+});
+
 
 const isShippable = z.object({
     isShippable: z.preprocess(
@@ -92,6 +108,21 @@ let costoNotRequired = z.object({
         z.number({
             invalid_type_error: "Il costo deve essere un numero",
         }).positive("Il costo deve essere maggiore di 0").optional()
+    ),
+});
+
+let pesoNotRequired = z.object({
+    peso: z.preprocess(
+        (val) => {
+            // se è una stringa numerica, convertila in numero
+            if (typeof val === "string" && val.trim() !== "" && !isNaN(Number(val))) {
+                return Number(val);
+            }
+            return val; // altrimenti lascia com'è
+        },
+        z.number({
+            invalid_type_error: "Il peso deve essere un numero",
+        }).positive("Il peso deve essere maggiore di 0").optional()
     ),
 });
 
@@ -150,6 +181,10 @@ export const CostoRequiredBody = z.object({
     body: costo,
 });
 
+export const PesoRequiredBody = z.object({
+    body: peso,
+});
+
 export const IsShippableRequiredBody = z.object({
     body: isShippable,
 });
@@ -162,12 +197,16 @@ export const CostoNotRequiredBody = z.object({
     body: costoNotRequired,
 });
 
+export const PesoNotRequiredBody = z.object({
+    body: pesoNotRequired,
+});
+
 
 export const IsShippableNotRequiredBody = z.object({
     body: isShippableNotRequired,
 });
 
 
-export const schemaProductPost = unionChecks([CostoRequiredBody, NomeRequiredBody, IsShippableRequiredBody, TagRequiredBody]);
-export const schemaProductPut = unionChecks([CostoNotRequiredBody, NomeNotRequiredBody, IsShippableNotRequiredBody, TagNotRequiredBody]);
+export const schemaProductPost = unionChecks([PesoRequiredBody, CostoRequiredBody, NomeRequiredBody, IsShippableRequiredBody, TagRequiredBody]);
+export const schemaProductPut = unionChecks([PesoNotRequiredBody, CostoNotRequiredBody, NomeNotRequiredBody, IsShippableNotRequiredBody, TagNotRequiredBody]);
 export const schemaProductSearch = unionChecks([NomeNotRequiredQuery, TagNotRequiredQuery]);

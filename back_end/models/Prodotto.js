@@ -15,6 +15,10 @@ import { DataTypes } from "sequelize";
  *           type: number
  *           format: float
  *           example: 7.50
+ *         peso:
+ *           type: number
+ *           format: float
+ *           example: 500
  *         nome:
  *           type: string
  *           example: tiramisú
@@ -47,6 +51,7 @@ export function ProdottoModel(database) {
             allowNull: true,
         },
         costo: { type: DataTypes.FLOAT, allowNull: false },
+        peso: { type: DataTypes.FLOAT, allowNull: false },
         image: {
             type: DataTypes.STRING,
             allowNull: false,

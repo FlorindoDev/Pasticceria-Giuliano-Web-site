@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+
 /**
  * @swagger
  * components:
@@ -15,6 +16,10 @@ import { DataTypes } from "sequelize";
  *         quantity:
  *           type: integer
  *           example: 2
+ *         peso:
+ *           type: number
+ *           format: float
+ *           example: 500
  *         priceAtPurchase:
  *           type: number
  *           format: float
@@ -24,6 +29,7 @@ import { DataTypes } from "sequelize";
 export function OrdineProdottoModel(database) {
     return database.define("OrdineProdotto", {
         quantity: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
-        priceAtPurchase: { type: DataTypes.FLOAT, allowNull: false }
-    }, { timestamps: false });
+        priceAtPurchase: { type: DataTypes.FLOAT, allowNull: false },
+        peso: { type: DataTypes.FLOAT, allowNull: false },
+    });
 }

@@ -8,6 +8,7 @@ export class ProductController {
 
         let prodotto = new Prodotto({
             costo: body.costo,
+            peso: body.peso,
             nome: body.nome,
             image: picUrl,
             tag: body.tag,
