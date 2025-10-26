@@ -1,0 +1,148 @@
+<div class="hidden sm:block">
+    <div class="relative flex flex-row gap-4 bg-bgcontrast rounded-2xl border border-secondary/40 shadow-sm p-5">
+
+        <div class="w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl ring-1 ring-cream/60 bg-bg">
+            <img [src]="item.Prodotto.image" alt="Torta panna e fragole" class="w-full h-full object-cover" />
+        </div>
+
+
+        <div class="flex-1 min-w-0 flex flex-col">
+
+            <div>
+                <h2 class="text-primary font-semibold text-lg leading-snug">
+                    {{item.Prodotto.nome}}
+                </h2>
+                <p class="text-text/70 text-sm leading-relaxed">
+                    {{item.Prodotto.descrizione}}
+                </p>
+            </div>
+
+            <div class="mt-4">
+                <div
+                    class="inline-flex items-center gap-3 rounded-full border border-secondary/40 bg-bg px-3 py-2 shadow-inner w-max select-none">
+                    <button (click)="removeQuantity()"
+                        class="w-8 h-8 flex items-center justify-center rounded-full border border-secondary/30 text-primary font-semibold hover:bg-bgcontrast transition active:scale-95"
+                        aria-label="Diminuisci quantità">
+                        −
+                    </button>
+
+                    <span class="min-w-[2ch] text-center font-semibold text-primary text-lg">
+                        {{quantity()}}
+                    </span>
+
+                    <button (click)="addQuantity()"
+                        class="w-8 h-8 flex items-center justify-center rounded-full border border-secondary/30 text-primary font-semibold hover:bg-bgcontrast transition active:scale-95"
+                        aria-label="Aumenta quantità">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="flex flex-col justify-start items-end text-right min-w-[8rem]">
+
+            <button class="text-text/50 hover:text-accent text-xs font-semibold transition order-1 self-end">
+                Rimuovi ✕
+            </button>
+
+            <div class="mt-2 order-2  self-end">
+                <p class="text-xl font-bold text-accent leading-none">
+                    {{(item.Prodotto.costo/item.Prodotto.peso)*1000 | number:'1.2-2' }}€/kg
+                </p>
+
+            </div>
+
+            <div class="mt-6 order-3 self-end">
+                <p class="text-sm text-text/60">Subtotale</p>
+                <p class="text-xl font-bold text-primary">
+                    {{subtotal() | number:'1.2-2'}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div
+    class="relative  block sm:hidden flex flex-col gap-4 bg-bgcontrast rounded-2xl border border-secondary/30 shadow-sm p-5">
+
+
+    <div class="flex flex-row gap-4">
+
+
+        <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-xl ring-1 ring-cream/60 bg-bg">
+            <img [src]="item.Prodotto.image" [alt]="item.Prodotto.nome" class="w-full h-full object-contain" />
+        </div>
+
+
+        <div class="flex-1 min-w-0 flex flex-col">
+
+
+            <h2 class="text-primary font-semibold text-lg leading-snug">
+                {{ item.Prodotto.nome }}
+            </h2>
+
+
+            <p class="text-text/70 text-sm leading-relaxed">
+                {{ item.Prodotto.descrizione }}
+            </p>
+
+
+            <div class="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
+
+
+                <span class="text-primary font-semibold text-base">
+                    {{ subtotal() | number:'1.2-2' }}€
+
+                </span>
+
+
+                <span class="text-text/40 font-semibold select-none">·</span>
+
+
+                <span class="text-accent font-bold text-base">
+                    {{ (item.Prodotto.costo / item.Prodotto.peso) * 1000 | number:'1.2-2' }}€/kg
+                </span>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex flex-row flex-wrap items-center gap-4">
+
+
+        <div
+            class="inline-flex items-center gap-3 rounded-full border border-secondary/40 bg-bg px-3 py-2 shadow-inner select-none">
+            <button (click)="removeQuantity()"
+                class="w-8 h-8 flex items-center justify-center rounded-full border border-secondary/30 text-primary font-semibold hover:bg-bgcontrast transition active:scale-95"
+                aria-label="Diminuisci quantità">
+                −
+            </button>
+
+            <span class="min-w-[2ch] text-center font-semibold text-primary text-lg">
+                {{ quantity() }}
+            </span>
+
+            <button (click)="addQuantity()"
+                class="w-8 h-8 flex items-center justify-center rounded-full border border-secondary/30 text-primary font-semibold hover:bg-bgcontrast transition active:scale-95"
+                aria-label="Aumenta quantità">
+                +
+            </button>
+        </div>
+
+
+        <button class="flex items-center gap-2 text-text/60 hover:text-accent text-sm font-semibold transition"
+            aria-label="Rimuovi dal carrello">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.75 9.75l.346 8.258m4.154-8.258l-.346 8.258M3.75 6.75h16.5M10.5 6.75h3m-6 0l.659-1.977A1.125 1.125 0 0 1 9.72 3.75h4.56c.494 0 .93.316 1.061.773L16 6.75m-8.25 0l.24 12.082a2.25 2.25 0 0 0 2.244 2.168h3.532a2.25 2.25 0 0 0 2.244-2.168L16.5 6.75" />
+            </svg>
+            <span>Rimuovi</span>
+        </button>
+
+    </div>
+</div>

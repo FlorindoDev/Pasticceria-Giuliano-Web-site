@@ -19,6 +19,7 @@ export class Homepage {
       peso: 10,
       tag: "dolce",
       image: "/carramello.jpeg",
+      descrizione: ""
     },
     {
       idProdotto: null,
@@ -28,6 +29,7 @@ export class Homepage {
       isShippable: false,
       tag: "dolce",
       image: "/codaaragosta.png",
+      descrizione: ""
     },
     {
       idProdotto: null,
@@ -37,6 +39,7 @@ export class Homepage {
       isShippable: false,
       tag: "dolce",
       image: "/croccantino.jpeg",
+      descrizione: ""
     },
     {
       idProdotto: null,
@@ -46,6 +49,7 @@ export class Homepage {
       isShippable: false,
       tag: "dolce",
       image: "/specalitaallapanna.png",
+      descrizione: ""
     },
     {
       idProdotto: null,
@@ -55,6 +59,7 @@ export class Homepage {
       isShippable: false,
       tag: "dolce",
       image: "/tonino.jpeg",
+      descrizione: ""
     },
     {
       idProdotto: null,
@@ -64,6 +69,7 @@ export class Homepage {
       isShippable: false,
       tag: "dolce",
       image: "/tiramisu.jpeg",
+      descrizione: ""
     },
   ];
 

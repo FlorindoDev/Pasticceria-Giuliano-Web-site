@@ -11,6 +11,6 @@ import { Dolce } from '../_services/assortimento/dolce.type';
 
 export class SweetCard {
 
-  @Input() dolce: Dolce = { idProdotto: null, nome: "null", costo: 0, peso: 0, isShippable: false, tag: "null", image: null };
+  @Input() dolce: Dolce = { idProdotto: null, nome: "null", costo: 0, peso: 0, isShippable: false, tag: "null", image: null, descrizione: null };
 
 }
