@@ -48,6 +48,10 @@ export function ProdottoModel(database) {
         },
         nome: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        descrizione: {
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         costo: { type: DataTypes.FLOAT, allowNull: false },

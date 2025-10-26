@@ -10,6 +10,7 @@ export class ProductController {
             costo: body.costo,
             peso: body.peso,
             nome: body.nome,
+            descrizione: body.descrizione,
             image: picUrl,
             tag: body.tag,
             isShippable: body.isShippable ?? true,

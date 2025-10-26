@@ -3,6 +3,20 @@ import { FailToSaveCart, CartNotFoundError } from "../utils/error/index.js";
 
 export class CartController {
 
+    static async getCartById(idCart) {
+
+        let result = await Cart.findOne({
+            where: {
+                idCart: idCart
+            }
+        });
+
+        if (!result) {
+            throw new CartNotFoundError();
+        }
+
+        return result;
+    }
 
     static async getCartByUser(idUser) {
 

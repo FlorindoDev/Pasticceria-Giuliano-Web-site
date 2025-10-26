@@ -153,6 +153,10 @@ export const idProdottoNotRequiredQuery = z.object({
     query: idProdottoNotR,
 });
 
+export const idProdottoRequiredBody = z.object({
+    body: idProdottoR,
+});
+
 export const idProdottoRequredParams = z.object({
     params: z.object(idRequired),
 });

@@ -98,7 +98,7 @@ export const TelefonoNotRequiredBody = z.object({
 
 });
 
-export const idUserRequredParams = z.object({
+export const idUserRequiredParams = z.object({
     params: z.object(idRequired),
 
 });
@@ -128,4 +128,4 @@ export const PasswordNotRequiredBody = z.object({
 
 });
 
-export const schemaUserPut = unionChecks([idUserRequredParams, NomeNotRequiredBody, CognomeNotRequiredBody, TelefonoNotRequiredBody, PasswordNotRequiredBody, EmailNotRequiredBody]);
+export const schemaUserPut = unionChecks([idUserRequiredParams, NomeNotRequiredBody, CognomeNotRequiredBody, TelefonoNotRequiredBody, PasswordNotRequiredBody, EmailNotRequiredBody]);

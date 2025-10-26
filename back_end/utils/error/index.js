@@ -41,6 +41,13 @@ export class CartNotFoundError extends AppErrorHttp {
     }
 }
 
+export class CartItemNotFoundError extends AppErrorHttp {
+    constructor() {
+        super(NO_CONTENT, "non ci sono cart item", "CART_ITEM_NOT_EXISTS");
+    }
+}
+
+
 
 
 /* ****************************************************************** */

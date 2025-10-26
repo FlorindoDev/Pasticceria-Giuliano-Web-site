@@ -35,6 +35,7 @@ export const router = express.Router();
  *                 "costo": { "type": "number", "example": 29.9 },
  *                  "nome": { "type": "string", "example": "tiramisú" },
  *                  "peso": { "type": "number", "example": 500 },
+ *                  "descrizione": { "type": "string", "example": "buonissimo" },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "format": "binary", "description": "File immagine del prodotto" },
  *                 "tag": { "type": "string",  "example": "semi-freddo"}
@@ -130,8 +131,8 @@ router.post("/", enforceAuthentication, imageParser, isUserAdmin, validate(schem
  *                 "items": { "$ref": "#/components/schemas/Prodotto" }
  *               },
  *               "example": [
- *                 { "idProdotto": 12, "costo": 29.9, "image": "https://.../p12.png", "isShippable": true, "tag": "semi-freddo" },
- *                 { "idProdotto": 13, "costo": 49.0, "image": "https://.../p13.png", "isShippable": false, "tag": "semi-freddo" }
+ *                 { "idProdotto": 12, "costo": 29.9, "peso":500, "descrizione":"buono","image": "https://.../p12.png", "isShippable": true, "tag": "semi-freddo" },
+ *                 { "idProdotto": 13, "costo": 49.0, "peso":500, "descrizione":"buono", "image": "https://.../p13.png", "isShippable": false, "tag": "semi-freddo" }
  *               ]
  *             }
  *           }
@@ -179,6 +180,7 @@ router.get("/", (req, res, next) => {
  *               "properties": {
  *                 "costo": { "type": "number", "example": 39.5 },
  *                 "nome": { "type": "string", "example": tiramisù },
+ *                  "descrizione": { "type": "string", "example": "buonissimo" },
  *                 "isShippable": { "type": "boolean", "example": true },
  *                 "image": { "type": "string", "format": "binary" },
  *                  "tag": { "type": "string",  "example": "semi-freddo"},
