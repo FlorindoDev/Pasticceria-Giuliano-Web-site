@@ -5,7 +5,6 @@ import { LoadingService } from '../../_services/loading/loading.service';
 
 export function loadingInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
   const loadingService = inject(LoadingService);
-  console.log(request.headers);
   if (request.headers.has('X-No-Loading')) {
     return next(request);
   }

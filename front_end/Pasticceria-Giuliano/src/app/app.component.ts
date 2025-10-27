@@ -1,19 +1,17 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar.component';
-import { LoadingService } from './_services/loading/loading.service';
-import { CommonModule } from '@angular/common';
+import { LoadingScreen } from './loading-screen/loading-screen.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, CommonModule],
+  imports: [RouterOutlet, Navbar, LoadingScreen],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
   protected readonly title = signal('angular-app');
-  constructor(protected loading_service: LoadingService) { }
+  constructor() { }
 
 }

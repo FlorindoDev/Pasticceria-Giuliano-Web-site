@@ -1,0 +1,10 @@
+@if (this.loading_service.loading$ | async) {
+<div class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-bg/90 backdrop-blur-sm">
+
+    <div class="w-14 h-14 rounded-full border-4 border-accent border-t-transparent animate-spin"></div>
+
+    <p class="mt-6 text-primary font-semibold tracking-wide text-sm uppercase">
+        Prepariamo la dolcezza...
+    </p>
+</div>
+}

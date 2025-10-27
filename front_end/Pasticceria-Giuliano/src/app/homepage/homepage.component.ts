@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { SweetCard } from '../sweet-card/sweet-card.component';
 import { Dolce } from '../_services/assortimento/dolce.type';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
-  imports: [SweetCard],
+  imports: [SweetCard, RouterLink],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss'
 })
