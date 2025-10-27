@@ -1,0 +1,26 @@
+services:
+  server-web:
+    build: ./front_end/Pasticceria-Giuliano
+    container_name: pasticceria_server_web
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - pasticceria-giuliano
+    tty: true
+    stdin_open: true
+
+  node-app:
+    build: ./back_end
+    container_name: pasticceria_node
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    networks:
+      - pasticceria-giuliano
+    tty: true
+    stdin_open: true
+
+networks:
+  pasticceria-giuliano:
+    driver: bridge

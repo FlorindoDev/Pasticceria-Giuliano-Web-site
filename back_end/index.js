@@ -77,7 +77,7 @@ app.use((err, req, res, next) => {
 
 });
 
-if (PORT == 443) {
+if (PORT == 443 || PORT == 3001) {
   const sslOptions = {
     key: fs.readFileSync(process.env.PATH_KEY_PEM),
     cert: fs.readFileSync(process.env.PATH_CERT_PEM),
