@@ -155,6 +155,65 @@ router.get("/", (req, res, next) => {
 /**
  * @swagger
  * {
+ *   "/products/{id}": {
+ *     "get": {
+ *       "tags": ["Products"],
+ *       "summary": "Dettagli di un singolo prodotto",
+ *       "description": "Recupera le informazioni dettagliate di un prodotto specifico identificato dal suo ID.",
+ *       "operationId": "getProductById",
+ *       "parameters": [
+ *         {
+ *           "name": "id",
+ *           "in": "path",
+ *           "description": "Identificativo univoco del prodotto da recuperare.",
+ *           "required": true,
+ *           "schema": {
+ *             "type": "integer"
+ *           },
+ *           "example": 12
+ *         }
+ *       ],
+ *       "responses": {
+ *         "200": {
+ *           "description": "Dettagli del prodotto",
+ *           "content": {
+ *             "application/json": {
+ *               "schema": {
+ *                 "$ref": "#/components/schemas/Prodotto"
+ *               },
+ *               "example": {
+ *                 "idProdotto": 12,
+ *                 "nome": "Red Velvet",
+ *                 "costo": 29.9,
+ *                 "peso": 500,
+ *                 "descrizione": "Deliziosa torta red velvet con panna fresca e crema artigianale.",
+ *                 "image": "https://.../p12.png",
+ *                 "isShippable": true,
+ *                 "tag": "semi-freddo"
+ *               }
+ *             }
+ *           }
+ *         },
+ *         "400": { "description": "Richiesta non valida (ID mancante o errato)" },
+ *         "401": { "description": "Non autorizzato" },
+ *         "404": { "description": "Prodotto non trovato" },
+ *         "500": { "description": "Errore interno del server" }
+ *       }
+ *     }
+ *   }
+ * }
+ */
+router.get("/:id", (req, res, next) => {
+
+    ProductController.getProductsByPk(req.params.id)
+        .then((result) => res.status(200).json(result))
+        .catch((err) => next(err));
+});
+
+
+/**
+ * @swagger
+ * {
  *   "/products/{productId}": {
  *     "put": {
  *       "tags": ["Products"],
