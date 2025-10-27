@@ -16,14 +16,18 @@
         </div>
 
         <div class="mt-2 flex items-center justify-between">
-
+            @if(!this.isVetrina){
             <div class="mt-2 flex items-center gap-4">
                 @if(dolce.costo){ <p class="text-primary">{{ dolce.costo }}€</p>}
                 @if(dolce.peso){ <p class="text-primary">{{ dolce.peso }}g</p>}
             </div>
 
-            <button class="bg-primary text-bg px-4 py-2 rounded-full hover:bg-accent transition">Scegli
+
+            <button (click)="goToProduct($event)"
+                class="bg-primary text-bg px-4 py-2 rounded-full hover:bg-accent transition">Scegli
                 dessert</button>
+            }
+
         </div>
     </div>
 </article>

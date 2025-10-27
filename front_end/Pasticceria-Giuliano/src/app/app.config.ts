@@ -5,8 +5,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptor } from './_interceptors/auth/auth.interceptor';
 import { errorHendlerInterceptor } from './_interceptors/errorHendler/error-hendler.interceptor';
-
 import { routes } from './app.routes';
+import { loadingInterceptor } from './_interceptors/loading/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor, errorHendlerInterceptor])
+      withInterceptors([authInterceptor, errorHendlerInterceptor, loadingInterceptor])
     ),
     provideRouter(
       routes,

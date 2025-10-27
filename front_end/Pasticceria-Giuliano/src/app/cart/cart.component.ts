@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { CartItem } from './cart-item/cart-item.component';
 import { CartService } from '../_services/cart/cart.service';
 import { AuthService } from '../_services/auth/auth.service';
 import { CartItem as Item } from '../_services/cart/cart-item.type';
 import { Cart as UserCart } from '../_services/cart/cart.type';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'cart',
-  imports: [CartItem],
+  imports: [CartItem, DecimalPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -15,6 +16,7 @@ export class Cart {
 
   items: Item[] = [];
   cart: UserCart | null = null;
+  costo_totale: WritableSignal<number> = signal<number>(0);
 
   constructor(private cart_service: CartService, private auth: AuthService) { }
 
@@ -38,6 +40,16 @@ export class Cart {
         this.items = val;
       }
     })
+  }
+
+  deleteItem(event: number) {
+    this.items = this.items.filter((val) => {
+      return val.idCartItem != event;
+    })
+  }
+
+  totale(event: number) {
+    this.costo_totale.update(q => q + event);
   }
 
 }

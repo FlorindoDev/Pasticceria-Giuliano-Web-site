@@ -32,6 +32,21 @@ export class CartService {
         return this.http.get<CartItem[]>(url, this.httpOptions);
     }
 
+    deleteItem(idUser: string | null, idCart: number | undefined, idItem: number) {
+        const url = `${this.url}/users/${idUser}/carts/${idCart}/${idItem}`;
+        return this.http.delete(url, this.httpOptions);
+    }
+
+    addItem(idUser: string | null, idCart: number | undefined, quantity: number, idProdotto: number | null, loadingApi: boolean = true) {
+
+        if (!loadingApi) {
+            this.httpOptions.headers = this.httpOptions.headers.set('X-no-Loading', '');
+
+        }
+        const url = `${this.url}/users/${idUser}/carts/${idCart}`;
+        return this.http.post(url, { quantity: quantity, idProdotto: `${idProdotto}` }, this.httpOptions);
+    }
+
 
 
 }

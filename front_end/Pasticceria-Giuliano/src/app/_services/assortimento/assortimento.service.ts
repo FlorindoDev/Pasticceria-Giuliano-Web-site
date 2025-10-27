@@ -26,16 +26,17 @@ export class AssortimentoService {
         return this.http.get<Dolce[]>(url, this.httpOptions);
     }
 
-
-    getIngredienti(idDolce: number) {
-        const url = `${this.url}/products/${idDolce}`;
-        return this.http.post<Ingrediente[]>(url, this.httpOptions);
+    getDolceById(id: string) {
+        const url = `${this.url}/products/${id}`;
+        return this.http.get<Dolce>(url, this.httpOptions);
     }
 
-    getIngredientiByName(dolce_nome: string) {
-        const url = `${this.url}/products/${dolce_nome}`;
-        return this.http.post<{ token: string }>(url, this.httpOptions);
+    getIngredienti(idDolce: string) {
+        const url = `${this.url}/products/${idDolce}/ingredients`;
+        return this.http.get<Ingrediente[]>(url, this.httpOptions);
     }
+
+
 
 
 }
