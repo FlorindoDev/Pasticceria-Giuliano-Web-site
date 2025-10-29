@@ -52,4 +52,12 @@ export class Cart {
     this.costo_totale.update(q => q + event);
   }
 
+  checkOut() {
+    this.cart_service.chackOut(this.auth.getidUser()).subscribe({
+      next: (value) => {
+        window.location.replace(value.url);
+      },
+    });
+  }
+
 }

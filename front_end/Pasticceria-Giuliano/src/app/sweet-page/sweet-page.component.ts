@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Dolce } from '../_services/assortimento/dolce.type';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AssortimentoService } from '../_services/assortimento/assortimento.service';
 import { Ingrediente } from '../_services/assortimento/ingrediente.type';
 import { CartService } from '../_services/cart/cart.service';
@@ -24,6 +24,7 @@ export class SweetPage {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private assortimento_service: AssortimentoService,
     private cart_service: CartService,
     private auth: AuthService,
@@ -58,13 +59,17 @@ export class SweetPage {
   }
 
   addCart() {
-    let idUser = this.auth.getidUser();
-    this.cart_service.getCartUser(idUser).subscribe({
-      next: (cart: Cart) => {
-        this.cart_service.addItem(idUser, cart.idCart, 1, this.dolce.idProdotto).subscribe({})
-        this.toastr.success("Hai aggiunto l'elemento con successo", "Azione Completata!");
-      },
-    })
+    if (this.auth.getToken() !== null) {
+      let idUser = this.auth.getidUser();
+      this.cart_service.getCartUser(idUser).subscribe({
+        next: (cart: Cart) => {
+          this.cart_service.addItem(idUser, cart.idCart, 1, this.dolce.idProdotto).subscribe({})
+          this.toastr.success("Hai aggiunto l'elemento con successo", "Azione Completata!");
+        },
+      })
+      return;
+    }
+    this.router.navigate([`products/${this.dolce.idProdotto}`], { fragment: 'login' });
 
   }
 

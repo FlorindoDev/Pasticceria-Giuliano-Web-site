@@ -149,7 +149,7 @@ export class Login {
   closeLogin() {
     let element = document.getElementById("login");
     element?.classList.add("hidden");
-    this.router.navigate([`/home`]);
+    this.router.navigate([], { fragment: '' });
 
   }
 

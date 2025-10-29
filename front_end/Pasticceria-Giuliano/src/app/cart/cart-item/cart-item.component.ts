@@ -4,10 +4,11 @@ import { DecimalPipe } from '@angular/common';
 import { CartService } from '../../_services/cart/cart.service';
 import { AuthService } from '../../_services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'cart-item',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './cart-item.component.html',
   styleUrl: './cart-item.component.scss'
 })
@@ -45,7 +46,7 @@ export class CartItem {
       let oldTot: number = this.subtotal();
       this.quantity.update(q => q - 1);
       this.subtotOutput.emit(this.subtotal() - oldTot);
-      this.cart_service.addItem(this.auth.getidUser(), this.item.CartIdCart, -1, this.item.Prodotto.idProdotto).subscribe({})
+      this.cart_service.addItem(this.auth.getidUser(), this.item.CartIdCart, -1, this.item.Prodotto.idProdotto, false).subscribe({})
     }
 
   }

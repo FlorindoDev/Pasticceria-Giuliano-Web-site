@@ -1,11 +1,11 @@
 import { HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, throwError, EMPTY } from 'rxjs';
 import { errorHTTP } from './error.type';
 import { ToastrService } from 'ngx-toastr';
 import { inject } from '@angular/core';
 import { environment } from '../../environment.prod';
 
-
+//TODO: Eliminare console.log()
 
 export function errorHendlerInterceptor(request: HttpRequest<any>, next: HttpHandlerFn) {
 
@@ -18,6 +18,11 @@ export function errorHendlerInterceptor(request: HttpRequest<any>, next: HttpHan
 
       let myerr: errorHTTP;
       let myErrors = environment.myErrors;
+
+      if (err.status >= 300 && err.status <= 399) {
+        window.location.replace(err.error.url);
+        return EMPTY;
+      }
 
       if (err.status === 0) {
         myerr = { status: err.status, description: "Errore di connessione", code: "CONNECTION_ERROR" }

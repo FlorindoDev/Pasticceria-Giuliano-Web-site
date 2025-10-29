@@ -4,7 +4,7 @@ import { environment } from '../../environment.prod';
 import { Cart } from './cart.type';
 import { CartItem } from './cart-item.type';
 
-
+//TODO: Refactoring
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +45,12 @@ export class CartService {
         }
         const url = `${this.url}/users/${idUser}/carts/${idCart}`;
         return this.http.post(url, { quantity: quantity, idProdotto: `${idProdotto}` }, this.httpOptions);
+    }
+
+    chackOut(idUser: string | null) {
+        const url = `${this.url}/users/${idUser}/create-checkout-session`;
+        return this.http.post<{ url: string }>(url, this.httpOptions);
+
     }
 
 

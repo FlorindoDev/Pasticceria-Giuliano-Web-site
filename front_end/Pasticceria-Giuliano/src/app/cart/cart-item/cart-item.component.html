@@ -9,9 +9,11 @@
         <div class="flex-1 min-w-0 flex flex-col">
 
             <div>
-                <h2 class="text-primary font-semibold text-lg leading-snug">
-                    {{item.Prodotto.nome}}
-                </h2>
+                <a routerLink="/products/{{this.item.ProdottoIdProdotto}}">
+                    <h2 class="text-primary font-semibold text-lg leading-snug">
+                        {{item.Prodotto.nome}}
+                    </h2>
+                </a>
                 <p class="text-text/70 text-sm leading-relaxed">
                     {{item.Prodotto.descrizione}}
                 </p>
