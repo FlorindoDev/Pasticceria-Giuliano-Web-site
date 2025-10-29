@@ -9,10 +9,10 @@ import { CartIteamController } from "../controllers/CartItemController.js";
 import { CartController } from "../controllers/CartController.js";
 import { SchemaParams } from "../schemas/cart.schema.js";
 import { SchemaCartItemPost, SchemaParamsDelete } from "../schemas/cartitem.schema.js";
+import { PaymentController } from "../controllers/PaymentController.js";
 
 
 export const router = express.Router();
-
 
 /**
  * @swagger
@@ -860,5 +860,13 @@ router.delete("/:id/carts/:idCart/:idItem", enforceAuthentication, isOwnProfile,
         .catch((err) => next(err));
 }
 );
+
+router.post('/:id/create-checkout-session', enforceAuthentication, isOwnProfile, async (req, res) => {
+
+    PaymentController.createSessionCheckOut().then((session) => {
+        res.status(303).json({ url: session.url });
+    })
+
+});
 
 
