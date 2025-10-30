@@ -5,14 +5,14 @@ import { idUserRequiredParams, schemaUserPut } from "../schemas/user.schema.js";
 import { validate } from "../middleware/Middlewares.js";
 import { ResidenceController } from "../controllers/ResidenceController.js";
 import { schemaResidencePost, schemaResidencePut, idResidenzaRequiredParams } from "../schemas/residenza.schema.js";
-import { CartIteamController } from "../controllers/CartItemController.js";
+import { CartItemController } from "../controllers/CartItemController.js";
 import { CartController } from "../controllers/CartController.js";
 import { SchemaParams } from "../schemas/cart.schema.js";
 import { SchemaCartItemPost, SchemaParamsDelete } from "../schemas/cartitem.schema.js";
-import { PaymentController } from "../controllers/PaymentController.js";
 
 
 export const router = express.Router();
+
 
 /**
  * @swagger
@@ -728,7 +728,7 @@ router.get("/:id/carts", enforceAuthentication, isOwnProfile, validate(idUserReq
  * }
  */
 router.post("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(SchemaCartItemPost), (req, res, next) => {
-    CartIteamController.addItem(req.body.idProdotto, req.params.idCart, req.body.quantity)
+    CartItemController.addItem(req.body.idProdotto, req.params.idCart, req.body.quantity)
         .then(() => res.status(200).send())
         .catch((err) => next(err));
 }
@@ -800,7 +800,7 @@ router.post("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(
  * }
  */
 router.get("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(SchemaParams), (req, res, next) => {
-    CartIteamController.getItem(req.params.idCart)
+    CartItemController.getItem(req.params.idCart)
         .then((result) => res.status(200).json(result))
         .catch((err) => next(err));
 }
@@ -855,18 +855,13 @@ router.get("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(S
  * }
  */
 router.delete("/:id/carts/:idCart/:idItem", enforceAuthentication, isOwnProfile, validate(SchemaParamsDelete), (req, res, next) => {
-    CartIteamController.deleteItem(req.params.idItem)
+    CartItemController.deleteItem(req.params.idItem)
         .then(() => res.status(200).send())
         .catch((err) => next(err));
 }
 );
 
-router.post('/:id/create-checkout-session', enforceAuthentication, isOwnProfile, async (req, res) => {
 
-    PaymentController.createSessionCheckOut().then((session) => {
-        res.status(303).json({ url: session.url });
-    })
 
-});
 
 

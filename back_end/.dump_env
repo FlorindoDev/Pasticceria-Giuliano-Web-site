@@ -9,6 +9,7 @@ INIT_DATA="false"
 
 #stripe
 STRIPE_TOKEN="TOKEN"
+STRIPE_WEBHOOK_SECRET="V3RY_S3CR37_T0K3N"
 
 # Google Cloud Storage (per upload immagini)
 GOOGLE_APPLICATION_CREDENTIALS="path/to/credentials.json"

@@ -5,7 +5,7 @@ import { ProductController } from "./ProductController.js";
 import { CartController } from "./CartController.js";
 import { Prodotto } from "../models/DataBase.js";
 
-export class CartIteamController {
+export class CartItemController {
 
     static async getItem(idCart) {
         let result = await CartItem.findAll({

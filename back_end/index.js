@@ -10,6 +10,7 @@ import { router as routeAuth } from "./routes/AuthRoute.js"
 import { router as UsersRoute } from "./routes/UsersRoute.js"
 import { router as ProductRoute } from "./routes/ProductRoute.js";
 import { AppErrorHttp } from "./utils/AppError.js";
+import { router as PaymentRoute } from "./routes/payment.route.js";
 
 
 const app = express();
@@ -24,6 +25,9 @@ app.use(cors({
   origin: process.env.END_POINT_ALLOWED
 }));
 
+
+//Rotta pagamenti, qui dentro una rotta necessita di dati raw per questo è prima di app.use(express.json());
+app.use("/users", PaymentRoute);
 
 app.use(express.json());
 

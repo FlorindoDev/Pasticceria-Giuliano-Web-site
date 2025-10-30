@@ -58,6 +58,13 @@ export class MissingFieldError extends AppErrorHttp {
     }
 }
 
+export class WebBookErrorStripe extends AppErrorHttp {
+    constructor(err) {
+        super(BED_REQUEST, `Errore WebBook: ${err}`, "ERROR_WEB_BOOK");
+    }
+}
+
+
 export class FieldError extends AppErrorHttp {
 
     constructor(errors) {
