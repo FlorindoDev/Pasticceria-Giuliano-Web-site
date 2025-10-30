@@ -1,3 +1,4 @@
+import { OrderController } from "../controllers/OrderController.js";
 import { PaymentController } from "../controllers/PaymentController.js";
 import { WebBookAuthentication } from "../middleware/Payment.middlewares.js";
 import { enforceAuthentication, isOwnProfile } from "../middleware/authorization.js";
@@ -35,11 +36,11 @@ export const router = express.Router();
  *   }
  * }
  */
-router.post('/:id/checkout-session', express.json(), enforceAuthentication, isOwnProfile, async (req, res) => {
-
-    PaymentController.createSessionCheckOut(req.idUser, req.email_in_token).then((session) => {
+router.post('/:id/checkout-session', express.json(), enforceAuthentication, isOwnProfile, async (req, res, next) => {
+    console.log(req.body);
+    PaymentController.createSessionCheckOut(req.idUser, req.email_in_token, req.body.nota_spedizione).then((session) => {
         res.status(303).json({ url: session.url });
-    })
+    }).catch((err) => next(err));
 
 });
 
@@ -65,15 +66,12 @@ router.post('/:id/checkout-session', express.json(), enforceAuthentication, isOw
  *   }
  * }
  */
-router.post('/checkout-success', bodyParser.raw({ type: 'application/json' }), WebBookAuthentication, (req, res) => {
+router.post('/checkout-success', bodyParser.raw({ type: 'application/json' }), WebBookAuthentication, (req, res, next) => {
 
     if (req.eventWebBook.type === 'checkout.session.completed') {
-        //const session = req.eventWebBook.data.object;
+        const session = req.eventWebBook.data.object;
+        OrderController.createOrder(session).catch((err) => next(err));
 
-        //const userId = session.metadata?.userId;
-        //const sessionId = session.id;
-        // const paymentIntentId = session.payment_intent;
-        console.log("grande coglione");
 
     }
 

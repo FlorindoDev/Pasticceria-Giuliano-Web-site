@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+
 /**
  * @swagger
  * components:
@@ -43,6 +44,8 @@ export function OrdineModel(database) {
             primaryKey: true
         },
         numero_spedizione: { type: DataTypes.STRING, allowNull: true },
+        id_pagamento: { type: DataTypes.STRING, allowNull: false },
+        nota_spedizione: { type: DataTypes.STRING, allowNull: true },
         stato: {
             type: DataTypes.ENUM("IN PREPARAZIONE", "SPEDITO", "IN CONSEGNA", "CONSEGNATO", "ANNULLATO"),
             allowNull: false,

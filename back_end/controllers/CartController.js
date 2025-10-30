@@ -45,13 +45,6 @@ export class CartController {
         })
 
         if (result) {
-            /*
-            await result.update({ isActive: false }, {
-                where: {
-                    idCart: result.dataValues.idCart
-                }
-            });
-            */
             return 0;
         }
 
@@ -67,6 +60,16 @@ export class CartController {
         }
 
         return resultSave;
+    }
+
+    static async deleteCart(idCart) {
+
+        let result = await Cart.findByPk(idCart);
+
+        result = result.destroy();
+
+        return result;
+
     }
 
 

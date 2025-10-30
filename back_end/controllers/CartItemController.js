@@ -71,7 +71,7 @@ export class CartItemController {
                 }
             }
 
-            CartIteamController.updateCartItem(item, filter);
+            CartItemController.updateCartItem(item, filter);
             return;
         }
 

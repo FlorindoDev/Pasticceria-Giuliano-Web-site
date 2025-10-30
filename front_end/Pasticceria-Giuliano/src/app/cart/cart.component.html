@@ -28,99 +28,105 @@
             }
         </section>
 
+        <form id="form-note" [formGroup]="checkoutForm" (ngSubmit)="checkOut()">
+            <aside
+                class="lg:sticky lg:top-24 h-max rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md p-6 flex flex-col">
 
-        <aside
-            class="lg:sticky lg:top-24 h-max rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md p-6 flex flex-col">
+                <h2 class="text-primary font-semibold text-xl leading-tight">
+                    Riepilogo ordine
+                </h2>
 
-            <h2 class="text-primary font-semibold text-xl leading-tight">
-                Riepilogo ordine
-            </h2>
+                <p class="text-text/70 text-sm mt-1">
+                    Controlla i costi prima di confermare.
+                </p>
 
-            <p class="text-text/70 text-sm mt-1">
-                Controlla i costi prima di confermare.
-            </p>
+                <div class="mt-6 space-y-4 text-sm">
 
-            <div class="mt-6 space-y-4 text-sm">
-
-                <div class="flex items-center justify-between">
-                    <span class="text-text/70">totale</span>
-                    <span class="font-semibold text-primary">
-                        {{this.costo_totale() | number:'1.2-2'}}
-                    </span>
-                </div>
-
-
-                <div class="flex items-start justify-between">
-                    <span class="text-text/70">
-                        Consegna
-                        <span class="block text-[11px] text-text/50 leading-tight">
-                            Gratuita nel comune, altrimenti calcolata al telefono
+                    <div class="flex items-center justify-between">
+                        <span class="text-text/70">totale</span>
+                        <span class="font-semibold text-primary">
+                            {{this.costo_totale() | number:'1.2-2'}}
                         </span>
-                    </span>
-                    <span class="font-semibold text-primary text-right">
-                        Gratis
-                    </span>
+                    </div>
+
+
+                    <div class="flex items-start justify-between">
+                        <span class="text-text/70">
+                            Consegna
+                            <span class="block text-[11px] text-text/50 leading-tight">
+                                Gratuita nel comune, altrimenti calcolata al telefono
+                            </span>
+                        </span>
+                        <span class="font-semibold text-primary text-right">
+                            Gratis
+                        </span>
+                    </div>
+
+
+                    <div class="pt-4 border-t border-secondary/30">
+                        <label for="noteOrdine" class="block text-text/80 font-medium mb-2">
+                            Note per la consegna
+                        </label>
+                        <textarea (keyup)="hendleTyping($event)" formControlName="nota" id="noteOrdine"
+                            class="w-full rounded-xl bg-bg border border-secondary/40 text-sm text-text/90 p-3 outline-none focus:ring-2  ring-accent/40 focus:border-accent/60 placeholder:text-text/40 resize-none"
+                            rows="3" placeholder="Es: consegna dopo le 15, citofono Rossi..."></textarea>
+                    </div>
+                    @if(isSubmitted && checkoutForm.controls.nota.errors){
+                    @if(checkoutForm.controls.nota.errors['maxlength']){
+                    <p class="form-error">lungezza massima 256</p>
+                    }
+                    }
                 </div>
 
+                <div class="mt-6 h-px w-full bg-secondary/30 rounded-full"></div>
 
-                <div class="pt-4 border-t border-secondary/30">
-                    <label for="noteOrdine" class="block text-text/80 font-medium mb-2">
-                        Note per la consegna
-                    </label>
-                    <textarea id="noteOrdine"
-                        class="w-full rounded-xl bg-bg border border-secondary/40 text-sm text-text/90 p-3 outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 placeholder:text-text/40 resize-none"
-                        rows="3" placeholder="Es: consegna dopo le 15, citofono Rossi..."></textarea>
+
+                <div class="mt-6 flex items-start justify-between">
+                    <div>
+                        <p class="text-text/70 text-sm leading-tight">Totale</p>
+                        <p class="text-[11px] text-text/50 leading-tight">IVA inclusa</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-3xl font-extrabold text-primary leading-none">
+                            {{this.costo_totale() | number:'1.2-2'}}
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mt-6 h-px w-full bg-secondary/30 rounded-full"></div>
+                <button type="submit"
+                    class="mt-8 w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-bg shadow-lg hover:-translate-y-0.5 hover:bg-accent transition active:scale-[0.99]">
+                    <p id="text-conferma">Conferma ordine
+                        <span aria-hidden>→</span>
+                    </p>
+                    <svg id="loading-ordine" class="hidden w-10 h-10 animate-spin text-bg" viewBox="0 0 24 24"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
+                            stroke="currentColor" stroke-width="3.55556" stroke-linecap="round" />
+                    </svg>
+                </button>
 
 
-            <div class="mt-6 flex items-start justify-between">
-                <div>
-                    <p class="text-text/70 text-sm leading-tight">Totale</p>
-                    <p class="text-[11px] text-text/50 leading-tight">IVA inclusa</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-3xl font-extrabold text-primary leading-none">
-                        {{this.costo_totale() | number:'1.2-2'}}
+
+                <div
+                    class="mt-6 rounded-xl bg-bg border border-secondary/30 p-4 text-xs text-text/80 leading-relaxed shadow-inner">
+                    <p class="font-semibold text-primary text-sm flex items-center gap-2">
+                        <span class="text-lg">📞</span>
+                        Hai bisogno di aiuto?
+                    </p>
+                    <p class="mt-2">
+                        Puoi anche ordinare o modificare l’ordine telefonicamente:
+                    </p>
+                    <p class="font-semibold text-accent mt-1 text-sm">
+                        081-588-7696
+                    </p>
+                    <p class="text-text/60 mt-2">
+                        Disponibili tutti i giorni <span class="font-medium text-text/80">08:00–19:00</span>.
                     </p>
                 </div>
-            </div>
 
-            <button (click)="checkOut()"
-                class="mt-8 w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-bg shadow-lg hover:-translate-y-0.5 hover:bg-accent transition active:scale-[0.99]">
-                <p id="text-conferma">Conferma ordine
-                    <span aria-hidden>→</span>
-                </p>
-                <svg id="loading-ordine" class="hidden w-10 h-10 animate-spin text-bg" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
-                        stroke="currentColor" stroke-width="3.55556" stroke-linecap="round" />
-                </svg>
-            </button>
-
-
-
-            <div
-                class="mt-6 rounded-xl bg-bg border border-secondary/30 p-4 text-xs text-text/80 leading-relaxed shadow-inner">
-                <p class="font-semibold text-primary text-sm flex items-center gap-2">
-                    <span class="text-lg">📞</span>
-                    Hai bisogno di aiuto?
-                </p>
-                <p class="mt-2">
-                    Puoi anche ordinare o modificare l’ordine telefonicamente:
-                </p>
-                <p class="font-semibold text-accent mt-1 text-sm">
-                    081-588-7696
-                </p>
-                <p class="text-text/60 mt-2">
-                    Disponibili tutti i giorni <span class="font-medium text-text/80">08:00–19:00</span>.
-                </p>
-            </div>
-
-        </aside>
+            </aside>
+        </form>
 
     </div>
 

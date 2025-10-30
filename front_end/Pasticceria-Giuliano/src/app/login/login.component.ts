@@ -113,10 +113,7 @@ export class Login {
 
     } else {
       this.startLoading();
-      console.log({
-        email: this.loginForm.value.user as string,
-        password: this.loginForm.value.pass as string
-      })
+
       this.authservice.login({
         email: this.loginForm.value.user as string,
         password: this.loginForm.value.pass as string

@@ -63,7 +63,7 @@ export class SweetPage {
       let idUser = this.auth.getidUser();
       this.cart_service.getCartUser(idUser).subscribe({
         next: (cart: Cart) => {
-          this.cart_service.addItem(idUser, cart.idCart, 1, this.dolce.idProdotto).subscribe({})
+          this.cart_service.addItem({ idUser: idUser, idCart: cart.idCart, quantity: 1, idProdotto: this.dolce.idProdotto }).subscribe({})
           this.toastr.success("Hai aggiunto l'elemento con successo", "Azione Completata!");
         },
       })

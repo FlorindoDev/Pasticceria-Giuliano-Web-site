@@ -6,17 +6,18 @@ export const stripe = new Stripe(process.env.STRIPE_TOKEN);
 
 export class PaymentController {
 
-    static async createSessionCheckOut(idUser, email) {
-        let items = await PaymentController.createItem(idUser);
+    static async createSessionCheckOut(idUser, email, nota_spedizione) {
+        let cart = await PaymentController.createItem(idUser);
         const session = await stripe.checkout.sessions.create({
             customer_email: email,
-            line_items: items,
+            line_items: cart.items,
             mode: 'payment',
             success_url: `https://www.google.com`,
             cancel_url: `${process.env.END_POINT_ALLOWED}/cart`,
             metadata: {
                 userId: idUser.toString(),
-
+                idCart: cart.idCart.toString(),
+                nota: nota_spedizione
             },
         });
 
@@ -46,7 +47,7 @@ export class PaymentController {
 
         });
 
-        return paymentItem;
+        return { items: paymentItem, idCart: cart.dataValues.idCart };
     }
 
 }

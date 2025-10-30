@@ -29,7 +29,7 @@ import { DataTypes } from "sequelize";
 export function OrdineProdottoModel(database) {
     return database.define("OrdineProdotto", {
         quantity: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
-        priceAtPurchase: { type: DataTypes.FLOAT, allowNull: false },
+        costo: { type: DataTypes.FLOAT, allowNull: false },
         peso: { type: DataTypes.FLOAT, allowNull: false },
     });
 }

@@ -38,7 +38,15 @@ export class CartItem {
     let oldTot: number = this.subtotal();
     this.quantity.update(q => q + 1);
     this.subtotOutput.emit(this.subtotal() - oldTot);
-    this.cart_service.addItem(this.auth.getidUser(), this.item.CartIdCart, 1, this.item.Prodotto.idProdotto, false).subscribe({})
+
+    let request = {
+      idUser: this.auth.getidUser(),
+      idCart: this.item.CartIdCart,
+      quantity: 1,
+      idProdotto: this.item.Prodotto.idProdotto
+    }
+
+    this.cart_service.addItem(request, false).subscribe({})
   }
 
   removeQuantity() {
@@ -46,7 +54,15 @@ export class CartItem {
       let oldTot: number = this.subtotal();
       this.quantity.update(q => q - 1);
       this.subtotOutput.emit(this.subtotal() - oldTot);
-      this.cart_service.addItem(this.auth.getidUser(), this.item.CartIdCart, -1, this.item.Prodotto.idProdotto, false).subscribe({})
+
+      let request = {
+        idUser: this.auth.getidUser(),
+        idCart: this.item.CartIdCart,
+        quantity: -1,
+        idProdotto: this.item.Prodotto.idProdotto
+      }
+
+      this.cart_service.addItem(request, false).subscribe({})
     }
 
   }
