@@ -53,11 +53,26 @@ export class Cart {
   }
 
   checkOut() {
+    this.startLoading();
     this.cart_service.chackOut(this.auth.getidUser()).subscribe({
       next: (value) => {
         window.location.replace(value.url);
+        this.stopLoading();
+      },
+      error: (err) => {
+        this.stopLoading();
       },
     });
+  }
+
+  startLoading() {
+    document.getElementById("text-conferma")?.classList.add("hidden");
+    document.getElementById("loading-ordine")?.classList.remove("hidden");
+  }
+
+  stopLoading() {
+    document.getElementById("text-conferma")?.classList.remove("hidden");
+    document.getElementById("loading-ordine")?.classList.add("hidden");
   }
 
 }
