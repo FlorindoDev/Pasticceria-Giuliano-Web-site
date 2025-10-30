@@ -48,7 +48,7 @@ export class CartService {
     }
 
     chackOut(idUser: string | null) {
-        const url = `${this.url}/users/${idUser}/create-checkout-session`;
+        const url = `${this.url}/users/${idUser}/checkout-session`;
         return this.http.post<{ url: string }>(url, this.httpOptions);
 
     }

@@ -247,7 +247,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
 /**
  * @swagger
  * {
- *   "/users/{id}/residence": {
+ *   "/users/{id}/residences": {
  *     "post": {
  *       "tags": ["Users"],
  *       "summary": "Aggiungi una residenza all'utente",
@@ -335,7 +335,7 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
  *   }
  * }
  */
-router.post('/:id/residence', [enforceAuthentication, validate(schemaResidencePost), isOwnProfile], (req, res, next) => {
+router.post('/:id/residences', [enforceAuthentication, validate(schemaResidencePost), isOwnProfile], (req, res, next) => {
     ResidenceController.addResidence(req.idUser, req.body).then(() => {
         res.status(200);
         res.send();
@@ -348,7 +348,7 @@ router.post('/:id/residence', [enforceAuthentication, validate(schemaResidencePo
 /**
  * @swagger
  * {
- *   "/users/{id}/residence/{residenceId}": {
+ *   "/users/{id}/residences/{residenceId}": {
  *     "delete": {
  *       "tags": ["Users"],
  *       "summary": "Cancella una residenza dell'utente",
@@ -418,7 +418,7 @@ router.post('/:id/residence', [enforceAuthentication, validate(schemaResidencePo
  *   }
  * }
  */
-router.delete('/:id/residence/:residenceId', [enforceAuthentication, validate(idResidenzaRequiredParams), isOwnProfile], (req, res, next) => {
+router.delete('/:id/residences/:residenceId', [enforceAuthentication, validate(idResidenzaRequiredParams), isOwnProfile], (req, res, next) => {
     ResidenceController.deleteResidence(req.params.residenceId).then(() => {
         res.status(200);
         res.send();
@@ -431,7 +431,7 @@ router.delete('/:id/residence/:residenceId', [enforceAuthentication, validate(id
 /**
  * @swagger
  * {
- *   "/users/{id}/residence": {
+ *   "/users/{id}/residences": {
  *     "get": {
  *       "tags": ["Users"],
  *       "summary": "Ottieni la residenza dell'utente",
@@ -478,7 +478,7 @@ router.delete('/:id/residence/:residenceId', [enforceAuthentication, validate(id
  *   }
  * }
  */
-router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, next) => {
+router.get('/:id/residences', enforceAuthentication, isOwnProfile, (req, res, next) => {
     ResidenceController.getResidence(req.idUser).then((result) => {
         res.status(200);
         res.json(result);
@@ -492,7 +492,7 @@ router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, nex
 /**
  * @swagger
  * {
- *   "/users/{id}/residence/{residenceId}": {
+ *   "/users/{id}/residences/{residenceId}": {
  *     "put": {
  *       "tags": ["Users"],
  *       "summary": "Aggiorna la residenza di un utente",
@@ -556,7 +556,7 @@ router.get('/:id/residence', enforceAuthentication, isOwnProfile, (req, res, nex
  *   }
  * }
  */
-router.put('/:id/residence/:residenceId', [enforceAuthentication, validate(schemaResidencePut), isOwnProfile], (req, res, next) => {
+router.put('/:id/residences/:residenceId', [enforceAuthentication, validate(schemaResidencePut), isOwnProfile], (req, res, next) => {
     ResidenceController.updateResidence(req.params.residenceId, req.body).then(() => {
         res.status(200);
         res.send();

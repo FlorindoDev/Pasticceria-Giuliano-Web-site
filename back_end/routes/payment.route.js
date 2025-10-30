@@ -9,7 +9,7 @@ export const router = express.Router();
 /**
  * @swagger
  * {
- *   "/users/{id}/create-checkout-session": {
+ *   "/users/{id}/checkout-session": {
  *     "post": {
  *       "tags": ["Users"],
  *       "summary": "[Interno] Crea una sessione di pagamento Stripe",
@@ -35,7 +35,7 @@ export const router = express.Router();
  *   }
  * }
  */
-router.post('/:id/create-checkout-session', express.json(), enforceAuthentication, isOwnProfile, async (req, res) => {
+router.post('/:id/checkout-session', express.json(), enforceAuthentication, isOwnProfile, async (req, res) => {
 
     PaymentController.createSessionCheckOut(req.idUser, req.email_in_token).then((session) => {
         res.status(303).json({ url: session.url });
