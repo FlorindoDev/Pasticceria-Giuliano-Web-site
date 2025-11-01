@@ -1,0 +1,434 @@
+<section class="min-h-screen bg-bg text-text">
+    <div
+        class="max-w-7xl mx-auto px-5 sm:px-8 md:px-10 lg:px-12 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
+
+        <!-- HEADER -->
+        <header class="lg:col-span-2">
+            <span
+                class="inline-flex items-center justify-center rounded-full border border-secondary/30 bg-bgcontrast/90 px-4 py-1.5 text-xs font-semibold text-highlight shadow-sm backdrop-blur">
+                I tuoi dolci passati 🧁
+            </span>
+
+            <h1
+                class="mt-4 text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-primary to-accent">
+                I miei ordini
+            </h1>
+
+            <p class="mt-3 max-w-2xl text-text/80 text-base md:text-lg">
+                Rivedi gli ordini fatti, controlla lo stato di consegna e riordina in un tocco.
+            </p>
+
+            <div class="mt-6 h-px w-24 rounded-full bg-secondary/30"></div>
+        </header>
+
+        <!-- LISTA ORDINI -->
+        <section class="flex flex-col gap-5">
+
+            <!-- Filtri -->
+            <div
+                class="flex flex-wrap gap-2 items-center rounded-2xl bg-bgcontrast border border-secondary/40 px-4 py-3 shadow-sm">
+                <p class="text-sm text-text/60 mr-auto">Filtra</p>
+                <button
+                    class="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5">
+                    Tutti
+                </button>
+                <button
+                    class="inline-flex items-center gap-2 rounded-full bg-bg text-text/70 text-xs font-semibold px-3 py-1.5 border border-transparent hover:border-accent/50 transition">
+                    In preparazione
+                </button>
+                <button
+                    class="inline-flex items-center gap-2 rounded-full bg-bg text-text/70 text-xs font-semibold px-3 py-1.5 border border-transparent hover:border-accent/50 transition">
+                    Consegnati
+                </button>
+                <button
+                    class="inline-flex items-center gap-2 rounded-full bg-bg text-text/70 text-xs font-semibold px-3 py-1.5 border border-transparent hover:border-accent/50 transition">
+                    Annullati
+                </button>
+            </div>
+
+            <!-- ========== ORDINE 1 - CONSEGNATO ========== -->
+            <article
+                class="rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md overflow-hidden hover:border-accent/40 transition">
+                <div class="flex flex-col md:flex-row gap-4 p-5 md:p-6">
+                    <!-- Sinistra -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <p class="text-xs font-mono text-text/50">#ORD-24018</p>
+                            <span
+                                class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold px-3 py-1 bg-green-500/20 text-green-500 shadow-sm ring-1 ring-green-400/40">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                                Consegnato
+                            </span>
+                            <span class="text-[11px] text-text/50">25 ottobre 2025, 18:45</span>
+                        </div>
+
+                        <h2 class="mt-2 text-lg font-semibold text-primary leading-tight">
+                            Consegna a: Rossi Maria
+                        </h2>
+                        <p class="text-text/70 text-sm mt-1 flex items-center gap-2">
+                            <span class="text-base">📍</span>
+                            Via dei Pasticcieri 12, Napoli
+                        </p>
+
+                        <!-- Prodotti -->
+                        <div class="mt-4 flex gap-3 flex-wrap">
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">1x</span>
+                                <span class="text-text/60 whitespace-nowrap">Torta panna fragole</span>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">12x</span>
+                                <span class="text-text/60 whitespace-nowrap">Mignon assortiti</span>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">1x</span>
+                                <span class="text-text/60 whitespace-nowrap">Baba al rum</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destra -->
+                    <div class="w-full md:w-56 flex flex-col justify-between gap-4">
+                        <div class="text-right">
+                            <p class="text-[11px] uppercase tracking-wide text-text/50">Totale</p>
+                            <p class="text-2xl font-extrabold text-primary leading-tight">
+                                38,50 €
+                            </p>
+                            <p class="text-[11px] text-text/50">IVA incl.</p>
+                        </div>
+
+                        <div class="flex gap-2 md:justify-end">
+                            <button
+                                class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-bg hover:bg-accent transition">
+                                Riordina
+                                <span aria-hidden>↺</span>
+                            </button>
+                            <button
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-2 text-sm font-semibold text-text/80 border border-secondary/30 hover:border-accent/40 transition">
+                                Dettagli
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline CONSEGNATO -->
+                <div class="bg-bg/50 px-5 md:px-6 py-4 border-t border-secondary/20 overflow-x-auto">
+                    <ol class="flex items-start gap-0 min-w-[280px]">
+                        <!-- step 1 -->
+                        <li class="flex flex-col items-center gap-2 flex-none w-20">
+                            <span
+                                class="w-7 h-7 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] font-semibold shadow-md ring-2 ring-accent/50">
+                                1
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Creato</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-start pt-3.5">
+                            <span class="h-0.5 w-full bg-accent/50 rounded-full"></span>
+                        </li>
+
+                        <!-- step 2 -->
+                        <li class="flex flex-col items-center gap-2 flex-none w-28">
+                            <span
+                                class="w-7 h-7 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] font-semibold shadow-md ring-2 ring-accent/50">
+                                2
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">In preparazione</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-start pt-3.5">
+                            <span class="h-0.5 w-full bg-accent/50 rounded-full"></span>
+                        </li>
+
+                        <!-- step 3 -->
+                        <li class="flex flex-col items-center gap-2 flex-none w-24">
+                            <span
+                                class="w-7 h-7 rounded-full bg-green-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-green-400/70 shadow-lg">
+                                3
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Consegnato</span>
+                        </li>
+                    </ol>
+                </div>
+            </article>
+
+            <!-- ========== ORDINE 2 - IN PREPARAZIONE ========== -->
+            <article
+                class="rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md overflow-hidden hover:border-accent/40 transition">
+                <div class="flex flex-col md:flex-row gap-4 p-5 md:p-6">
+                    <!-- Sinistra -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <p class="text-xs font-mono text-text/50">#ORD-24019</p>
+                            <span
+                                class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold px-3 py-1 bg-amber-500/25 text-amber-500 shadow-sm ring-1 ring-amber-400/60">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                                In preparazione
+                            </span>
+                            <span class="text-[11px] text-text/50">1 novembre 2025, 10:15</span>
+                        </div>
+
+                        <h2 class="mt-2 text-lg font-semibold text-primary leading-tight">
+                            Ritiro in pasticceria
+                        </h2>
+                        <p class="text-text/70 text-sm mt-1 flex items-center gap-2">
+                            <span class="text-base">📍</span>
+                            Via delle Creme 5, Napoli
+                        </p>
+
+                        <!-- Prodotti -->
+                        <div class="mt-4 flex gap-3 flex-wrap">
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">2x</span>
+                                <span class="text-text/60 whitespace-nowrap">Tiramisù mono</span>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">1x</span>
+                                <span class="text-text/60 whitespace-nowrap">Crostata frutta</span>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">6x</span>
+                                <span class="text-text/60 whitespace-nowrap">Sfogliatelle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destra -->
+                    <div class="w-full md:w-56 flex flex-col justify-between gap-4">
+                        <div class="text-right">
+                            <p class="text-[11px] uppercase tracking-wide text-text/50">Totale</p>
+                            <p class="text-2xl font-extrabold text-primary leading-tight">
+                                24,00 €
+                            </p>
+                            <p class="text-[11px] text-text/50">IVA incl.</p>
+                        </div>
+
+                        <div class="flex gap-2 md:justify-end">
+                            <button
+                                class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-bg hover:bg-accent transition">
+                                Riordina
+                                <span aria-hidden>↺</span>
+                            </button>
+                            <button
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-2 text-sm font-semibold text-text/80 border border-secondary/30 hover:border-accent/40 transition">
+                                Dettagli
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline IN PREPARAZIONE -->
+                <div class="bg-bg/50 px-5 md:px-6 py-3 border-t border-secondary/20 overflow-x-auto">
+                    <ol class="flex items-center justify-between gap-2 sm:gap-4 min-w-[280px]">
+                        <!-- STEP 1 -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="w-6 h-6 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] shadow-md ring-2 ring-accent/50">
+                                1
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Creato</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-center justify-center">
+                            <span class="h-0.5 w-10 sm:w-16 md:w-full bg-amber-400/50 rounded-full"></span>
+                        </li>
+
+                        <!-- STEP 2 (CURRENT) -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="relative w-7 h-7 rounded-full bg-amber-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-amber-400/70 shadow-lg">
+                                2
+
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">In preparazione</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-center justify-center">
+                            <span class="h-0.5 w-10 sm:w-16 md:w-full bg-secondary/30 rounded-full"></span>
+                        </li>
+
+                        <!-- STEP 3 -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="w-6 h-6 rounded-full bg-bgcontrast border border-secondary/40 flex items-center justify-center text-[11px] text-text/50">
+                                3
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Consegnato</span>
+                        </li>
+                    </ol>
+                </div>
+            </article>
+
+            <!-- ========== ORDINE 3 - ANNULLATO ========== -->
+            <article
+                class="rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md overflow-hidden hover:border-accent/40 transition">
+                <div class="flex flex-col md:flex-row gap-4 p-5 md:p-6">
+                    <!-- Sinistra -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <p class="text-xs font-mono text-text/50">#ORD-24012</p>
+                            <span
+                                class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold px-3 py-1 bg-red-500/15 text-red-400 shadow-sm ring-1 ring-red-400/50">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                                Annullato
+                            </span>
+                            <span class="text-[11px] text-text/50">20 ottobre 2025, 14:20</span>
+                        </div>
+
+                        <h2 class="mt-2 text-lg font-semibold text-primary leading-tight">
+                            Consegna a: Bianchi Luca
+                        </h2>
+                        <p class="text-text/70 text-sm mt-1 flex items-center gap-2">
+                            <span class="text-base">📍</span>
+                            Fuori comune (conferma mancata)
+                        </p>
+
+                        <!-- Prodotti -->
+                        <div class="mt-4 flex gap-3 flex-wrap">
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">1x</span>
+                                <span class="text-text/60 whitespace-nowrap">Cassata siciliana</span>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-2 rounded-full bg-bg px-3 py-1 border border-secondary/20 text-xs">
+                                <span class="font-semibold text-text/80">8x</span>
+                                <span class="text-text/60 whitespace-nowrap">Pastarelle miste</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destra -->
+                    <div class="w-full md:w-56 flex flex-col justify-between gap-4">
+                        <div class="text-right">
+                            <p class="text-[11px] uppercase tracking-wide text-text/50">Totale</p>
+                            <p class="text-2xl font-extrabold text-text/40 leading-tight line-through">
+                                31,90 €
+                            </p>
+                            <p class="text-[11px] text-text/50">Ordine annullato</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline ANNULLATO -->
+                <div class="bg-bg/50 px-5 md:px-6 py-3 border-t border-secondary/20 overflow-x-auto">
+                    <ol class="flex items-center justify-between gap-2 sm:gap-4 min-w-[280px]">
+                        <!-- STEP 1 -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="w-6 h-6 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] shadow-md ring-2 ring-accent/50">
+                                1
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Creato</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-center justify-center">
+                            <span class="h-0.5 w-10 sm:w-16 md:w-full bg-red-400/50 rounded-full"></span>
+                        </li>
+
+                        <!-- STEP 2 (CANCEL) -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="relative w-7 h-7 rounded-full bg-red-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-red-400/70 shadow-lg">
+                                !
+                                <span
+                                    class="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-red-500/90 whitespace-nowrap hidden sm:inline">annullato</span>
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Interrotto</span>
+                        </li>
+
+                        <!-- linea -->
+                        <li class="flex-1 flex items-center justify-center">
+                            <span class="h-0.5 w-10 sm:w-16 md:w-full bg-secondary/25 rounded-full"></span>
+                        </li>
+
+                        <!-- STEP 3 -->
+                        <li class="flex flex-col items-center gap-1 flex-none">
+                            <span
+                                class="w-6 h-6 rounded-full bg-bgcontrast border border-secondary/40 flex items-center justify-center text-[11px] text-text/50">
+                                3
+                            </span>
+                            <span class="text-xs text-text/70 leading-tight text-center">Consegnato</span>
+                        </li>
+                    </ol>
+                </div>
+            </article>
+        </section>
+
+        <!-- ASIDE DESTRO -->
+        <aside
+            class="lg:sticky lg:top-24 h-max rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md p-6 flex flex-col gap-6">
+            <div>
+                <h2 class="text-primary font-semibold text-xl leading-tight">
+                    Statistiche ordini
+                </h2>
+                <p class="text-text/70 text-sm mt-1">
+                    Uno sguardo veloce ai tuoi dolci preferiti 🍰
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between rounded-2xl bg-bg px-3 py-3">
+                    <div>
+                        <p class="text-xs text-text/50">Ordini totali</p>
+                        <p class="text-2xl font-extrabold text-primary leading-tight">
+                            14
+                        </p>
+                    </div>
+                    <span class="text-3xl">🧁</span>
+                </div>
+
+                <div class="flex items-center justify-between rounded-2xl bg-bg px-3 py-3">
+                    <div>
+                        <p class="text-xs text-text/50">Spesa totale</p>
+                        <p class="text-xl font-bold text-primary leading-tight">
+                            326,40 €
+                        </p>
+                    </div>
+                    <span class="text-3xl">💶</span>
+                </div>
+
+                <div class="flex items-center justify-between rounded-2xl bg-bg px-3 py-3">
+                    <div>
+                        <p class="text-xs text-text/50">Ultimo ordine</p>
+                        <p class="text-sm font-semibold text-text/80 leading-tight">
+                            1 novembre 2025
+                        </p>
+                    </div>
+                    <span class="text-3xl">🗓️</span>
+                </div>
+            </div>
+
+            <div class="h-px w-full bg-secondary/30 rounded-full"></div>
+
+            <div
+                class="rounded-xl bg-bg border border-secondary/30 p-4 text-xs text-text/80 leading-relaxed shadow-inner">
+                <p class="font-semibold text-primary text-sm flex items-center gap-2">
+                    <span class="text-lg">📦</span>
+                    Hai un problema con un ordine?
+                </p>
+                <p class="mt-2">
+                    Chiama o scrivi specificando il numero dell’ordine (es. #ORD-24018).
+                </p>
+                <p class="font-semibold text-accent mt-1 text-sm">
+                    081-588-7696
+                </p>
+                <p class="text-text/60 mt-2">
+                    Disponibili <span class="font-medium text-text/80">08:00–19:00</span>.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+</section>

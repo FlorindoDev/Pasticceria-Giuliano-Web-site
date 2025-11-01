@@ -4,6 +4,7 @@ import { Assortimento } from './assortimento/assortimento.component';
 import { Cart } from './cart/cart.component';
 import { SweetPage } from './sweet-page/sweet-page.component';
 import { authGuard } from './_guards/auth/auth.guard';
+import { OrderPage } from './order-page/order-page.component';
 
 export const routes: Routes = [
 
@@ -32,6 +33,11 @@ export const routes: Routes = [
         path: "products/:id",
         title: "Sweet Page",
         component: SweetPage
+    },
+    {
+        path: "order",
+        title: "Order Page",
+        component: OrderPage
     }
 
 ];
