@@ -29,6 +29,15 @@ export function isOwnProfile(req, res, next) {
 
 }
 
+export function isOwnProfileQuery(req, res, next) {
+
+
+    if (req.idUser != req.query.iduser) return next(new ForbbidenError());
+
+    next();
+
+}
+
 export let isUserAdmin = (req, res, next) => {
     req.isAdmin ? next() : next(new UnauthorizedError());
     return;

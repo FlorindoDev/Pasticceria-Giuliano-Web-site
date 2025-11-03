@@ -6,11 +6,14 @@ import swaggerJSDoc from "swagger-jsdoc";
 import { database } from "./models/DataBase.js";
 import https from "https";
 import fs from 'fs';
-import { router as routeAuth } from "./routes/AuthRoute.js"
-import { router as UsersRoute } from "./routes/UsersRoute.js"
-import { router as ProductRoute } from "./routes/ProductRoute.js";
+import { router as routeAuth } from "./routes/auth.route.js"
+import { router as UsersRoute } from "./routes/users.route.js"
+import { router as ProductRoute } from "./routes/product.route.js";
 import { AppErrorHttp } from "./utils/AppError.js";
 import { router as PaymentRoute } from "./routes/payment.route.js";
+import { router as CartRouter } from "./routes/cart.route.js";
+import { router as ResidanceRouter } from "./routes/residence.route.js";
+import { router as OrderRouter } from "./routes/order.route.js";
 
 
 const app = express();
@@ -53,8 +56,11 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 //define routes
 app.use('/auth', routeAuth);
-app.use('/users', UsersRoute);
 app.use('/products', ProductRoute);
+app.use('/users', UsersRoute);
+app.use('/users', CartRouter);
+app.use('/users', ResidanceRouter);
+app.use('/orders', OrderRouter);
 
 
 //error handler

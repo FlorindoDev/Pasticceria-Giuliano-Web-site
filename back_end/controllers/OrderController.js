@@ -1,6 +1,8 @@
 
 import { Ordine } from "../models/DataBase.js";
 import { CartItemController } from "./CartItemController.js";
+import { Prodotto, User, Residenza } from "../models/DataBase.js";
+import { OrderNotFoundError } from "../utils/error/index.js";
 
 //TODO: Aggiungere svuotamento carrello
 
@@ -42,6 +44,35 @@ export class OrderController {
                 }
             });
         }
+    }
+
+    static async getOrder(idUser, filters = {}) {
+
+        filters.UserIdUser = idUser;
+        let result = await Ordine.findAll({
+            where: filters,
+            include: [
+                {
+                    model: Prodotto,
+                    attributes: ["nome", "tag"]
+                },
+                {
+                    model: User,
+                    attributes: ["idUser"],
+                    include: [
+                        {
+                            model: Residenza
+                        }
+                    ]
+                }
+            ]
+        });
+
+        if (!result || result.length === 0) {
+            throw new OrderNotFoundError();
+        }
+
+        return result;
     }
 
 }

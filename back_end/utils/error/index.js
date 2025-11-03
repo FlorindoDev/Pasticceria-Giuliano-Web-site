@@ -41,6 +41,12 @@ export class CartNotFoundError extends AppErrorHttp {
     }
 }
 
+export class OrderNotFoundError extends AppErrorHttp {
+    constructor() {
+        super(NO_CONTENT, "non ci sono ordini", "ORDER_NOT_EXISTS");
+    }
+}
+
 export class CartItemNotFoundError extends AppErrorHttp {
     constructor() {
         super(NO_CONTENT, "non ci sono cart item", "CART_ITEM_NOT_EXISTS");
@@ -116,7 +122,7 @@ export class TelephoneNumerPresentError extends AppErrorHttp {
 
 export class ToMnayResidenceError extends AppErrorHttp {
     constructor() {
-        super(CONFLICT, "Hai troppe Residenze (max 3)", "MAX_RESIDENCE");
+        super(CONFLICT, "Hai troppe Residenze (max 1)", "MAX_RESIDENCE");
     }
 }
 

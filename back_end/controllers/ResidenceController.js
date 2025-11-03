@@ -11,7 +11,7 @@ export class ResidenceController {
             }
         })
 
-        if (res.count > 3) {
+        if (res.count > 1) {
             throw new ToMnayResidenceError();
         }
 
