@@ -1,0 +1,172 @@
+<article
+    class="rounded-2xl bg-bgcontrast border border-secondary/40 shadow-md overflow-hidden hover:border-accent/40 transition">
+    <div class="flex flex-col md:flex-row gap-4 p-5 md:p-6">
+        <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+                <p class="text-xs font-mono text-text/50">#ORD-{{ordine?.idOrdine}}</p>
+                <p class="text-xs font-mono text-text/50">#{{ordine?.id_pagamento}}</p>
+                @if(ordine?.stato === "CONSEGNATO"){
+                <span
+                    class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold bg-bg px-3 py-1  text-green-500 shadow-sm ring-1 ring-green-400/40">
+                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                    {{ordine?.stato}}
+                </span>
+                }@else if(ordine?.stato === "ANNULLATO"){
+                <span
+                    class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold bg-bg px-3 py-1 shadow-sm ring-1   text-red-500 ring-red-400/40">
+                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                    {{ordine?.stato}}
+                </span>
+                }@else{
+                <span
+                    class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold bg-bg px-3 py-1 shadow-sm ring-1  text-amber-500 ring-amber-400/40">
+                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                    {{ordine?.stato}}
+                </span>
+                }
+
+                <span class="text-[11px] text-text/50">{{ ordine?.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</span>
+            </div>
+
+            <h2 class="mt-3 mb-2 text-lg font-semibold text-primary leading-tight">
+                @if (residenzaPrincipale) {
+                {{ residenzaPrincipale.via }} {{ residenzaPrincipale.numeroCivico }},
+                {{ residenzaPrincipale.regione }},
+                {{ residenzaPrincipale.comune }},
+                {{ residenzaPrincipale.cap }}
+                }
+
+
+
+            </h2>
+
+
+            <p class="text-text/70 text-sm mt-1 flex items-center gap-2">
+                <span class="font-semibold text-text/80">Nota consegna:</span> {{ordine?.nota_spedizione}}
+            </p>
+
+
+            <div class="mt-4 flex gap-3 flex-wrap">
+                @for(prodotto of ordine?.Prodottos; track prodotto){
+                <tag-dolce [dolce]=prodotto></tag-dolce>
+                }
+            </div>
+        </div>
+
+
+        <div class="w-full md:w-56 flex flex-row md:flex-col justify-between gap-4 items-center md:place-items-end ">
+            <div class="text-right">
+                <p class="text-[11px] uppercase tracking-wide text-text/50">Totale</p>
+                @if(ordine?.stato === "ANNULLATO"){
+                <p class="text-2xl font-extrabold text-text/40 leading-tight line-through">
+                    {{ordine?.costo | number:'1.2-2' }} €
+                </p>
+                <p class="text-[11px] text-text/50">Ordine annullato</p>
+                }@else{
+                <p class="text-2xl font-extrabold text-primary leading-tight">
+                    {{ordine?.costo | number:'1.2-2' }} €
+                </p>
+                <p class="text-[11px] text-text/50">IVA incl.</p>
+                }
+
+
+            </div>
+
+            <div class="flex gap-2 md:justify-end">
+                <!--<button
+                    class="h-10 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-bg hover:bg-accent transition">
+                    Riordina
+                    <span aria-hidden>↺</span>
+                </button>
+                
+                <button
+                    class="h-10 inline-flex items-center gap-2 rounded-full bg-bg px-3 py-2 text-sm font-semibold text-text/80 border border-secondary/30 hover:border-accent/40 transition">
+                    Dettagli
+                </button> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="bg-bg/50 px-5 md:px-6 py-4 border-t border-secondary/20 overflow-x-auto">
+        <ol class="flex items-start gap-0 min-w-[280px]">
+            @if(ordine?.stato === "IN PREPARAZIONE"){
+            <li class="flex flex-col items-center gap-1 flex-none w-15">
+                <span
+                    class="relative w-7 h-7 rounded-full bg-amber-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-amber-400/70 shadow-lg">
+                    1
+
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">In preparazione</span>
+            </li>
+            }@else{
+            <li class="flex flex-col items-center gap-2 flex-none w-15">
+                <span
+                    class="w-7 h-7 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] font-semibold shadow-md ring-2 ring-accent/50">
+                    1
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">In preparazione</span>
+            </li>
+            }
+
+            <li class="flex-1 flex items-start pt-3.5">
+                <span class="h-0.5 w-full bg-accent/50 rounded-full"></span>
+            </li>
+
+
+            @if(ordine?.stato === "SPEDITO"){
+            <li class="flex flex-col items-center gap-1 flex-none w-15">
+                <span
+                    class="relative w-7 h-7 rounded-full bg-amber-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-amber-400/70 shadow-lg">
+                    2
+
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">Spedito</span>
+            </li>
+            }@else if(ordine?.stato === "ANNULLATO"){
+            <li class="flex flex-col items-center gap-1 flex-none w-15">
+                <span
+                    class="relative w-7 h-7 rounded-full bg-red-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-red-400/70 shadow-lg">
+                    !
+                    <span
+                        class="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-red-500/90 whitespace-nowrap hidden sm:inline">annullato</span>
+                </span>
+
+            </li>
+            }@else{
+            <li class="flex flex-col items-center gap-2 flex-none w-15">
+                <span
+                    class="w-7 h-7 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] font-semibold shadow-md ring-2 ring-accent/50">
+                    2
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">Spedito</span>
+            </li>
+
+            }
+
+
+            <li class="flex-1 flex items-start pt-3.5">
+                <span class="h-0.5 w-full bg-accent/50 rounded-full"></span>
+            </li>
+
+            @if(ordine?.stato === "CONSEGNATO"){
+            <li class="flex flex-col items-center gap-2 flex-none w-15">
+                <span
+                    class="w-7 h-7 rounded-full bg-green-500 text-bg flex items-center justify-center text-[11px] font-bold ring-2 ring-green-400/70 shadow-lg">
+                    3
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">Consegnato</span>
+            </li>
+            }@else{
+
+            <li class="flex flex-col items-center gap-2 flex-none w-15">
+                <span
+                    class="w-7 h-7 rounded-full bg-accent text-bg flex items-center justify-center text-[11px] font-semibold shadow-md ring-2 ring-accent/50">
+                    3
+                </span>
+                <span class="text-xs text-text/70 leading-tight text-center">Consegnato</span>
+            </li>
+            }
+        </ol>
+    </div>
+</article>

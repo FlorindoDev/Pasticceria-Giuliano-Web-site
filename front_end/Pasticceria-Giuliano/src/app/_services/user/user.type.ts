@@ -1,3 +1,5 @@
+import { Residenza } from "./residenza.type";
+
 export interface User {
     idUser?: number | string,
     nome: string,
@@ -5,5 +7,6 @@ export interface User {
     email: string,
     telefono: string | null,
     createdAt?: Date,
-    updatedAt?: Date
+    updatedAt?: Date,
+    Residenzas?: Residenza[]
 }

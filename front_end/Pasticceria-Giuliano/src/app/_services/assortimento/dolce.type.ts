@@ -1,3 +1,5 @@
+import { OrdineProdotto } from "./ordineprodotto.type"
+
 export interface Dolce {
     idProdotto: number | null,
     nome: string,
@@ -6,5 +8,6 @@ export interface Dolce {
     peso: number,
     image: string | null,
     isShippable: boolean,
-    tag: string
+    tag: string,
+    OrdineProdotto?: OrdineProdotto
 }
