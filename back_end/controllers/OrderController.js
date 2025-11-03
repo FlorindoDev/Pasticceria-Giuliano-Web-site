@@ -65,7 +65,8 @@ export class OrderController {
                         }
                     ]
                 }
-            ]
+            ],
+            order: [['createdAt', 'DESC']]
         });
 
         if (!result || result.length === 0) {
