@@ -97,14 +97,20 @@
 
 
 
-        <div class="flex flex-1 items-center justify-center gap-4 md:hidden">
-            <img src="/pasticceria-giuliano-logo.svg" alt="Logo Pasticceria Giuliano" class="w-24 h-24 object-contain">
+
+        <div class="relative flex items-center justify-center md:hidden w-full">
+
+            <img src="/pasticceria-giuliano-logo.svg" alt="Logo Pasticceria Giuliano"
+                class="w-24 h-24 object-contain mx-auto">
+
+
             <button (click)="closeBurger()"
-                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-secondary focus:outline-none transition"
+                class="absolute right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-secondary focus:outline-none transition"
                 aria-label="Apri menu">
                 <img class="w-6" src="/menu-icon.svg" alt="Menu">
             </button>
         </div>
+
 
     </div>
 </header>
