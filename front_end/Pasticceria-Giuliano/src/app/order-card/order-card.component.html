@@ -5,6 +5,8 @@
             <div class="flex items-center gap-2 flex-wrap">
                 <p class="text-xs font-mono text-text/50">#ORD-{{ordine?.idOrdine}}</p>
                 <p class="text-xs font-mono text-text/50">#{{ordine?.id_pagamento}}</p>
+
+
                 @if(ordine?.stato === "CONSEGNATO"){
                 <span
                     class="inline-flex items-center gap-1 rounded-full text-[11px] font-semibold bg-bg px-3 py-1  text-green-500 shadow-sm ring-1 ring-green-400/40">
@@ -26,6 +28,10 @@
                 }
 
                 <span class="text-[11px] text-text/50">{{ ordine?.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</span>
+                <br>
+                @if(ordine?.numero_spedizione){
+                <p class="text-xs font-mono text-text/50">#Tracciamento-{{ordine?.numero_spedizione}}</p>
+                }
             </div>
 
             <h2 class="mt-3 mb-2 text-lg font-semibold text-primary leading-tight">
