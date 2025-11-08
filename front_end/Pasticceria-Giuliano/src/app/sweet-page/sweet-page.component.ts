@@ -58,19 +58,29 @@ export class SweetPage {
     })
   }
 
-  addCart() {
+  addtoCart() {
     if (this.auth.getToken() !== null) {
       let idUser = this.auth.getidUser();
       this.cart_service.getCartUser(idUser).subscribe({
         next: (cart: Cart) => {
           this.cart_service.addItem({ idUser: idUser, idCart: cart.idCart, quantity: 1, idProdotto: this.dolce.idProdotto }).subscribe({})
-          this.toastr.success("Hai aggiunto l'elemento con successo", "Azione Completata!");
+          this.toastr.success("Hai aggiunto l'elemento con successo", "Dolce Aggiunto!");
         },
       })
       return;
     }
     this.router.navigate([`products/${this.dolce.idProdotto}`], { fragment: 'login' });
 
+  }
+
+
+
+  onAddToCartPressed() {
+    this.cart_service.createCartUser(this.auth.getidUser()).subscribe({
+      next: () => {
+        this.addtoCart()
+      }
+    });
   }
 
 }

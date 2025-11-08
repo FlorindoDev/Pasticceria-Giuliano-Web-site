@@ -14,7 +14,15 @@
                 </button>
             </div>
 
-            <h2 class="text-3xl font-bold text-center mb-6">Sign up</h2>
+            <div
+                class="relative flex justify-center mb-6 bg-[#d9dadc] dark:bg-[#272729] rounded-full w-fit mx-auto p-1">
+                <div
+                    class="absolute top-1 bottom-1 left-27 w-1/2 bg-primary rounded-full transition-all duration-300 ease-in-out peer-hover:left-1/2">
+                </div>
+                <button (click)="this.gotoLogin.emit('login'); this.closeSingup();"
+                    class="relative z-10 px-6 py-2 font-bold text-lg text-text peer hover:text-secondary transition-colors duration-300">Accedi</button>
+                <button class="relative z-10 px-6 py-2 font-bold text-lg text-bg">Iscriviti</button>
+            </div>
 
             <form id="form-signup" class="flex flex-col" [formGroup]="signupForm" (ngSubmit)="handleSignup()">
                 <input (keyup)="hendleTyping($event)" type="nome" placeholder="Nome" formControlName="nome"
@@ -62,8 +70,22 @@
 
                 }
                 <div class="pb-5"></div>
-                <input (keyup)="hendleTyping($event)" type="password" placeholder="Password" formControlName="pass"
-                    class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" />
+                <div class="relative">
+                    <input id="pass-sign" (keyup)="hendleTyping($event)" type="password" placeholder="Password"
+                        formControlName="pass"
+                        class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-accent" />
+
+
+                    <div
+                        class="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full transition-colors duration-200 hover:bg-bgcontrast cursor-pointer">
+                        <svg (click)="viewPass()" class="w-5 h-5 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8" />
+                        </svg>
+                    </div>
+                </div>
                 @if(isSubmitted && signupForm.controls.pass.errors){
                 @if(signupForm.controls.pass.errors['required']){
                 <p class="form-error">Password is required.</p>

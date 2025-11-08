@@ -96,6 +96,7 @@ export class SignUp {
   }
 
   handleSignup() {
+    this.setTypePass();
     this.isSubmitted = true;
     if (this.signupForm.invalid) {
 
@@ -135,6 +136,21 @@ export class SignUp {
   closeSingup() {
     let element = document.getElementById("signup");
     element?.classList.add("hidden");
+  }
+
+  viewPass() {
+    const input = document.querySelector("#pass-sign");
+    if (input?.getAttribute("type") === "password") {
+      input.setAttribute("type", "text");
+    } else {
+      input?.setAttribute("type", "password");
+    }
+  }
+
+  setTypePass() {
+    const input = document.querySelector("#pass-sign");
+    input?.setAttribute("type", "password");
+
   }
 
 

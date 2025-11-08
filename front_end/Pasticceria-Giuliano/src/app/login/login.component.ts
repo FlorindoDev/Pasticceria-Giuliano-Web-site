@@ -103,6 +103,7 @@ export class Login {
 
 
   handleLogin() {
+    this.setTypePass();
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
 
@@ -155,6 +156,22 @@ export class Login {
     if (element?.classList.contains("hidden")) {
       element?.classList.remove("hidden");
     }
+
+  }
+
+  viewPass() {
+    const input = document.querySelector("#pass-login");
+    if (input?.getAttribute("type") === "password") {
+      input.setAttribute("type", "text");
+    } else {
+      input?.setAttribute("type", "password");
+    }
+
+  }
+
+  setTypePass() {
+    const input = document.querySelector("#pass-login");
+    input?.setAttribute("type", "password");
 
   }
 
