@@ -19,9 +19,7 @@ export class OrderCard {
 
   }
 
-  ngOnInit() {
-    console.log(this.ordine);
-  }
+
 
   get residenzaPrincipale() {
     return this.ordine?.User?.Residenzas?.[0];

@@ -29,7 +29,11 @@ export class OrderPage {
   }
 
   get ultimoOridine() {
-    return this.orders?.[0].createdAt
+    if (this.orders.length != 0) {
+      return this.orders?.[0].createdAt
+    }
+    return 0
+
   }
 
 

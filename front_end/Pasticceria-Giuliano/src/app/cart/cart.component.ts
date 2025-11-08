@@ -76,7 +76,6 @@ export class Cart {
     if (this.checkoutForm.invalid) {
 
       let element = document.querySelectorAll("#form-note textarea");
-      console.log(element)
       element.forEach((val) => {
         this.addRedRing(val as HTMLElement, this.isFieldInError(val as HTMLElement));
       });

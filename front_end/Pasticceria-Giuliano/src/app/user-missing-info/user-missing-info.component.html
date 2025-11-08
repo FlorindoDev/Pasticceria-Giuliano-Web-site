@@ -1,0 +1,146 @@
+<div id="info-missing" class="">
+    <div id="over" class="z-50 inset-0 fixed w-full h-full dark:bg-white/30 bg-black opacity-60 backdrop-blur-sm"></div>
+
+    <div id="button-close-info-missing" class="fixed inset-0 flex items-center justify-center z-60">
+        <div class="bg-bg w-full max-w-lg mx-4 rounded-2xl p-6 text-text flex flex-col max-h-[90vh]">
+
+            <div class="flex justify-end">
+                <button (click)="closeMissingInfo()" class="p-2 dark:hover:bg-gray-600 hover:bg-[#cfd1d3] rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <h2 class="text-3xl font-bold text-center mb-6 flex-shrink-0">Inserimento</h2>
+
+            <div class="flex-1 overflow-y-auto pr-2">
+                <form id="form-info-missing" class="flex flex-col gap-5" [formGroup]="infoMissingForm"
+                    (ngSubmit)="handleSave()">
+
+                    <div class="flex flex-col">
+                        <label for="phone" class="mb-1 font-medium">Numero di cellulare</label>
+                        <input id="phone" (keyup)="hendleTyping($event)" type="tel" placeholder="Es. +39 333 123 4567"
+                            autocomplete="tel" inputmode="tel" formControlName="phone" class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 
+                   focus:outline-none focus:ring-2 focus:ring-accent" />
+                        @if (isSubmitted && infoMissingForm.controls.phone.errors) {
+                        @if (infoMissingForm.controls.phone.errors['required']) {
+                        <p id="err-phone" class="form-error">Il numero di cellulare è obbligatorio.</p>
+                        } @else if (infoMissingForm.controls.phone.errors['pattern']) {
+                        <p id="err-phone" class="form-error">Inserisci un numero valido.</p>
+                        }
+                        }
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="flex flex-col">
+                            <label for="street" class="mb-1 font-medium">Via</label>
+                            <input id="street" (keyup)="hendleTyping($event)" type="text" placeholder="Es. Via Roma"
+                                autocomplete="address-line1" formControlName="street" class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 
+                     focus:outline-none focus:ring-2 focus:ring-accent" />
+                            @if (isSubmitted && infoMissingForm.controls.street.errors) {
+                            @if (infoMissingForm.controls.street.errors['required']) {
+                            <p id="err-street" class="form-error">La via è obbligatoria.</p>
+                            }
+                            }
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="streetNumber" class="mb-1 font-medium">Numero civico</label>
+                            <input id="streetNumber" (keyup)="hendleTyping($event)" type="text" placeholder="Es. 12A"
+                                autocomplete="address-line2" formControlName="streetNumber" class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 
+                     focus:outline-none focus:ring-2 focus:ring-accent" />
+                            @if (isSubmitted && infoMissingForm.controls.streetNumber.errors) {
+                            @if (infoMissingForm.controls.streetNumber.errors['required']) {
+                            <p id="err-streetNumber" class="form-error">Il numero civico è obbligatorio.</p>
+                            } @else if (infoMissingForm.controls.streetNumber.errors['pattern']) {
+                            <p id="err-streetNumber" class="form-error">Formato numero civico non valido.</p>
+                            }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div class="flex flex-col">
+                            <label for="cap" class="mb-1 font-medium">CAP</label>
+                            <input id="cap" (keyup)="hendleTyping($event)" type="text" placeholder="Es. 00100"
+                                autocomplete="postal-code" inputmode="numeric" maxlength="5" formControlName="cap"
+                                class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 
+                     focus:outline-none focus:ring-2 focus:ring-accent" />
+                            @if (isSubmitted && infoMissingForm.controls.cap.errors) {
+                            @if (infoMissingForm.controls.cap.errors['required']) {
+                            <p id="err-cap" class="form-error">Il CAP è obbligatorio.</p>
+                            } @else if (infoMissingForm.controls.cap.errors['pattern']) {
+                            <p id="err-cap" class="form-error">Il CAP deve contenere 5 cifre.</p>
+                            }
+                            }
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="comune" class="mb-1 font-medium">Comune</label>
+                            <input id="comune" (keyup)="hendleTyping($event)" type="text" placeholder="Es. Roma"
+                                autocomplete="address-level2" formControlName="comune" class="dark:bg-[#272729] bg-[#d9dadc] placeholder-gray-500 rounded-md px-4 py-3 
+                     focus:outline-none focus:ring-2 focus:ring-accent" />
+                            @if (isSubmitted && infoMissingForm.controls.comune.errors) {
+                            @if (infoMissingForm.controls.comune.errors['required']) {
+                            <p id="err-comune" class="form-error">Il comune è obbligatorio.</p>
+                            }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="region" class="mb-1 font-medium">Regione</label>
+                        <select id="region" (change)="hendleTyping($event)" formControlName="region" class="dark:bg-[#272729] bg-[#d9dadc] text-text rounded-md px-4 py-3 
+                    focus:outline-none focus:ring-2 focus:ring-accent">
+                            <option value="" disabled selected>Seleziona la tua regione</option>
+                            <option value="Abruzzo">Abruzzo</option>
+                            <option value="Basilicata">Basilicata</option>
+                            <option value="Calabria">Calabria</option>
+                            <option value="Campania">Campania</option>
+                            <option value="Emilia-Romagna">Emilia-Romagna</option>
+                            <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
+                            <option value="Lazio">Lazio</option>
+                            <option value="Liguria">Liguria</option>
+                            <option value="Lombardia">Lombardia</option>
+                            <option value="Marche">Marche</option>
+                            <option value="Molise">Molise</option>
+                            <option value="Piemonte">Piemonte</option>
+                            <option value="Puglia">Puglia</option>
+                            <option value="Sardegna">Sardegna</option>
+                            <option value="Sicilia">Sicilia</option>
+                            <option value="Toscana">Toscana</option>
+                            <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+                            <option value="Umbria">Umbria</option>
+                            <option value="Valle d’Aosta">Valle d’Aosta</option>
+                            <option value="Veneto">Veneto</option>
+                        </select>
+                        @if (isSubmitted && infoMissingForm.controls.region.errors) {
+                        @if (infoMissingForm.controls.region.errors['required']) {
+                        <p id="err-region" class="form-error">La regione è obbligatoria.</p>
+                        }
+                        }
+                    </div>
+                </form>
+            </div>
+
+            <div class="flex-shrink-0 bg-bg pt-4">
+                <button type="submit" form="form-info-missing"
+                    class="w-full text-text mt-2 bg-primary hover:bg-secondary rounded-full py-3 font-bold flex justify-center transition-colors duration-200">
+                    <p id="text-salva" class="text-bg">Salva</p>
+                    <svg id="loading" class="hidden w-10 h-10 animate-spin text-bg" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 
+                     16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 
+                     8.23975 19.0612" stroke="currentColor" stroke-width="3.55556" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="mt-4 text-center text-md text-text space-y-2 flex-shrink-0">
+                <a href="#" class="block hover:underline">Attento a cosa scrivi</a>
+            </div>
+        </div>
+    </div>
+</div>
