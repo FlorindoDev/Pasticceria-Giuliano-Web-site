@@ -76,11 +76,14 @@ export class SweetPage {
 
 
   onAddToCartPressed() {
-    this.cart_service.createCartUser(this.auth.getidUser()).subscribe({
-      next: () => {
-        this.addtoCart()
-      }
-    });
+    if (this.auth.getToken() !== null) {
+      this.cart_service.createCartUser(this.auth.getidUser()).subscribe({
+        next: () => {
+          this.addtoCart()
+        }
+      });
+    }
+    this.router.navigate([`products/${this.dolce.idProdotto}`], { fragment: 'login' });
   }
 
 }

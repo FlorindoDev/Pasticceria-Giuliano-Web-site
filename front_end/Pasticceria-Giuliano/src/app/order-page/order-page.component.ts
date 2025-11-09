@@ -25,11 +25,15 @@ export class OrderPage {
   }
 
   get costoTotale() {
-    return this.orders.reduce((acc: number, ordine) => acc + ordine.costo, 0);
+    if (this.orders !== null && this.orders.length != 0) {
+      return this.orders.reduce((acc: number, ordine) => acc + ordine.costo, 0);
+    }
+    return 0
+
   }
 
   get ultimoOridine() {
-    if (this.orders.length != 0) {
+    if (this.orders !== null && this.orders.length != 0) {
       return this.orders?.[0].createdAt
     }
     return 0
