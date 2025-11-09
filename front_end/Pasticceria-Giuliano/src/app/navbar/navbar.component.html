@@ -29,16 +29,17 @@
                 <span class="text-primary opacity-60 select-none font-bold text-2xl">|</span>
 
                 <a routerLink="/cart" outerLinkActive="active"
-                    class="text-text hover:text-accent transition flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 shrink-0 text-text hover:text-accent mb-1"
-                        viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    class="group text-text transition flex items-center mt-0.5 gap-1 hover:text-accent">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-8 h-8 shrink-0 text-text mb-1 transition group-hover:text-accent" viewBox="0 0 24 24"
+                        fill="none" aria-hidden="true">
                         <path d="M7 9h10a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 11a2 2 0 0 1 2-2Z"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             fill="none" />
                         <path d="M9 9c0-1.66 1.34-3 3-3s3 1.34 3 3" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" fill="none" />
                     </svg>
-                    <span class="font-semibold xl:block hidden">Carrello</span>
+                    <span class="font-semibold xl:block hidden transition group-hover:text-accent">Carrello</span>
                 </a>
 
                 @if(!isLogged()){
