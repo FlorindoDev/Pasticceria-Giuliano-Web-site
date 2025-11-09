@@ -51,7 +51,7 @@
 
             <div class="mt-2 order-2  self-end">
                 <p class="text-xl font-bold text-accent leading-none">
-                    {{(item.Prodotto.costo/item.Prodotto.peso)*1000 | number:'1.2-2' }}€/kg
+                    {{(item.Prodotto.costo/item.Prodotto.peso)*1000 | number:'1.2-2':'it' }}€/kg
                 </p>
 
             </div>
@@ -59,7 +59,7 @@
             <div class="mt-6 order-3 self-end">
                 <p class="text-sm text-text/60">Subtotale</p>
                 <p class="text-xl font-bold text-primary">
-                    {{subtotal() | number:'1.2-2'}}
+                    {{subtotal() | number:'1.2-2':'it' }}
                 </p>
             </div>
         </div>
@@ -96,7 +96,7 @@
 
 
                 <span class="text-primary font-semibold text-base">
-                    {{ subtotal() | number:'1.2-2' }}€
+                    {{ subtotal() | number:'1.2-2':'it' }}€
 
                 </span>
 
@@ -105,7 +105,7 @@
 
 
                 <span class="text-accent font-bold text-base">
-                    {{ (item.Prodotto.costo / item.Prodotto.peso) * 1000 | number:'1.2-2' }}€/kg
+                    {{ (item.Prodotto.costo / item.Prodotto.peso) * 1000 | number:'1.2-2':'it' }}€/kg
                 </span>
 
             </div>

@@ -18,7 +18,7 @@
         <div class="mt-2 flex items-center justify-between">
             @if(!this.isVetrina){
             <div class="mt-2 flex items-center gap-4">
-                @if(dolce.costo){ <p class="text-primary">{{ dolce.costo }}€</p>}
+                @if(dolce.costo){ <p class="text-primary">{{ dolce.costo | number:'1.2-2':'it' }}€</p>}
                 @if(dolce.peso){ <p class="text-primary">{{ dolce.peso }}g</p>}
             </div>
 

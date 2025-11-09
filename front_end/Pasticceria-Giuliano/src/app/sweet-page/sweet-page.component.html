@@ -46,14 +46,14 @@
                 <div class="rounded-xl bg-bgcontrast p-4 ring-1 ring-cream/60 shadow-sm">
                     <p class="text-text/60 uppercase tracking-wide text-[11px] font-semibold">Peso</p>
                     <p class="text-primary font-semibold text-lg">
-                        {{ dolce.peso}} g
+                        {{ dolce.peso }} g
                     </p>
                 </div>
 
                 <div class="rounded-xl bg-bgcontrast p-4 ring-1 ring-cream/60 shadow-sm">
                     <p class="text-text/60 uppercase tracking-wide text-[11px] font-semibold">Prezzo</p>
                     <p class="text-primary font-semibold text-lg">
-                        {{ dolce.costo }} €
+                        {{ dolce.costo | number:'1.2-2':'it' }} €
                     </p>
                 </div>
 

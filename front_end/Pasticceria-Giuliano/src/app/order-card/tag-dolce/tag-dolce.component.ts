@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Dolce } from '../../_services/assortimento/dolce.type';
+import { DecimalPipe } from '@angular/common';
 
 
 @Component({
   selector: 'tag-dolce',
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './tag-dolce.component.html',
   styleUrl: './tag-dolce.component.scss'
 })

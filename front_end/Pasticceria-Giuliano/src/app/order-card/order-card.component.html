@@ -65,12 +65,12 @@
                 <p class="text-[11px] uppercase tracking-wide text-text/50">Totale</p>
                 @if(ordine?.stato === "ANNULLATO"){
                 <p class="text-2xl font-extrabold text-text/40 leading-tight line-through">
-                    {{ordine?.costo | number:'1.2-2' }} €
+                    {{ordine?.costo | number:'1.2-2':'it' }} €
                 </p>
                 <p class="text-[11px] text-text/50">Ordine annullato</p>
                 }@else{
                 <p class="text-2xl font-extrabold text-primary leading-tight">
-                    {{ordine?.costo | number:'1.2-2' }} €
+                    {{ordine?.costo | number:'1.2-2':'it' }} €
                 </p>
                 <p class="text-[11px] text-text/50">IVA incl.</p>
                 }

@@ -7,11 +7,12 @@ import { CartService } from '../_services/cart/cart.service';
 import { AuthService } from '../_services/auth/auth.service';
 import { Cart } from '../_services/cart/cart.type';
 import { ToastrService } from 'ngx-toastr';
+import { DecimalPipe } from '@angular/common';
 
 
 @Component({
   selector: 'sweet-page',
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe],
   templateUrl: './sweet-page.component.html',
   styleUrl: './sweet-page.component.scss'
 })

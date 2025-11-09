@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Dolce } from '../_services/assortimento/dolce.type';
 import { Router } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'sweet-card',
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './sweet-card.component.html',
   styleUrl: './sweet-card.component.scss'
 })

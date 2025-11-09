@@ -7,6 +7,11 @@ import { authInterceptor } from './_interceptors/auth/auth.interceptor';
 import { errorHendlerInterceptor } from './_interceptors/errorHendler/error-hendler.interceptor';
 import { routes } from './app.routes';
 import { loadingInterceptor } from './_interceptors/loading/loading.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localeIt from '@angular/common/locales/it';
+
+
+registerLocaleData(localeIt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,8 +35,6 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
-        scrollPositionRestoration: 'enabled',
-        // scrollOffset: [0, 80],         
       })
     )
   ]
