@@ -1,4 +1,188 @@
-# Pasticceria Giuliano
+# Pasticceria Giuliano (EN)
+
+Full-stack application built to showcase and sell the artisanal pastries from Pasticceria Giuliano.  
+This repository includes:
+
+- **Angular 20 frontend** (`front_end/Pasticceria-Giuliano`): landing page, catalog, product detail, cart, order history, and login/signup modals.
+- **Node.js + Express 5 backend** (`back_end`): REST API with JWT auth, product and ingredient management, shipping addresses, carts, orders, plus Stripe and Google Cloud Storage integrations.
+- **docker-compose** stack to start the Nginx frontend and backend containers.
+
+---
+
+## Table of Contents (EN)
+
+1. [Tech Stack](#tech-stack-en)  
+2. [Key Features](#key-features-en)  
+3. [Repository Structure](#repository-structure-en)  
+4. [Prerequisites](#prerequisites-en)  
+5. [Environment Variables](#environment-variables-en)  
+6. [Local Development](#local-development-en)  
+7. [Docker Compose Setup](#docker-compose-setup-en)  
+8. [API Overview](#api-overview-en)  
+
+---
+
+## Tech Stack (EN)
+
+- **Frontend**: Angular 20 (standalone components, Angular Signals, RxJS 7.8), Tailwind CSS, ngx-toastr, Nginx for production.
+- **Backend**: Node 20, Express 5, Sequelize 6, Postgres, JWT, Stripe SDK, Multer + Google Cloud Storage, Swagger UI.
+- **Infra**: Docker Compose, TLS (local cert/key for frontend and backend), Morgan logging, Jest + Supertest for API tests.
+
+---
+
+## Key Features (EN)
+
+### User experience
+- Landing page with hero/vitrine, catalog filtered by tag, and product detail pages with ingredients.
+- **Login** and **signup** modals backed by reactive forms, toast feedback, and password show/hide.
+- **Persistent cart** per authenticated user: first access auto-creates it, quantities can be updated, items removed, totals recalculated.
+- **Stripe Checkout** redirect with shipping note passed as metadata.
+- **Orders page** summarizing totals, last order, and allowing status filtering.
+- HTTP interceptors attach the token, display a loading overlay, and centralize error handling.
+- Guarded routes for `/cart` and `/order` through `authGuard`.
+
+### Domain & API
+- **JWT authentication** (signup, login, logout handled on the client).
+- **Product management** with roles: admins can create/update/delete products and ingredients, including uploading images to Google Cloud Storage.
+- **Ingredient management** (product-scoped CRUD) to expose nutritional info in the frontend.
+- **Users and residences** (max two addresses per user, enforced server-side).
+- **Carts** and **cart items** with quantity and price validation.
+- **Orders** stored via Stripe webhook, including purchased products and shipping data.
+- **Swagger UI** on `/api-docs` for contract exploration.
+
+---
+
+## Repository Structure (EN)
+
+```
+Pasticceria-Giuliano Web site/
+|-- docker-compose.yaml
+|-- back_end/
+|   |-- controllers/
+|   |-- routes/
+|   |-- middleware/
+|   |-- models/
+|   |-- schemas/
+|   |-- utils/
+|   `-- tests/
+`-- front_end/
+    `-- Pasticceria-Giuliano/
+        |-- src/app/
+        |-- public/
+        |-- ssl/
+        `-- Dockerfile
+```
+
+---
+
+## Prerequisites (EN)
+
+- Node.js **>= 20** and npm.
+- Angular CLI (`npm install -g @angular/cli`) optional for dev tooling.
+- Docker + Docker Compose.
+- Reachable PostgreSQL instance (local or hosted).
+- Google Cloud Storage credentials with bucket access.
+- Stripe secret key + webhook signing secret.
+- TLS certificates (self-signed or issued) if you plan to expose HTTPS through containers.
+
+---
+
+## Environment Variables (EN)
+
+### Backend – `back_end/.env`
+
+```env
+DB_CONNECTION_URI=postgres://user:password@host:5432/database
+DIALECT=postgres
+TOKEN_SECRET=super-secret-jwt-key
+END_POINT_ALLOWED=http://localhost:4200
+
+PORT=3000                     # 3000 -> HTTP, 443/3001 -> HTTPS with the provided certs
+PATH_KEY_PEM=./ssl/key.pem
+PATH_CERT_PEM=./ssl/cert.pem
+
+GOOGLE_APPLICATION_CREDENTIALS=./pasticceria-service-account.json
+BUCKET_NAME=dolci-giuliano
+
+INIT_DATA=false
+STRIPE_TOKEN=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+```
+
+**Notes:**
+- `END_POINT_ALLOWED` powers CORS and Stripe cancel URL redirects.
+- When `PORT` equals `443` or `3001`, `index.js` spins up HTTPS using `PATH_KEY_PEM` and `PATH_CERT_PEM`.
+- The service account JSON must be available inside the container (copy or mount it via secrets).
+
+### Frontend – `front_end/Pasticceria-Giuliano/src/app/environment.prod.ts`
+
+```ts
+export const environment = {
+  apiBaseUrl: 'http://localhost:3000',
+  myErrors: [400, 401, 403, 404, 409, 500, 503],
+};
+```
+
+- `apiBaseUrl` must target the backend (HTTP or HTTPS).
+- `myErrors` helps the interceptor separate known API errors from unexpected ones.
+
+---
+
+## Local Development (EN)
+
+### Backend
+
+```bash
+cd back_end
+npm install
+npm run startDev   # nodemon watch
+# or npm start for a one-off run
+```
+
+- Runs on `http://localhost:3000` (HTTPS if you configure the certs).  
+- Swagger served at `http://localhost:3000/api-docs`.
+
+### Frontend
+
+```bash
+cd front_end/Pasticceria-Giuliano
+npm install
+npm start
+```
+
+- Angular dev server on `http://localhost:4200` with HMR.
+- Ensure `END_POINT_ALLOWED` includes `http://localhost:4200`.
+
+---
+
+## Docker Compose Setup (EN)
+
+1. Provide `.env` files and SSL certs in `back_end/ssl` and `front_end/Pasticceria-Giuliano/ssl`.
+2. From repo root:
+
+```bash
+docker compose up -d --build
+```
+
+- `server-web`: builds Angular and serves it through Nginx on ports `80` and `443`.
+- `node-app`: backend exposed on `3000` (HTTP) and `3001` (HTTPS).
+- Customize `docker-compose.yaml` if you want to add Postgres or other services locally.
+
+Shutdown:
+
+```bash
+docker compose down
+```
+
+---
+
+## API Overview (EN)
+
+Swagger UI: **`http://localhost:3000/api-docs`**
+
+---
+
+# Pasticceria Giuliano (IT)
 
 Applicazione full-stack per raccontare e vendere i dolci artigianali di Pasticceria Giuliano.  
 Il repository contiene:
@@ -19,11 +203,6 @@ Il repository contiene:
 6. [Avvio in Locale](#avvio-in-locale)  
 7. [Avvio con Docker Compose](#avvio-con-docker-compose)  
 8. [Panoramica API](#panoramica-api)  
-9. [Frontend in dettaglio](#frontend-in-dettaglio)  
-10. [Pagamenti e Servizi Esterni](#pagamenti-e-servizi-esterni)  
-11. [Testing](#testing)  
-12. [Troubleshooting](#troubleshooting)  
-13. [Contribuire](#contribuire)
 
 ---
 
