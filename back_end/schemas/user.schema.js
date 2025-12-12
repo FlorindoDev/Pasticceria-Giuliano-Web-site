@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { idRequired, idNotRequired, unionChecks } from "./utils.schema.js";
+import { unionChecks, uuidV7String, uuidV7StringOptional } from "./utils.schema.js";
 
 const rfc5322EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
 const telefonoRegex = /^\+?\d{1,4}?[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}$/;
@@ -36,11 +36,11 @@ let telefono = z.object({
 });
 
 let idR = z.object({
-    iduser: idRequired.id
+    iduser: uuidV7String
 });
 
 let idNotR = z.object({
-    iduser: idNotRequired.id
+    iduser: uuidV7StringOptional
 });
 
 let cognomeNotRequired = z.object({
@@ -99,8 +99,9 @@ export const TelefonoNotRequiredBody = z.object({
 });
 
 export const idUserRequiredParams = z.object({
-    params: z.object(idRequired),
-
+    params: z.object({
+        id: uuidV7String,
+    }),
 });
 
 export const idUserNotRequiredQuery = z.object({

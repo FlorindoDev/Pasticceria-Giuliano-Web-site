@@ -40,7 +40,9 @@ export const idCartItemNotRequiredQuery = z.object({
 });
 
 export const idCartItemRequiredParams = z.object({
-    params: z.object(idRequired),
+    params: z.object({
+        idItem: idRequired.id,
+    }),
 });
 
 export const quantityRequiredBody = z.object({
@@ -51,5 +53,4 @@ export const quantityRequiredBody = z.object({
 export const SchemaParamsDelete = unionChecks([SchemaParams, idCartItemRequiredParams]);
 
 export const SchemaCartItemPost = unionChecks([SchemaParams, quantityRequiredBody, idProdottoRequiredBody]);
-
 

@@ -83,6 +83,7 @@ export class SweetPage {
           this.addtoCart()
         }
       });
+      return;
     }
     this.router.navigate([`products/${this.dolce.idProdotto}`], { fragment: 'login' });
   }

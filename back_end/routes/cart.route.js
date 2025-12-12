@@ -27,8 +27,8 @@ export const router = express.Router();
  *           "in": "path",
  *           "required": true,
  *           "description": "ID dell'utente proprietario del carrello",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         }
  *       ],
  *       "responses": {
@@ -67,8 +67,8 @@ router.post("/:id/carts", enforceAuthentication, isOwnProfile, validate(idUserRe
  *           "in": "path",
  *           "required": true,
  *           "description": "ID dell'utente di cui recuperare il carrello attivo",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         }
  *       ],
  *       "responses": {
@@ -124,8 +124,8 @@ router.get("/:id/carts", enforceAuthentication, isOwnProfile, validate(idUserReq
  *           "in": "path",
  *           "required": true,
  *           "description": "ID dell'utente proprietario del carrello",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         },
  *         {
  *           "name": "idCart",
@@ -194,8 +194,8 @@ router.post("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(
  *           "in": "path",
  *           "required": true,
  *           "description": "ID dell'utente proprietario del carrello",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         },
  *         {
  *           "name": "idCart",
@@ -266,8 +266,8 @@ router.get("/:id/carts/:idCart", enforceAuthentication, isOwnProfile, validate(S
  *           "in": "path",
  *           "required": true,
  *           "description": "ID dell'utente proprietario del carrello",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         },
  *         {
  *           "name": "idCart",

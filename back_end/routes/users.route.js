@@ -43,7 +43,7 @@ export const router = express.Router();
  *                 "items": { "$ref": "#/components/schemas/User" }
  *               },
  *                "example": {
- *                      "idUser": 1,
+ *                      "idUser": "018fa0fc-3e68-7ccd-9e85-5b3950397aad",
  *                      "nome": "johnDoe",
  *                      "cognome": "johnDoe",
  *                       "email": "john@example.com",
@@ -235,7 +235,6 @@ router.delete('/:id', enforceAuthentication, isOwnProfile, (req, res, next) => {
     });
 
 });
-
 
 
 

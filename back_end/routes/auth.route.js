@@ -65,7 +65,7 @@ const ErrorTelephoneNumerPresent = new TelephoneNumerPresentError();
  *               "example": {
  *                 "message": "User successfully registered",
  *                 "user": {
- *                   "idUser": 1,
+ *                   "idUser": "018fa0fc-3e68-7ccd-9e85-5b3950397aad",
  *                   "nome": "Mario",
  *                   "cognome": "Rossi",
  *                   "email": "mario.rossi@example.com",

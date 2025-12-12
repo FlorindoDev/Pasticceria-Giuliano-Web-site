@@ -23,8 +23,8 @@ export const router = express.Router();
  *           "in": "query",
  *           "required": true,
  *           "description": "ID dell'utente di cui recuperare gli ordini",
- *           "schema": { "type": "integer", "format": "int32" },
- *           "example": 3
+ *           "schema": { "type": "string", "format": "uuid" },
+ *           "example": "018fa0fc-3e68-7ccd-9e85-5b3950397aad"
  *         },
  *         {
  *           "name": "stato",

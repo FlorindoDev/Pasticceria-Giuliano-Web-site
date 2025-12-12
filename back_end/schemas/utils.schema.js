@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+const uuidV7Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const uuidV7String = z
+    .string()
+    .regex(uuidV7Regex, "Il valore deve essere un UUID v7 valido");
+export const uuidV7StringOptional = uuidV7String.optional();
+
 const checkPageSize = (val) => {
     const isPageSizeCorrect = val > 0 && val <= 10;
     return (val !== undefined && isPageSizeCorrect) ? val : 10;

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { createHash } from "crypto";
+import { v7 as uuidv7 } from "uuid";
 
 
 /**
@@ -11,8 +12,7 @@ import { createHash } from "crypto";
  *         "type": "object",
  *         "properties": {
  *           "idUser": {
- *             "type": "integer",
- *             "format": "int32",
+ *             "type": "string",
  *             "description": "Identificativo univoco auto-incrementale dell'utente",
  *             "example": 1
  *           },
@@ -74,10 +74,10 @@ import { createHash } from "crypto";
 export function UserModel(database) {
     database.define('User', {
         idUser: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            defaultValue: () => uuidv7(),
         },
 
         nome: {
