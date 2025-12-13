@@ -1,11 +1,10 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AuthService } from '../_services/auth/auth.service';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Output } from '@angular/core';
 import { UserService } from '../_services/user/user.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { every, filter } from 'rxjs';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -14,10 +13,12 @@ import { every, filter } from 'rxjs';
   templateUrl: './user-missing-info.component.html',
   styleUrl: './user-missing-info.component.scss'
 })
-export class UserMissingInfo {
+export class UserMissingInfo implements OnInit, OnChanges {
 
-  @Output() logged = new EventEmitter<boolean>();
-  @Output() gotoSignup = new EventEmitter<string>();
+  @Input() telefono: boolean = true;
+  @Input() indirizzo: boolean = true;
+
+  private readonly addressControls = ['street', 'streetNumber', 'region', 'cap', 'comune'];
 
   constructor(
     private authservice: AuthService,
@@ -145,14 +146,32 @@ export class UserMissingInfo {
   }
 
   ngOnInit() {
+    this.togglePhoneControl(this.telefono);
+    this.toggleAddressControls(this.indirizzo);
     let element = document.getElementById("info-missing");
     element?.classList.add("hidden");
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.url.endsWith("#info")) {
+          this.openMissingInfo();
+        }
+      });
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['telefono']) {
+      this.togglePhoneControl(this.telefono);
+    }
+    if (changes['indirizzo']) {
+      this.toggleAddressControls(this.indirizzo);
+    }
   }
 
   closeMissingInfo() {
     let element = document.getElementById("info-missing");
     element?.classList.add("hidden");
+    this.router.navigate([], { fragment: '' });
 
 
   }
@@ -165,6 +184,33 @@ export class UserMissingInfo {
 
   }
 
+  private togglePhoneControl(show: boolean) {
+    const control = this.infoMissingForm.get("phone");
+    if (!control) {
+      return;
+    }
+    if (show) {
+      control.enable({ emitEvent: false });
+    } else {
+      control.reset('');
+      control.disable({ emitEvent: false });
+    }
+  }
+
+  private toggleAddressControls(show: boolean) {
+    this.addressControls.forEach((name) => {
+      const control = this.infoMissingForm.get(name);
+      if (!control) {
+        return;
+      }
+      if (show) {
+        control.enable({ emitEvent: false });
+      } else {
+        control.reset('');
+        control.disable({ emitEvent: false });
+      }
+    });
+  }
 
 
 

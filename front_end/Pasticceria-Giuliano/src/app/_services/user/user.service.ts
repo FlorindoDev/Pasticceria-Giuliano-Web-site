@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environment.prod';
 import { Observable } from 'rxjs';
 import { User } from './user.type';
+import { Residenza } from './residenza.type';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,6 @@ export class UserService {
 
   getNome(): string | null {
 
-
     const nome = localStorage.getItem("user");
     if (nome) {
       return (JSON.parse(nome) as User).nome;
@@ -47,6 +47,10 @@ export class UserService {
 
     return null;
 
+  }
+
+  getIndirizzo(iduser: number | string): Observable<Residenza[]> {
+    return this.http.get<Residenza[]>(`${this.url}/users/${iduser}/residences`, this.httpOptions);
   }
 
 

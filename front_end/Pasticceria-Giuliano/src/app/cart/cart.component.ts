@@ -7,10 +7,16 @@ import { Cart as UserCart } from '../_services/cart/cart.type';
 import { DecimalPipe } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { UserMissingInfo } from '../user-missing-info/user-missing-info.component';
+import { UserService } from '../_services/user/user.service';
+import { Residenza } from '../_services/user/residenza.type';
+import { User } from '../_services/user/user.type';
+import { Router } from '@angular/router';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'cart',
-  imports: [CartItem, DecimalPipe, ReactiveFormsModule],
+  imports: [UserMissingInfo, CartItem, DecimalPipe, ReactiveFormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -20,11 +26,15 @@ export class Cart {
   cart: UserCart | null = null;
   costo_totale: WritableSignal<number> = signal<number>(0);
   isSubmitted: boolean = false;
+  telefono: boolean = false;
+  indirizzo: boolean = false;
 
   constructor(
     private cart_service: CartService,
+    private user_service: UserService,
     private auth: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   checkoutForm = new FormGroup({
@@ -71,30 +81,64 @@ export class Cart {
     this.costo_totale.update(q => q + event);
   }
 
+  private checkInfoUser(iduser: string) {
+    return forkJoin({
+      indirizzo: this.user_service.getIndirizzo(iduser).pipe(
+        map((val: Residenza[]) => val == null || val.length === 0)
+      ),
+      telefono: this.user_service.getUserFromId(iduser).pipe(
+        map((val: User) => val.telefono == null || val.telefono === '')
+      )
+    });
+  }
+
+  private goToPayment() {
+    this.startLoading();
+    this.cart_service.chackOut(this.auth.getidUser(), this.checkoutForm.value.nota).subscribe({
+      next: (value) => {
+        value != null ? window.location.replace(value.url) : this.toastr.warning("Non hai elementi nel carrello", "Attenzione!");
+        this.stopLoading();
+      },
+      error: () => {
+        this.stopLoading();
+      },
+    });
+  }
+
   checkOut() {
     this.isSubmitted = true;
-    if (this.checkoutForm.invalid) {
+    let idUser = this.auth.getidUser();
 
-      let element = document.querySelectorAll("#form-note textarea");
-      element.forEach((val) => {
-        this.addRedRing(val as HTMLElement, this.isFieldInError(val as HTMLElement));
-      });
-
-    } else {
-
-      this.startLoading();
-      this.cart_service.chackOut(this.auth.getidUser(), this.checkoutForm.value.nota).subscribe({
-        next: (value) => {
-          value != null ? window.location.replace(value.url) : this.toastr.warning("Non hai elementi nel carrello", "Attenzione!");
-
-          this.stopLoading();
-        },
-        error: () => {
-          this.stopLoading();
-        },
-      });
-
+    if (!idUser) {
+      this.router.navigate([`cart`], { fragment: 'info' });
+      return;
     }
+
+    this.checkInfoUser(idUser).subscribe({
+      next: (result) => {
+
+        let info = result;
+        this.indirizzo = info.indirizzo;
+        this.telefono = info.telefono;
+
+        if (info.indirizzo || info.telefono) {
+          this.router.navigate([`cart`], { fragment: 'info' });
+
+        } else if (this.checkoutForm.invalid) {
+
+          let element = document.querySelectorAll("#form-note textarea");
+          element.forEach((val) => {
+            this.addRedRing(val as HTMLElement, this.isFieldInError(val as HTMLElement));
+          });
+
+        } else {
+          this.goToPayment()
+        }
+      },
+      error: () => {
+        this.toastr.error("Impossibile verificare i dati utente", "Errore");
+      }
+    });
   }
 
   startLoading() {
