@@ -4,8 +4,8 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../_services/user/user.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
-
+import { filter, forkJoin } from 'rxjs';
+import { Residenza } from '../_services/user/residenza.type';
 
 @Component({
   selector: 'user-missing-info',
@@ -32,7 +32,7 @@ export class UserMissingInfo implements OnInit, OnChanges {
   infoMissingForm = new FormGroup({
     phone: new FormControl('', [
       Validators.required,
-      Validators.pattern(/^\+?[0-9\s\-]{7,15}$/)
+      Validators.pattern(/^\+(\d{1,4})[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}$/)
     ]),
     street: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     streetNumber: new FormControl('', [
@@ -124,25 +124,54 @@ export class UserMissingInfo implements OnInit, OnChanges {
         this.addRedRing(val as HTMLElement, this.isFieldInError(val as HTMLElement));
       });
 
-    } else {
-
-      this.startLoading();
-      /*
-      this.authservice.login({
-        email: this.infoMissingForm.value.user as string,
-        password: this.infoMissingForm.value.pass as string
-      }).subscribe({
-
-        next: (val) => {
-          this.userLoggedSuccess(val.token);
-        },
-
-        error: () => {
-          this.stopLoading();
-        }
-
-      });*/
+      return;
     }
+
+    const iduser = this.authservice.getidUser();
+    if (!iduser) {
+      this.toastr.error("Sessione scaduta, esegui nuovamente l'accesso.");
+      return;
+    }
+
+    const requests = [];
+
+    if (this.telefono) {
+      const phoneValue = this.getControlValue("phone");
+      if (phoneValue) {
+        requests.push(this.UserService.updatePhone(iduser, phoneValue));
+      }
+    }
+
+    if (this.indirizzo) {
+      const residenza: Residenza = {
+        idResidenza: null,
+        via: this.getControlValue("street"),
+        numero_civico: this.getControlValue("streetNumber"),
+        regione: this.getControlValue("region"),
+        cap: this.getControlValue("cap"),
+        comune: this.getControlValue("comune")
+      };
+      requests.push(this.UserService.addResidance(iduser, residenza));
+    }
+
+    if (!requests.length) {
+      this.toastr.info("Non ci sono informazioni da salvare.");
+      return;
+    }
+
+    this.startLoading();
+    forkJoin(requests).subscribe({
+      next: () => {
+        this.toastr.success("Informazioni aggiornate con successo.");
+        this.clearInput();
+        this.closeMissingInfo();
+        this.stopLoading();
+      },
+      error: () => {
+        this.toastr.error("Errore durante il salvataggio delle informazioni.");
+        this.stopLoading();
+      }
+    });
   }
 
   ngOnInit() {
@@ -212,6 +241,10 @@ export class UserMissingInfo implements OnInit, OnChanges {
     });
   }
 
+  private getControlValue(controlName: string): string {
+    const value = this.infoMissingForm.get(controlName)?.value;
+    return value ? value.trim() : '';
+  }
 
 
 }

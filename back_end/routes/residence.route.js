@@ -244,9 +244,8 @@ router.delete('/:id/residences/:residenceId', [enforceAuthentication, validate(i
  */
 router.get('/:id/residences', enforceAuthentication, isOwnProfile, (req, res, next) => {
     ResidenceController.getResidence(req.idUser).then((result) => {
-        res.status(200);
-        res.json(result);
-        res.send();
+        res.status(200).json(result);
+
     }).catch(err => {
         next(err);
     });

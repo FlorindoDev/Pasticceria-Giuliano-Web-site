@@ -4,5 +4,5 @@ export interface Residenza {
     comune: string;
     cap: string;
     via: string;
-    numeroCivico: string;
+    numero_civico: string;
 }

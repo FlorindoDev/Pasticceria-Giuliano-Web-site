@@ -53,6 +53,14 @@ export class UserService {
     return this.http.get<Residenza[]>(`${this.url}/users/${iduser}/residences`, this.httpOptions);
   }
 
+  updatePhone(iduser: number | string, phone: string) {
+    return this.http.put(`${this.url}/users/${iduser}`, { telefono: phone }, this.httpOptions);
+  }
+
+  addResidance(iduser: number | string, residenza: Residenza) {
+    return this.http.post(`${this.url}/users/${iduser}/residences`, residenza, this.httpOptions);
+  }
+
 
 
 

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { unionChecks, uuidV7String, uuidV7StringOptional } from "./utils.schema.js";
 
 const rfc5322EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
-const telefonoRegex = /^\+?\d{1,4}?[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}$/;
+const telefonoRegex = /^\+(\d{1,4})[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}$/;
 
 
 let password = z.object({
