@@ -71,7 +71,7 @@ export class CartItemController {
                 }
             }
 
-            CartItemController.updateCartItem(item, filter);
+            await CartItemController.updateCartItem(item, filter);
             return;
         }
 
@@ -84,7 +84,7 @@ export class CartItemController {
             quantity: quantity
         });
 
-        let result = item.save();
+        let result = await item.save();
 
         if (!result) {
             throw new FailToSaveCartItem();
